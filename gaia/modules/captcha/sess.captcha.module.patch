@@ -1,0 +1,17 @@
+Index: captcha.module
+===================================================================
+--- captcha.module	(revision 6397)
++++ captcha.module	(working copy)
+@@ -510,7 +510,11 @@
+     // we also provide the CAPTCHA $element and $form_state arrays for more advanced use cases.
+     if ($captcha_validate($solution, $captcha_response, $element, $form_state)) {
+       // Correct answer.
+-      $_SESSION['captcha_success_form_ids'][$form_id] = $form_id;
++      // Skip session for anonymous users.
++      global $user;
++      if ($user->uid != 0) {
++        $_SESSION['captcha_success_form_ids'][$form_id] = $form_id;
++      }
+       // Record success.
+       db_query("UPDATE {captcha_sessions} SET status=%d, attempts=attempts+1 WHERE csid=%d", CAPTCHA_STATUS_SOLVED, $csid);
+     }

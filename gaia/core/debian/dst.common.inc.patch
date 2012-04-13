@@ -1,0 +1,12 @@
+Index: common.inc
+===================================================================
+--- common.inc	(revision 6302)
++++ common.inc	(working copy)
+@@ -1315,6 +1315,7 @@
+  *   A translated date string in the requested format.
+  */
+ function format_date($timestamp, $type = 'medium', $format = '', $timezone = NULL, $langcode = NULL) {
++  if(function_exists('dst_format_date') ) return dst_format_date($timestamp, $type, $format, $timezone, $langcode);
+   if (!isset($timezone)) {
+     global $user;
+     if (variable_get('configurable_timezones', 1) && $user->uid && strlen($user->timezone)) {

@@ -1,0 +1,26 @@
+diff --git a/messages_alter.module b/messages_alter.module
+index 3ea4d79..43752c7 100644
+--- a/messages_alter.module
++++ b/messages_alter.module
+@@ -100,6 +100,14 @@ function messages_alter_invoke_message_alter() {
+   // the remove method of the messages object
+   $messages->clean();
+ 
++  // Unset empty messages array from session variable.
++  // Without that, when you using Pressflow with Lazy session creation,
++  // cache page for anonymous user never be generated.
++  // @see drupal_page_is_cacheable()
++  // @see drupal_session_start()
++  if (empty($_SESSION['messages'])) {
++    unset($_SESSION['messages']);
++  }
+ }
+ 
+ /**
+@@ -244,4 +252,4 @@ function messages_alter_settings_page() {
+  */
+ function messages_alter_version() {
+   return variable_get('messages_alter_version', 'rookie');
+-}
+\ No newline at end of file
++}

@@ -1,0 +1,23 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Add redirection rule error 404 for all statistic files.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+.htaccess
+
+Related issue
+=============
+
+https://redmine.serwisyregionalne.pl/issues/2993
+-

@@ -1,0 +1,20 @@
+Index: boxes.module
+===================================================================
+--- boxes.module	(revision 14)
++++ boxes.module	(working copy)
+@@ -152,7 +152,13 @@
+ function boxes_footer() {
+   // Besure the page isn't a 404 or 403.
+   $headers = drupal_set_header();
+-  foreach (explode("\n", $headers) as $header) {
++
++  // Support for Pressflow patched drupal_set_header
++  if (!is_array($headers)) {
++    $headers = explode("\n", $headers);
++  }
++
++  foreach ($headers as $header) {
+     if ($header == "HTTP/1.1 404 Not Found" || $header == "HTTP/1.1 403 Forbidden") {
+       return;
+     }
+

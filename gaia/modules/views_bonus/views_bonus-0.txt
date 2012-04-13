@@ -1,0 +1,22 @@
+Bonus Views (http://drupal.org/project/views_bonus)
+-----------------------------------------------------------
+
+Description
+===========
+
+Elimination of errors in watchdog.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+views_bonus_export.module
+
+Related issue
+=============
+
+

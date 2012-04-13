@@ -1,0 +1,22 @@
+Context (http://drupal.org/project/context)
+----------------------------------------------------
+
+Description
+===========
+
+This patch fixes problem with context activated on node forms. The context haven't beed applied if the submitted form were validate with error.
+
+Compatibility
+=============
+
+6.x-3.0 (last release).
+
+Modified files
+==============
+
+context.core.inc
+
+Related issue
+=============
+
+http://drupal.org/node/606816

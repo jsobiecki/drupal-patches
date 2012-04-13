@@ -1,0 +1,18 @@
+=== modified file 'sites/all/modules/content_taxonomy/content_taxonomy.module'
+--- sites/all/modules/contrib/content_taxonomy/content_taxonomy.module	2009-12-08 20:46:48 +0000
++++ sites/all/modules/contrib/content_taxonomy/content_taxonomy.module	2009-12-08 20:54:20 +0000
+@@ -328,10 +328,10 @@
+  * hides the taxonomy form if there exists a content taxonomy field, which is set to 'hide default taxonomy fields'
+  */
+ function content_taxonomy_form_alter(&$form, $form_state, $form_id) {
+-  if (isset($form['type']['#value']) && $form['type']['#value'] .'_node_form' == $form_id && isset($form['taxonomy'])) {
+-    if (!is_array($form['taxonomy'])) {
++  if (isset($form['type']['#value']) && $form['type']['#value'] .'_node_form' == $form_id) {
++    if (!isset($form['taxonomy']) || !is_array($form['taxonomy'])) {
+       // empty taxonomy arrays can cause errors on preview
+-      if ($form_state['post']['op'] == t('Preview')) {
++      if (isset($form_state['post']) && $form_state['post']['op'] == t('Preview')) {
+         $form['taxonomy'] = array('#tree' => TRUE);
+         $form['taxonomy']['key'] = array('#type' => 'value', '#value' => '');
+         return;
+

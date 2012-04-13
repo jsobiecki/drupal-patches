@@ -1,0 +1,11 @@
+--- sites/all/modules/contrib/taxonomy_manager/taxonomy_manager.admin.inc	Sat Sep 05 12:09:42 2009
++++ sites/all/modules/contrib/taxonomy_manager/taxonomy_manager.admin.inc	Thu Sep 17 09:56:17 2009
+@@ -2119,7 +2119,7 @@
+   foreach ($merging_terms as $merge_term) {
+     if ($merge_term != $main_term) {
+       //update node-relations
+-      $sql = db_query("SELECT * FROM {term_node} WHERE tid = %d", $merge_term);
++      $sql = db_query("SELECT * FROM {term_node} WHERE tid = %d ORDER BY nid ASC, vid DESC", $merge_term);
+       while ($obj = db_fetch_object($sql)) {
+         db_query("DELETE FROM {term_node} WHERE tid = %d AND nid = %d", $obj->tid, $obj->nid);
+         if (!db_result(db_query("SELECT COUNT(*) FROM {term_node} WHERE tid = %d AND nid = %d", $main_term, $obj->nid))) {

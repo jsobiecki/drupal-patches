@@ -1,0 +1,10 @@
+--- imagecache_profiles.module	2010-09-21 11:14:59.000000000 -0700
++++ imagecache_profiles_new.module	2010-09-21 11:15:23.000000000 -0700
+@@ -235,6 +235,7 @@ function imagecache_profiles_form_user_p
+   else {
+     $description = t('Minimum height is %height.', array('%height' => $height));
+   }
++  if (empty($width) && empty($height)) $description = '';
+   if (!empty($description)) {
+     $form['picture']['picture_upload']['#description'] .= ' ' . $description;
+   }

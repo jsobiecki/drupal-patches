@@ -1,0 +1,22 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Redirect url with ?fb_xd_fragment to the url witout it.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+.htaccess
+
+Related issue
+=============
+
+https://redmine.serwisyregionalne.pl/issues/6243

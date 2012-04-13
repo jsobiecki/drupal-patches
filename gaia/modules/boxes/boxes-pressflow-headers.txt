@@ -1,0 +1,19 @@
+XMLSITEMAP (http://drupal.org/project/boxes)
+----------------------------------------------------
+
+Description
+===========
+
+6.x-1.0
+
+Compatibility
+=============
+
+When using pressflow, boxes gives the error
+Notice: Array to string conversion in boxes_footer() (line 155 of /ebs/platforms/sites/all/modules/boxes/boxes.module).
+Looks like a similar issue/solution to http://drupal.org/node/601420
+
+Modified files
+==============
+
+boxes.module

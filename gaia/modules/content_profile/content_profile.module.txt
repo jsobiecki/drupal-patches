@@ -1,0 +1,22 @@
+Content profile (http://drupal.org/project/content_profile)
+----------------------------------------------------
+
+Description
+===========
+
+Fixes posible XHTML errors.
+
+Compatibility
+=============
+
+6.x-1.0 (last release).
+
+Modified files
+==============
+
+content_profile.module
+
+Related issue
+=============
+
+http://drupal.org/node/1124788

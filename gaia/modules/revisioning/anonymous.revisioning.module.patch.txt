@@ -1,0 +1,27 @@
+Revisioning (http://drupal.org/project/revisioning)
+----------------------------------------------------
+
+Description
+===========
+
+Restrict access to nodes "created" by anonymous user.
+
+Compatibility
+=============
+
+6.x-3.9+
+
+Modified files
+==============
+
+revisioning.module
+
+Issue
+=============
+
+RM #2778
+
+Related issue
+=============
+
+None

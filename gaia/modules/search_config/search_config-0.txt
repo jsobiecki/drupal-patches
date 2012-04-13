@@ -1,0 +1,22 @@
+Search config (http://drupal.org/project/search_config)
+-----------------------------------------------------------
+
+Description
+===========
+
+Elimination of errors in watchdog.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+search_config.module
+
+Related issue
+=============
+
+

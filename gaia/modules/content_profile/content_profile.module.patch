@@ -1,0 +1,15 @@
+Index: content_profile.module
+===================================================================
+--- content_profile.module	(revision 5598)
++++ content_profile.module	(working copy)
+@@ -550,8 +550,8 @@
+     }
+   }
+   if ($content) {
+-    $content['#prefix'] = '<p id="content-profile-view">';
+-    $content['#suffix'] = '</p>';
++    $content['#prefix'] = '<div id="content-profile-view">';
++    $content['#suffix'] = '</div>';
+   }
+   return $content;
+ }

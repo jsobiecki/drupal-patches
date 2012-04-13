@@ -1,0 +1,23 @@
+Scheduler (http://drupal.org/project/scheduler)
+----------------------------------------------------
+
+Description
+===========
+
+Adapt scheduler to work with dst modules (without the patch - if dst is enabled - after saving a node you'll get different publish_on and unpublish_on values when you get back to the node edit form).
+
+Compatibility
+=============
+
+6.x-1.7
+
+Modified files
+==============
+
+scheduler.module
+
+Related issue
+=============
+
+http://drupal.org/node/965606#comment-4604432
+http://drupal.org/node/1189080

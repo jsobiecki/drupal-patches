@@ -1,0 +1,116 @@
+? administer.patch
+Index: usercomment.install
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/usercomment/usercomment.install,v
+retrieving revision 1.2.6.2
+diff -u -p -r1.2.6.2 usercomment.install
+--- usercomment.install	3 Feb 2010 21:07:58 -0000	1.2.6.2
++++ usercomment.install	15 Feb 2011 00:37:07 -0000
+@@ -24,8 +24,6 @@ function usercomment_update_1() {
+ }
+ 
+ /**
+- * Implementation of hook_update()
+- *
+  * Permission name was changed b/c drupal does not permit special chars in permissions, so
+  * update data in permissions table
+  */
+@@ -50,6 +48,30 @@ function usercomment_update_6001() {
+ }
+ 
+ /**
++ * Add administer comments permission for each content type, this update
++ * gives roles with the old permisison all the new permissions.
++ */
++function usercomment_update_6201() {
++  $ret = array();
++  $new_perms = array();
++  $perm_string = '';
++
++  foreach (node_get_types() as $node) {
++    $new_perms[] = 'administer comments on own '. $node->type .' content';
++  }
++  $perm_string = implode(", ", $new_perms);
++
++  $result = db_query("SELECT rid, perm FROM {permission} ORDER BY rid");
++  while ($role = db_fetch_object($result)) {
++    $renamed_permission = preg_replace('/administer comments on own content/', $perm_string, $role->perm);
++    if ($renamed_permission != $role->perm) {
++      $ret[] = update_sql("UPDATE {permission} SET perm = '$renamed_permission' WHERE rid = $role->rid");
++    }
++  }
++  return $ret;
++}
++
++/**
+  * Implementation of hook_uninstall().
+  */
+ 
+Index: usercomment.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/usercomment/usercomment.module,v
+retrieving revision 1.5.4.10
+diff -u -p -r1.5.4.10 usercomment.module
+--- usercomment.module	14 Feb 2011 17:56:56 -0000	1.5.4.10
++++ usercomment.module	15 Feb 2011 00:37:08 -0000
+@@ -172,7 +172,7 @@ function usercomment_nodeapi(&$node, $op
+     case 'view':
+       // Don't show the form for users with administer comments permission, they already see unpublished.
+       if (!user_access('administer comments')) {
+-        if ($user->uid == $node->uid && (user_access('approve comments on own '. $node->type .' content') || user_access('administer comments on own content'))) {
++        if ($user->uid == $node->uid && (user_access("approve comments on own $node->type content") || user_access("administer comments on own $node->type content"))) {
+           if (!$a3 && $user->uid) { 
+             $node->content['usercomment'] = array(
+               '#value' => usercomment_approval_form($node),
+@@ -192,10 +192,10 @@ function usercomment_nodeapi(&$node, $op
+ function usercomment_perm() {
+   $perms = array(
+     "skip author approval queue when posting comments",
+-    'administer comments on own content',
+   );
+ 
+   foreach (node_get_types() as $node) {
++    $perms[] = 'administer comments on own '. $node->type .' content';
+     $perms[] = 'delete comments on own '. $node->type .' content';
+     $perms[] = 'approve comments on own '. $node->type .' content';
+   }
+@@ -214,9 +214,10 @@ function usercomment_perm() {
+  */
+ function usercomment_form_alter(&$form, $form_state, $form_id) {
+   global $user;
++  $type = $form['type']['#value'];
+ 
+-  if (isset($form['type']) && isset($form['#node']) && $form['type']['#value'] .'_node_form' == $form_id) {
+-    $form['comment_settings']['#access'] |= ($user->uid == $form['#node']->uid && user_access('administer comments on own content'));
++  if (isset($form['type']) && isset($form['#node']) && $type .'_node_form' == $form_id) {
++    $form['comment_settings']['#access'] |= ($user->uid == $form['#node']->uid && user_access("administer comments on own $type content"));
+   }
+ }
+ 
+@@ -235,7 +236,7 @@ function usercomment_user($op, &$edit, &
+       $form = array();
+       foreach (node_get_types() as $node) {
+         if (node_access('create', $node, $account)) {
+-          if ((user_access('approve comments on own '. $node->type .' content', $account)) || (user_access('administer comments on own content'))) {
++          if ((user_access("approve comments on own $node->type content", $account)) || (user_access("administer comments on own $node->type content", $account))) {
+ 
+             $form['usercomment_settings']['usercomment_approve_'. $node->type] = array(
+               '#type'          => 'checkbox',
+@@ -327,7 +328,7 @@ function usercomment_access_check($cid, 
+       if (user_access('administer comments')) {
+         return TRUE;
+       }
+-      elseif (user_access('administer comments on own content') && ($user->uid == $node->uid)) {
++      elseif (user_access("administer comments on own $node->type content") && ($user->uid == $node->uid)) {
+         return TRUE;
+       }
+       elseif (user_access('delete comments on own '. $node->type .' content') && ($user->uid == $node->uid)) {
+@@ -343,7 +344,7 @@ function usercomment_access_check($cid, 
+         if (user_access('administer comments')) {
+           return TRUE;
+         }
+-        elseif (user_access('administer comments on own content') && ($user->uid == $node->uid)) {
++        elseif (user_access("administer comments on own $node->type content") && ($user->uid == $node->uid)) {
+           return TRUE;
+         }
+         elseif (user_access('approve comments on own '. $node->type .' content') && ($user->uid == $node->uid)) {

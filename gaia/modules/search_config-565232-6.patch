@@ -1,0 +1,34 @@
+Index: search_config.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/search_config/search_config.module,v
+retrieving revision 1.9.2.6
+diff -u -p -r1.9.2.6 search_config.module
+--- search_config.module	30 May 2009 20:22:53 -0000	1.9.2.6
++++ search_config.module	25 Feb 2010 15:20:14 -0000
+@@ -23,6 +23,11 @@ function search_config_perm() {
+  * Implementation of hook_form_alter()
+  */
+ function search_config_form_alter(&$form, &$form_state, $form_id) {
++  // Add validation function to search administration form
++  if ($form_id == 'search_admin_settings') {
++    $form['#validate'][] = 'search_config_validate';
++  }
++  
+   // Present the user with the appropriate search results tab as defined by
+   // variable "search_config_default_search" (labeled "Default Search")
+   // in the "Advanced search settings" fieldset in admin/settings/search
+@@ -276,13 +281,12 @@ function search_config_search($op) {
+         '#default_value' => variable_get('search_config_disable_index_type', array())
+       );
+ 
+-      $form['#validate'][] = 'search_config_validate';
+       return $form;
+   }
+ }
+ 
+ function search_config_validate($form, &$form_state) {
+-  if ($form_state['values']['form_id'] == 'search_admin_settings' && $form_state['values']['op'] == 'Save configuration') {
++  if ($form_state['values']['form_id'] == 'search_admin_settings' && $form_state['values']['op'] == t('Save configuration')) {
+     $post_values = $form_state['values'];
+     $node_types = node_get_types('names');
+ 

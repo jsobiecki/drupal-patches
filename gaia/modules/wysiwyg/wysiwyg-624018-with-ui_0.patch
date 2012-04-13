@@ -1,0 +1,590 @@
+diff --git wysiwyg.admin.inc wysiwyg.admin.inc
+index 26e3b6f..146c841 100644
+--- wysiwyg.admin.inc
++++ wysiwyg.admin.inc
+@@ -315,8 +315,20 @@ function wysiwyg_profile_form_submit($form, &$form_state) {
+   // @see system_settings_form_submit()
+   unset($values['submit'], $values['form_id'], $values['op'], $values['form_token'], $values['form_build_id']);
+ 
++  // Determine if this is an update.
++  if (!db_result(db_query("SELECT 1 FROM {wysiwyg} WHERE format = %d", $format))) {
++    $update = array();
++  }
++  else {
++    $update = array('format');
++  }
++  $wysiwyg = new stdClass();
++  $wysiwyg->format = $format;
++  $wysiwyg->editor = $editor;
++  $wysiwyg->settings = $values;
++
+   // Insert new profile data.
+-  db_query("UPDATE {wysiwyg} SET settings = '%s' WHERE format = %d", serialize($values), $format);
++  drupal_write_record('wysiwyg', $wysiwyg, $update);
+ 
+   drupal_set_message(t('Wysiwyg profile for %format has been saved.', array('%format' => $input_format)));
+ 
+@@ -415,7 +427,8 @@ function wysiwyg_profile_overview() {
+   }
+ 
+   $formats = filter_formats();
+-  $profiles = wysiwyg_profile_load_all();
++  // Reset Wysiwyg cache
++  $profiles = wysiwyg_profile_load_all(TRUE);
+   $form['formats'] = array(
+     '#type' => 'item',
+     '#description' => t('To assign a different editor to a text format, click "delete" to remove the existing first.'),
+@@ -423,6 +436,7 @@ function wysiwyg_profile_overview() {
+   );
+ 
+   $enable_save = FALSE;
++  $in_code_only = FALSE;
+   foreach ($formats as $id => $format) {
+     $form['formats'][$id]['name'] = array(
+       '#value' => check_plain($format->name),
+@@ -430,9 +444,13 @@ function wysiwyg_profile_overview() {
+     // Only display editor selection for associated input formats to avoid
+     // confusion about disabled selection.
+     if (isset($profiles[$id]) && !empty($profiles[$id]->editor)) {
++      $in_code_only = !empty($profiles[$id]->in_code_only);
+       $form['formats'][$id]['editor'] = array(
+         '#value' => $options[$profiles[$id]->editor],
+       );
++      if ($in_code_only) {
++        $form['formats'][$id]['name']['#value'] .= ' <em>(' . t('From: !module module', array('!module' => $profiles[$id]->export_module)) . ')</em>';
++      }
+     }
+     else {
+       $form['formats'][$id]['editor'] = array(
+@@ -443,12 +461,17 @@ function wysiwyg_profile_overview() {
+       $enable_save = TRUE;
+     }
+     if (isset($profiles[$id]) && !empty($profiles[$id]->editor)) {
++      $edit = !empty($profiles[$id]->in_code_only)?t('Override'):t('Edit');
+       $form['formats'][$id]['edit'] = array(
+-        '#value' => l(t('Edit'), "admin/settings/wysiwyg/profile/$id/edit"),
+-      );
+-      $form['formats'][$id]['delete'] = array(
+-        '#value' => l(t('Delete'), "admin/settings/wysiwyg/profile/$id/delete"),
++        '#value' => l($edit, "admin/settings/wysiwyg/profile/$id/edit"),
+       );
++      // Only display delete/revert links for wysiwyg loaded from the database
++      if (!$in_code_only) {
++        $delete = (empty($profiles[$id]->type) || $profiles[$id]->type == t('Normal'))?t('Delete'):t('Revert');
++        $form['formats'][$id]['delete'] = array(
++          '#value' => l($delete, "admin/settings/wysiwyg/profile/$id/delete"),
++        );
++      }
+     }
+   }
+ 
+@@ -467,7 +490,7 @@ function theme_wysiwyg_profile_overview($form) {
+     return;
+   }
+   $output = '';
+-  $header = array(t('Input format'), t('Editor'), array('data' => t('Operations'), 'colspan' => 2));
++  $header = array(t('Input format'), t('Editor'), array('data' => t('Operations'), 'colspan' => 3));
+   $rows = array();
+   foreach (element_children($form['formats']) as $item) {
+     $format = &$form['formats'][$item];
+@@ -475,6 +498,7 @@ function theme_wysiwyg_profile_overview($form) {
+       drupal_render($format['name']),
+       drupal_render($format['editor']),
+       isset($format['edit']) ? drupal_render($format['edit']) : '',
++      isset($format['export']) ? drupal_render($format['export']) : '',
+       isset($format['delete']) ? drupal_render($format['delete']) : '',
+     );
+   }
+@@ -502,6 +526,18 @@ function wysiwyg_profile_delete_confirm(&$form_state, $profile) {
+   $formats = filter_formats();
+   $format = $formats[$profile->format];
+   $form['format'] = array('#type' => 'value', '#value' => $format);
++  if (isset($profile->type) && $profile->type == t('Overridden')) {
++    $form['revert'] = array(
++      '#type' => 'value',
++      '#value' => TRUE,
++    );
++    return confirm_form(
++      $form,
++      t('Are you sure you want to revert the profile settings for %name?', array('%name' => $format->name)),
++      'admin/settings/wysiwyg',
++      t('This action cannot be undone.'), t('Revert'), t('Cancel')
++    );
++  }
+   return confirm_form(
+     $form,
+     t('Are you sure you want to remove the profile for %name?', array('%name' => $format->name)),
+@@ -517,15 +553,15 @@ function wysiwyg_profile_delete_confirm(&$form_state, $profile) {
+  */
+ function wysiwyg_profile_delete_confirm_submit($form, &$form_state) {
+   $format = $form_state['values']['format'];
+-  wysiwyg_profile_delete($format->format);
+-  drupal_set_message(t('Wysiwyg profile for %name has been deleted.', array('%name' => $format->name)));
++  $wysiwyg = new stdClass();
++  $wysiwyg->format = $format->format;
++  wysiwyg_profile_delete($wysiwyg);
++  if (!empty($form_state['values']['revert'])) {
++    drupal_set_message(t('Wysiwyg profile settings for %name has been reverted.', array('%name' => $format->name)));
++  }
++  else {
++    drupal_set_message(t('Wysiwyg profile for %name has been deleted.', array('%name' => $format->name)));
++  }
+   $form_state['redirect'] = 'admin/settings/wysiwyg';
+ }
+ 
+-/**
+- * Remove a profile from the database.
+- */
+-function wysiwyg_profile_delete($format) {
+-  db_query("DELETE FROM {wysiwyg} WHERE format = %d", $format);
+-}
+-
+diff --git wysiwyg.install wysiwyg.install
+index b336b80..4f027cd 100644
+--- wysiwyg.install
++++ wysiwyg.install
+@@ -7,10 +7,34 @@
+ function wysiwyg_schema() {
+   $schema['wysiwyg'] = array(
+     'description' => t('Stores Wysiwyg profiles.'),
++    'join' => array(
++      'exportables' => array(
++        'table' => 'exportables',
++        'left_key' => 'format',
++        'right_key' => 'id',
++        'extra' => "AND t__1.type = 'input_formats' AND t__0.editor != ''",
++        'load' => array(
++          'machine',
++        ),
++      ),
++    ),
++    'export' =>  array(
++      'key' => 'machine',
++      'key in table' => 'exportables',
++      'identifier' => 'wysiwyg',
++      'export module' => 'wysiwyg',
++      'api' => array(
++        'owner' => 'wysiwyg',
++        'minimum_version' => 2,
++        'current_version' => 2,
++      ),
++      'list callback' => 'wysiwyg_profile_list',
++      'delete callback' => 'wysiwyg_profile_delete',
++    ),
+     'fields' => array(
+-      'format' => array('type' => 'int', 'not null' => TRUE, 'default' => 0),
++      'format' => array('type' => 'int', 'not null' => TRUE, 'default' => 0, 'no export' => TRUE),
+       'editor' => array('type' => 'varchar', 'length' => 128, 'not null' => TRUE, 'default' => ''),
+-      'settings' => array('type' => 'text', 'size' => 'normal'),
++      'settings' => array('type' => 'text', 'size' => 'normal', 'serialize' => TRUE),
+     ),
+     'primary key' => array('format'),
+   );
+@@ -176,3 +200,49 @@ function wysiwyg_update_6200() {
+   return $ret;
+ }
+ 
++/**
++ * Implementation of hook_requirements().
++ *
++ * Display information about getting features support working.
++ */
++function wysiwyg_requirements($phase) {
++  $requirements = array();
++  // Ensure translations don't break at install time
++  $t = get_t();
++
++  if ($phase == 'runtime') {
++    $ctools = $exportables = FALSE;
++    if (module_exists('ctools')) {
++      $ctools = ctools_api_version('1.7');
++    }
++    if (module_exists('exportables')) {
++      $exportables = exportables_api_version('2.0');
++    }
++    if (!$ctools || !$exportables) {
++      $value = $t('Not enabled');
++      $description = t('Wysiwyg is unabled to provide or load wysiwyg profiles in code because you need !ctools (6.x-1.7 or greather) and !exportables (6.x-2.x or greather).',
++        array(
++          '!ctools' => l('CTools', 'http://drupal.org/project/ctools'), 
++          '!exportables' => l('Exportables', 'http://drupal.org/project/exportables'),
++        )
++      );
++      $severity = REQUIREMENT_INFO;
++    }
++    else {
++      $value = $t('Wysiwyg can provide exportables objects using !features and load profiles from code.',
++        array(
++          '!features' => l('Features', 'http://drupal.org/project/features'), 
++        )
++      );
++      $severity = REQUIREMENT_OK;
++    }
++    $requirements['wysiwyg_features'] = array(
++      'title' => $t('Wysiwyg from code'),
++      'value' => $value,
++      'severity' => $severity,
++      'description' => $description,
++    );
++  }
++
++  return $requirements;
++}
+diff --git wysiwyg.module wysiwyg.module
+index 660936b..3c8455c 100644
+--- wysiwyg.module
++++ wysiwyg.module
+@@ -87,6 +87,13 @@ function wysiwyg_help($path, $arg) {
+ }
+ 
+ /**
++ * Clear wysiwyg cache on admin/build/modules form.
++ */
++function wysiwyg_form_system_modules_alter(&$form, $form_state) {
++  wysiwyg_profile_load_all(TRUE);
++}
++
++/**
+  * Implementation of hook_form_alter().
+  *
+  * Before Drupal 7, there is no way to easily identify form fields that are
+@@ -586,11 +593,7 @@ function wysiwyg_profile_load($format) {
+   static $profiles;
+ 
+   if (!isset($profiles) || !array_key_exists($format, $profiles)) {
+-    $result = db_query('SELECT format, editor, settings FROM {wysiwyg} WHERE format = %d', $format);
+-    while ($profile = db_fetch_object($result)) {
+-      $profile->settings = unserialize($profile->settings);
+-      $profiles[$profile->format] = $profile;
+-    }
++    $profiles = wysiwyg_profile_load_all();
+   }
+ 
+   return (isset($profiles[$format]) ? $profiles[$format] : FALSE);
+@@ -599,22 +602,72 @@ function wysiwyg_profile_load($format) {
+ /**
+  * Load all profiles.
+  */
+-function wysiwyg_profile_load_all() {
++function wysiwyg_profile_load_all($reset = FALSE) {
+   static $profiles;
+ 
+-  if (!isset($profiles)) {
++  if ($reset || !isset($profiles)) {
+     $profiles = array();
+-    $result = db_query('SELECT format, editor, settings FROM {wysiwyg}');
+-    while ($profile = db_fetch_object($result)) {
+-      $profile->settings = unserialize($profile->settings);
+-      $profiles[$profile->format] = $profile;
++    if (!$reset && ($cache = cache_get('wysiwyg:profiles', 'cache')) && is_array($cache->data)) {
++      $profiles = $cache->data;
++      return $profiles;
+     }
++
++    // If Exportables and CTools are installed, use their API to load both
++    // wysiwyg profiles from code and from the database
++    if (module_exists('ctools') && module_exists('exportables')) {
++      if (exportables_api_version('2.0') && ctools_api_version('1.7')) {
++        $input_formats = exportables_load_all('input_formats');
++        ctools_include('export');
++        $ctools_profiles = ctools_export_load_object('wysiwyg');
++        // Wysiwyg module still use numeric ids as keys
++        foreach ($ctools_profiles as $machine_name => $profile) {
++          $profile->format = $input_formats[$machine_name];
++          $profiles[$profile->format] = $profile;
++        }
++      }
++    }
++    // If ctools and exportables are not available, just load profiles
++    // from the database
++    else {
++      $result = db_query('SELECT format, editor, settings FROM {wysiwyg}');
++      while ($profile = db_fetch_object($result)) {
++        $profile->settings = unserialize($profile->settings);
++        $profiles[$profile->format] = $profile;
++      }
++    }
++    drupal_alter('wysiwyg_load_profiles', $profiles);
++    cache_set('wysiwyg:profiles', $profiles);
+   }
+ 
+   return $profiles;
+ }
+ 
+ /**
++ * Wysiwyg profiles list callback.
++ */
++function wysiwyg_profile_list() {
++  $profiles = wysiwyg_profile_load_all(TRUE);
++  $filter_formats = filter_formats();
++  $list = array();
++  foreach ($profiles as $profile) {
++    $list[$profile->machine] = t('@format (@editor)', array('@editor' => $profile->editor, '@format' => $filter_formats[$profile->format]->name));
++  }
++  return $list;
++}
++
++/**
++ * Remove a profile from the database.
++ */
++function wysiwyg_profile_delete($wysiwyg) {
++  if (!isset($wysiwyg->format)) {
++    $input_formats = exportables_load_all('input_formats');
++    $wysiwyg->format = $input_formats[$wysiwyg->machine];
++  }
++  db_query("DELETE FROM {wysiwyg} WHERE format = %d", $wysiwyg->format);
++}
++
++
++/**
+  * Implementation of hook_user().
+  */
+ function wysiwyg_user($type, &$edit, &$user, $category = NULL) {
+@@ -971,3 +1024,37 @@ function _wysiwyg_process_include($module, $identifier, $path, $hook) {
+  * @} End of "defgroup wysiwyg_api".
+  */
+ 
++/**
++ * @defgroup features_integration Features Integration
++ * @{
++ */
++
++/**
++ * Implementation of hook_features_api().
++ *
++ * Provide features integration only when ctools and exportables are 
++ * installed.
++ */
++function wysiwyg_features_api() {
++  if (module_exists('exportables') && module_exists('ctools')) {
++    module_load_include('inc', 'features', 'includes/features.ctools');
++    return ctools_component_features_api('wysiwyg');
++  }
++}
++
++/**
++ * Implementation of hook_features_export().
++ *
++ * Includes exportables as a dependency. 
++ */
++function wysiwyg_features_export($data, &$export, $module_name = '') {
++
++  $return = ctools_component_features_export('wysiwyg', $data, $export, $module_name);
++  $export['dependencies']['exportables'] = 'exportables';
++
++  return $return;
++}
++
++/**
++ * @} End of "defgroup features_integration".
++ */
+diff --git wysiwyg_copy/wysiwyg_copy.admin.inc wysiwyg_copy/wysiwyg_copy.admin.inc
+new file mode 100644
+index 0000000..82e80b1
+--- /dev/null
++++ wysiwyg_copy/wysiwyg_copy.admin.inc
+@@ -0,0 +1,130 @@
++<?php
++
++// $Id$
++
++/**
++ * Wysiwyg import from code page.
++ */
++function wysiwyg_import_profile_page(&$form_state) {
++  $filter_formats = filter_formats();
++  $formats[0] = t('As defined in the import');
++  foreach ($filter_formats as $filter_format) {
++    $formats[$filter_format->format] = check_plain($filter_format->name);
++  }
++
++  $form['wysiwyg'] = array(
++    '#type' => 'textarea',
++    '#title' => t('Paste wysiwyg settings code here'),
++    '#required' => TRUE,
++  );
++
++  $form['target_format'] = array(
++    '#type' => 'select',
++    '#title' => t('Target format'),
++    '#options' => $formats,
++    '#description' => t('Input format for the wysiwyg settings'),
++  );
++
++  $form['submit'] = array(
++    '#type' => 'submit',
++    '#value' => t('Import'),
++    '#submit' => array('wysiwyg_import_submit'),
++    '#validate' => array('wysiwyg_import_validate'),
++  );
++
++  return $form;
++}
++
++/**
++ * Validate that the pasted in code works.
++ */
++function wysiwyg_import_validate($form, &$form_state) {
++  $wysiwyg = '';
++
++  ob_start();
++  eval($form_state['values']['wysiwyg']);
++  ob_end_clean();
++
++  if (!is_object($wysiwyg)) {
++    return form_error($form['wysiwyg'], t('Unable to interpret Wysiwyg code.'));
++  }
++  if (empty($wysiwyg->api_version) || $wysiwyg->api_version < 2) {
++    form_error($form['wysiwyg'], t('That Wysiwyg format setting is not compatible with this version of the Wysiwyg module.'));
++  }
++
++  if ($form_state['values']['target_format']) {
++    $wysiwyg->format = $form_state['values']['target_format'];
++  }
++  else {
++    if (empty($wysiwyg->format) && !empty($wysiwyg->machine)) {
++      $input_formats = exportables_load_all('input_formats');
++      if (!empty($input_formats[$wysiwyg->machine])) {
++        $wysiwyg->format = $input_formats[$wysiwyg->machine];
++      }
++      else {
++        form_error($form['wysiwyg'], t('You are trying to import a wysiwyg profile for the input format @machine which does not exists.', array('@machine' => $wysiwyg->machine)));
++      }
++    }
++  }
++
++  // Refuse any settings that already exist for that format type
++  $profile_exists = db_result(db_query("SELECT format FROM {wysiwyg} WHERE format = %d AND editor != '' AND settings IS NOT NULL", $wysiwyg->format));
++  if ($profile_exists) {
++    form_error($form['wysiwyg'], t('Wysiwyg settings already exists for that input format type. Please delete the existing settings and attempt the import again if you wish to replace the existing settings.'));
++  }
++}
++
++/**
++ * Submit handler for wysiwyg settings import
++ */
++function wysiwyg_import_submit($form, &$form_state) {
++  // Check to see if the setting exits (should have been caught by validation hook above); if so give an error;
++  // else write the format settings to the database and then redirect the user to the edit page
++  $wysiwyg = '';
++  eval($form_state['values']['wysiwyg']);
++
++  if ($form_state['values']['target_format']) {
++    $wysiwyg->format = $form_state['values']['target_format'];
++  }
++  else {
++    if (empty($wysiwyg->format) && !empty($wysiwyg->machine)) {
++      $input_formats = exportables_load_all('input_formats');
++      $wysiwyg->format = $input_formats[$wysiwyg->machine];
++    }
++  }
++
++  // Write the settings to the database
++
++  if (!db_result(db_query("SELECT 1 FROM {wysiwyg} WHERE format = %d", $wysiwyg->format))) {
++    $update = array();
++  }
++  else {
++    $update = array('format');
++  }
++  $dwr_ret = drupal_write_record('wysiwyg', $wysiwyg, $update);
++
++  if ($dwr_ret === FALSE) {
++    drupal_set_message(t('An error occurred when writing the wysiwyg settings to the database.') , 'error');
++    return;
++  }
++  drupal_set_message(t('Wysiwyg settings were imported successfully.'));
++  // Refresh Wysiwyg cache before redirect
++  wysiwyg_profile_load_all(TRUE);
++  $form_state['redirect'] = 'admin/settings/wysiwyg/profile/'. $wysiwyg->format .'/edit';
++}
++
++/**
++ * Export a format setting and display it in a form.
++ */
++function wysiwyg_export_profile_page(&$form_state, $format) {
++  ctools_include('export');
++  $wysiwyg = wysiwyg_profile_load($format);
++
++  $formats = filter_formats();
++  $format_name = $formats[$format]->name;
++
++  drupal_set_title(t('Export @wysiwyg settings for: @format input format', array('@wysiwyg'=> $obj->editor, '@format' => $format_name)));
++
++  $code = ctools_export_object('wysiwyg', $wysiwyg);
++  return ctools_export_form($form_state, $code, t('Exported code'));
++}
+diff --git wysiwyg_copy/wysiwyg_copy.info wysiwyg_copy/wysiwyg_copy.info
+new file mode 100644
+index 0000000..dabd8fb
+--- /dev/null
++++ wysiwyg_copy/wysiwyg_copy.info
+@@ -0,0 +1,8 @@
++; $Id$
++name = Wysiwyg Copy
++description = Allows users to import and export Wysiwyg settings.
++package = User interface
++core = 6.x
++dependencies[] = wysiwyg
++dependencies[] = ctools
++dependencies[] = exportables
+diff --git wysiwyg_copy/wysiwyg_copy.module wysiwyg_copy/wysiwyg_copy.module
+new file mode 100644
+index 0000000..85f8a64
+--- /dev/null
++++ wysiwyg_copy/wysiwyg_copy.module
+@@ -0,0 +1,54 @@
++<?php
++
++// $Id$
++
++/**
++ * Implementation of hook_menu().
++ */
++function wysiwyg_copy_menu() {
++  $items['admin/settings/wysiwyg/profile/%/export'] = array(
++    'title' => 'Export',
++    'page callback' => 'drupal_get_form',
++    'page arguments' => array('wysiwyg_export_profile_page', 4),
++    'access arguments' => array('administer filters'),
++    'file' => 'wysiwyg_copy.admin.inc',
++    'type' => MENU_CALLBACK,
++  );
++  $items['admin/settings/wysiwyg/import'] = array(
++    'title' => 'Import',
++    'page callback' => 'drupal_get_form',
++    'page arguments' => array('wysiwyg_import_profile_page', 3),
++    'access arguments' => array('import wysiwyg profiles'),
++    'file' => 'wysiwyg_copy.admin.inc',
++    'type' => MENU_LOCAL_TASK,
++    'weight' => 10
++  );
++  return $items;
++}
++
++/**
++ * Implementation of hook_perm().
++ */
++function wysiwyg_copy_perm() {
++  return array('import wysiwyg profiles');
++}
++
++/**
++ * Implementation of hook_form_FORM_ID_alter().
++ */
++function wysiwyg_copy_form_wysiwyg_profile_overview_alter(&$form, $form_state) {
++
++  if (!isset($form['formats']) || !is_array($form['formats'])) {
++   return; 
++  }
++
++  $wysiwyg_profiles = wysiwyg_profile_load_all();
++
++  foreach (element_children($form['formats']) as $id) {
++    if (isset($form['formats'][$id]['edit'])) {
++      $form['formats'][$id]['export'] = array(
++        '#value' => l(t('Export'), "admin/settings/wysiwyg/profile/$id/export"),
++      );
++    }
++  }
++}

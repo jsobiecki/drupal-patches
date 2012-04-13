@@ -1,0 +1,31 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Adds static cache to taxonomy_get_vocabularies().
+
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+taxonomy.module
+
+
+Target Process
+==============
+
+-
+
+
+Related issue
+=============
+
+http://drupal.org/node/163018#comment-586494

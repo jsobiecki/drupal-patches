@@ -1,0 +1,24 @@
+CustomError (http://drupal.org/project/customerror)
+----------------------------------------------------
+
+Description
+===========
+
+Prevents creation of session for anonymous users. Side efect: user won't be redirected to the previously visited 403/404 page.
+
+See also: http://drupal.org/node/986512
+
+Compatibility
+=============
+
+6.x-1.1 (last release).
+
+Modified files
+==============
+
+customerror.module
+
+Related issue
+=============
+
+None

@@ -1,0 +1,22 @@
+Global Redirect (http://drupal.org/project/globalredirect)
+-----------------------------------------------------------
+
+Description
+===========
+
+Elimination of errors in watchdog.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+globalredirect.module
+
+Related issue
+=============
+
+

@@ -1,0 +1,26 @@
+Index: includes/bootstrap.inc
+===================================================================
+--- includes/bootstrap.inc	(revision 24)
++++ includes/bootstrap.inc	(working copy)
+@@ -951,7 +951,8 @@
+ 
+   $default_headers = array(
+     'Last-Modified' => gmdate(DATE_RFC1123, $_SERVER['REQUEST_TIME']),
+-    'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0',
++    //'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0',
++    'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+     'ETag' => '"' . $_SERVER['REQUEST_TIME'] . '"',
+   );
+   drupal_send_headers($default_headers);
+@@ -1029,8 +1030,9 @@
+   // not bother caching the page in a public proxy, because the cached copy
+   // will only be served to that particular user due to Vary: Cookie, unless
+   // the Vary header has been replaced or unset in hook_boot() (see below).
+-  $max_age = variable_get('cache', CACHE_DISABLED) == CACHE_AGGRESSIVE && (!isset($_COOKIE[session_name()]) || isset($hook_boot_headers['vary'])) ? variable_get('page_cache_max_age', 0) : 0;
+-  $default_headers['Cache-Control'] = 'public, max-age=' . $max_age;
++  //$max_age = variable_get('cache', CACHE_DISABLED) == CACHE_AGGRESSIVE && (!isset($_COOKIE[session_name()]) || isset($hook_boot_headers['vary'])) ? variable_get('page_cache_max_age', 0) : 0;
++  //$default_headers['Cache-Control'] = 'public, max-age=' . $max_age;
++  $default_headers['Cache-Control'] = 'no-store, no-cache, must-revalidate';
+ 
+   // Entity tag should change if the output changes.
+   $etag = '"' . $cache->created . '-' . intval($return_compressed) . '"';

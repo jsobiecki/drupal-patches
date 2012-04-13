@@ -1,0 +1,29 @@
+Index: .htaccess
+===================================================================
+--- .htaccess
++++ .htaccess
+@@ -22,6 +22,11 @@
+   ErrorDocument 404 "The requested file favicon.ico was not found.
+ </Files>
+ 
++# This overrides the Drupal 404 handler for files that should never be handled by Drupal
++<FilesMatch "\.(gif|jpe?g|png|bmp|js|css)$">
++    ErrorDocument 404 /404-error.php
++</FilesMatch>
++
+ # Set the default handler.
+ DirectoryIndex index.php
+ 
+@@ -112,6 +117,12 @@
+   RewriteCond %{QUERY_STRING} !^.*(q=webapi/.*)$
+   RewriteRule ^(.*)$ http://regiopraca.pl/$1 [L,R=301]
+ 
++  RewriteCond %{REQUEST_FILENAME} !-f
++  RewriteCond %{REQUEST_URI} !^.*(sites/.*/imagecache/.*)$
++  RewriteCond %{REQUEST_URI} \.(gif|jpe?g|png|bmp|js|css)$
++  RewriteCond %{REQUEST_URI} !^404.%1$
++  RewriteRule ^(.*)$ 404.%1 [L]
++
+   # Rewrite URLs of the form 'x' to the form 'index.php?q=x'.
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-d

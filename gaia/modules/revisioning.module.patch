@@ -1,0 +1,13 @@
+Index: revisioning.module
+===================================================================
+--- revisioning.module	(revision 3328)
++++ revisioning.module	(working copy)
+@@ -375,7 +375,7 @@
+       break;
+ 
+     case 'prepare': // presenting edit form
+-      _revisioning_prepare_msg($node);
++      //_revisioning_prepare_msg($node);
+       break;
+ 
+     case 'presave': // for edits, called from node_save(), prior to _node_save_revision()

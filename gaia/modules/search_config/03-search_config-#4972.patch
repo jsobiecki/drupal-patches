@@ -1,0 +1,27 @@
+--- search_config/search_config.module	(wersja 7173)
++++ search_config/search_config.module	(kopia robocza)
+@@ -27,7 +27,7 @@
+   if ($form_id == 'search_admin_settings') {
+     $form['#validate'][] = 'search_config_validate';
+   }
+-  
++
+   // Present the user with the appropriate search results tab as defined by
+   // variable "search_config_default_search" (labeled "Default Search")
+   // in the "Advanced search settings" fieldset in admin/settings/search
+@@ -95,7 +95,14 @@
+       }
+     }
+ 
+-    if ($taxonomy = module_invoke('taxonomy', 'form_all', 1)) {
++    // #4972. This module executes taxonomy_form_all with free tags argument = 0.
++    // This options is real memory hog, if we have (and we have) huge tags
++    // categories. Becouse php is lazy at condition verification, this
++    // variable_get call will prevent problems with out of memory
++    if (
++      !variable_get('search_override_no_category', TRUE) &&
++      $taxonomy = module_invoke('taxonomy', 'form_all', 1)
++    ) {
+       // Taxonomy
+       if (variable_get('search_config_disable_category_all', 0) || !user_access('search by category')) {
+         unset($form['advanced']['category']);

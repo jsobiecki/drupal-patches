@@ -1,0 +1,30 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch enforces site configuration path to value setted at settings.php. It's used, becouse otherwise it leads to various mess with modules
+like imagecache and apc opcode cacher.
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+includes/bootstrap.inc
+
+
+Target Process
+==============
+
+-
+
+
+Related issue
+=============
+

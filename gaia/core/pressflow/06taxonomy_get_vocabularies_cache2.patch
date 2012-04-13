@@ -1,0 +1,38 @@
+Index: modules/taxonomy/taxonomy.module
+===================================================================
+--- modules/taxonomy/taxonomy.module	(revision 22)
++++ modules/taxonomy/taxonomy.module	(working copy)
+@@ -467,10 +467,19 @@
+  *   If set, return only those vocabularies associated with this node type.
+  */
+ function taxonomy_get_vocabularies($type = NULL) {
++  static $vocabularies_cache = array();
++  static $vocabularies_null;
++
+   if ($type) {
++    if (is_array($vocabularies_cache[$type])) {
++      return $vocabularies_cache[$type];
++    }
+     $result = db_query(db_rewrite_sql("SELECT v.vid, v.*, n.type FROM {vocabulary} v LEFT JOIN {vocabulary_node_types} n ON v.vid = n.vid WHERE n.type = '%s' ORDER BY v.weight, v.name", 'v', 'vid'), $type);
+   }
+   else {
++    if (is_array($vocabularies_null)) {
++      return $vocabularies_null;
++    }
+     $result = db_query(db_rewrite_sql('SELECT v.*, n.type FROM {vocabulary} v LEFT JOIN {vocabulary_node_types} n ON v.vid = n.vid ORDER BY v.weight, v.name', 'v', 'vid'));
+   }
+ 
+@@ -490,6 +499,13 @@
+     $vocabularies[$voc->vid] = $voc;
+   }
+ 
++  if ($type) {
++    $vocabularies_cache[$type] = $vocabularies;
++  }
++  else {
++    $vocabularies_null = $vocabularies;
++  }
++
+   return $vocabularies;
+ }
+ 

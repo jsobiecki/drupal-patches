@@ -1,0 +1,25 @@
+Corresponding node references (http://drupal.org/project/cnr)
+----------------------------------------------------
+
+Description
+===========
+
+Use cache_clear_all() call instead clearing cache SQL query to work  
+with alternative cache handlers like memcached correctly.
+
+
+Compatibility
+=============
+
+6.x-3.2
+
+Modified files
+==============
+
+corresponding_node_references.module
+
+Related issue
+=============
+
+http://drupal.org/node/1229638
+https://redmine.serwisyregionalne.pl/issues/3296

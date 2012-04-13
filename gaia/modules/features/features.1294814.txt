@@ -1,0 +1,25 @@
+Features (http://drupal.org/project/features)
+----------------------------------------------------------
+
+Description
+===========
+
+Adds CCK field and fieldset description to translatables.
+
+
+Compatibility
+=============
+
+6.x-1.0
+
+
+Modified files
+==============
+
+includes/features.content.inc
+includes/features.fieldgroup.inc
+
+Related issue
+=============
+
+http://drupal.org/node/1294814

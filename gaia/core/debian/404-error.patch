@@ -1,0 +1,202 @@
+--- 404-error.php
++++ 404-error.php
+@@ -0,0 +1,199 @@
++<?php
++// #2993: Page has not passed validation doctype XHTML 1.1 and code improvement
++$server_local = array(
++  // IGC2
++  'mmopole' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '2_igc_',
++    'name' =>'MM Moje Miasto Opole',
++  ),
++  'mmbialystok' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '3_igc_',
++    'name' =>'MM Moje Miasto Białystok',
++  ),
++  'mmzielonagora' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '4_igc_',
++    'name' =>'MM Moje Miasto Zielona Góra',
++  ),
++  'mmpulawy' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '5_igc_',
++    'name' =>'MM Moje Miasto Puławy',
++  ),
++  'mmtorun' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '6_igc_',
++    'name' =>'MM Moje Miasto Toruń',
++  ),
++  'mmkoszalin' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '7_igc_',
++    'name' =>'MM Moje Miasto Koszalin',
++  ),
++  'mmgorzow' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '8_igc_',
++    'name' =>'MM Moje Miasto Gorzów',
++  ),
++  'mmlubartow' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '9_igc_',
++    'name' =>'MM Moje Miasto Lubratów',
++  ),
++  'mmstargard' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '10_igc_',
++    'name' =>'MM Moje Miasto Stargard',
++  ),
++  'mmkolobrzeg' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '11_igc_',
++    'name' =>'MM Moje Miasto Kołobrzeg',
++  ),
++  'mm2miasto' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '12_igc_',
++    'name' =>'MM Moje Miasto Dwumiasto (Słupsk - Ustka)',
++  ),
++  'mmrzeszow' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '13_igc_',
++    'name' =>'MM Moje Miasto Rzeszów',
++  ),
++  'mmkkozle' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '14_igc_',
++    'name' =>'MM Moje Miasto Kędzierzyn Koźle',
++  ),
++  'mmzamosc' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '15_igc_',
++    'name' =>'MM Moje Miasto Zamość',
++  ),
++  'mmkielce' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '16_igc_',
++    'name' =>'MM Moje Miasto Kielce',
++  ),
++  'mmsokolka' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '17_igc_',
++    'name' =>'MM Moje Miasto Sokółka',
++  ),
++  'mmaugustow' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '18_igc_',
++    'name' =>'MM Moje Miasto Augustów',
++  ),
++  'mmbielskpodlaski' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '19_igc_',
++    'name' =>'MM Moje Miasto Bielsk Podlaski',
++  ),
++  'mmsuwalki' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '20_igc_',
++    'name' =>'MM Moje Miasto Suwałki',
++  ),
++  'mmelk' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '21_igc_',
++    'name' =>'MM Moje Miasto Ełk',
++  ),
++  'mmostrowiec' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '22_igc_',
++    'name' =>'MM Moje Miasto Ostrowiec',
++  ),
++  'mmwloclawek' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '23_igc_',
++    'name' =>'MM Moje Miasto Włocławek',
++  ),
++  'mmlomza' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '24_igc_',
++    'name' =>'MM Moje Miasto Łomża',
++  ),
++  'mmgrajewo' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '25_igc_',
++    'name' =>'MM Moje Miasto Grajewo',
++  ),
++  'mmradom' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '26_igc_',
++    'name' =>'MM Moje Miasto Radom',
++  ),
++  'mmdebica' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '27_igc_',
++    'name' =>'MM Moje Miasto Dębica',
++  ),
++  'mminowroclaw' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '28_igc_',
++    'name' =>'MM Moje Miasto Inowrocław',
++  ),
++  'mmgrudziadz' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '29_igc_',
++    'name' =>'MM Moje Miasto Grudziądz',
++  ),
++  'mmnowasol' => array(
++    'files' => '/igc2/files',
++    'logo_id' => '30_igc_',
++    'name' =>'MM Moje Miasto Nowa Sól',
++  ),
++  // regiodom
++  'regiodom' => array(
++    'files' => '/regiodom/themes/regiodom/',
++    'logo_id' => '',
++    'name' =>'Nieruchomości regioDom',
++  ),
++
++  //regiopraca
++  'regiopraca' => array(
++    'files' => '/regiopraca/themes/regiopraca/',
++    'logo_id' => '',
++    'name' =>'Oferty pracy - regioPraca',
++  ),
++);
++foreach ($server_local as $key => $value) {
++  if (in_array($key, explode('.', $_SERVER['HTTP_HOST']))) {
++      $output = <<< EOT
++        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
++        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
++        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
++          <head>
++            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
++            <title>Strona nie istnieje | $value[name] </title>
++            <meta content="pl" name="language" />
++            <meta content="Media Regionalne" name="author" />
++            <meta content="noindex,nofollow" name="robots" />
++          </head>
++          <body>
++            <div style="text-align:center">
++              Strona o podanym adresie nie istnieje.
++              <br /><br />
++              Zapraszamy na
++              <a href="http://{$_SERVER['HTTP_HOST']}">$value[name]</a>
++            </div>
++          </body>
++        </html>
++EOT;
++  }
++}
++if (!empty($output)) {
++  header('HTTP/1.1 404 Not Found');
++  header('Content-Type: text/html; charset=utf-8');
++  print $output;
++}
++else {
++    header('HTTP/1.1 404 Not Found');
++    header('Content-Type: text/html; charset=utf-8');
++    echo "<h1>404 Not Found</h1>";
++    echo "The page that you have requested could not be found.";
++}

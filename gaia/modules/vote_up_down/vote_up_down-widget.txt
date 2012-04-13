@@ -1,0 +1,22 @@
+Vote Up Down (http://drupal.org/project/vote_up_down)
+----------------------------------------------------
+
+Description
+===========
+
+Fixes XHTML error (<div> inside <a>).
+
+Compatibility
+=============
+
+6.x-2.1 (last release).
+
+Modified files
+==============
+
+widgets/upanddown/widget.tpl.php
+
+Related issue
+=============
+
+http://drupal.org/node/815984#comment-4398406

@@ -1,0 +1,78 @@
+Index: dmemcache.inc
+===================================================================
+--- dmemcache.inc	(revision 7987)
++++ dmemcache.inc	(revision 7988)
+@@ -384,19 +384,21 @@
+ 
+ function dmemcache_key($key = '', $bin = 'cache', $reset = FALSE) {
+   static $prefix;
+-  if (!isset($prefix)) {
+-    $prefix = '';
+-    // memcache_key_prefix can be set in settings.php to support site namespaces
+-    // in a multisite environment.
+-    if ($prefix = variable_get('memcache_key_prefix', '')) {
+-      $prefix .= '-';
+-    }
+-    // When simpletest is running, emulate the simpletest database prefix here
+-    // to avoid the child site setting cache entries in the parent site.
+-    if (isset($GLOBALS['drupal_test_info']['test_run_id'])) {
+-      $prefix .= $GLOBALS['drupal_test_info']['test_run_id'];
+-    }
+-  }
++  /*if (!isset($prefix)) {*/
++    /*$prefix = '';*/
++    /*// memcache_key_prefix can be set in settings.php to support site namespaces*/
++    /*// in a multisite environment.*/
++    /*if ($prefix = variable_get('memcache_key_prefix', '')) {*/
++      /*$prefix .= '-';*/
++    /*}*/
++    /*// When simpletest is running, emulate the simpletest database prefix here*/
++    /*// to avoid the child site setting cache entries in the parent site.*/
++    /*if (isset($GLOBALS['drupal_test_info']['test_run_id'])) {*/
++      /*$prefix .= $GLOBALS['drupal_test_info']['test_run_id'];*/
++    /*}*/
++  /*}*/
++
++  $prefix = dmemcache_key_prefix($bin);
+   $full_key = urlencode($prefix . $bin . '-' . $key);
+ 
+   // Memcache only supports key lengths up to 250 bytes.  If we have generated
+@@ -408,3 +410,38 @@
+ 
+   return $full_key;
+ }
++
++
++
++function dmemcache_key_prefix($bin = 'cache', $reset = FALSE) {
++  static $prefixes = array();
++  if ($reset) {
++    $prefixes = array();
++  }
++  
++  // Do we need to load the prefixes?
++  if (empty($prefixes)) {
++    $prefixes['default'] = '';
++    
++    // memcache_key_prefix can be set in settings.php to support site namespaces
++    // in a multisite environment.
++    if ($prefix_var = variable_get('memcache_key_prefix', '')) {
++      if (is_array($prefix_var)) {
++        foreach ($prefix_var as $bin_name => $prefix) {
++          $prefixes[$bin_name] = $prefix .'-';
++        }
++      }
++      else {
++        $prefixes['default'] = $prefix_var .'-';
++      }
++    }
++    
++  }
++  
++  // Try to use a specific prefix
++  if (isset($prefixes[$bin])) {
++    return $prefixes[$bin];
++  }
++  
++  return $prefixes['default'];
++}

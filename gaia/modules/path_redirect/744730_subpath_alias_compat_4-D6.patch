@@ -1,0 +1,26 @@
+? 361150-path_redirect-preserve-querystring.patch
+? 744730_subpath_alias_compat_3.patch
+? 744730_subpath_alias_compat_4-D6.patch
+Index: path_redirect.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/path_redirect/path_redirect.module,v
+retrieving revision 1.3.2.7.2.97
+diff -u -p -r1.3.2.7.2.97 path_redirect.module
+--- path_redirect.module	18 Mar 2010 15:20:27 -0000	1.3.2.7.2.97
++++ path_redirect.module	30 Jul 2010 17:08:59 -0000
+@@ -481,7 +481,15 @@ function path_redirect_get_path($path = 
+       $path = '<front>';
+     }
+     else {
++      // Let's start with the old reliable way to figure out where we are.
+       $path = $_GET['q'];
++
++      // But for some weird situations, let's try this other way to figure out the original request.
++      if (function_exists('custom_url_rewrite_inbound') && !empty($_SERVER['QUERY_STRING'])) {
++        // At this point we only care about the request and not any querystring components.
++        $path_pieces = explode('&', str_replace('q=', '', $_SERVER['QUERY_STRING']));
++        $path = rtrim($path_pieces[0], '/');
++      }
+     }
+   }
+   else {

@@ -1,0 +1,23 @@
+Vote Up Down (http://drupal.org/project/vote_up_down)
+----------------------------------------------------
+
+Description
+===========
+
+Refresh all widget for the same element (e.g. when it appears several time on a page) after voting.
+
+Compatibility
+=============
+
+6.x-2.1 (last release).
+
+Modified files
+==============
+
+vud.theme.inc
+widgets/upanddown/widget.tpl.php
+
+Related issue
+=============
+
+http://drupal.org/node/1139800

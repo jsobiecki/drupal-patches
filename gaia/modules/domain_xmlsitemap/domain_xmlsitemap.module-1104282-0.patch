@@ -1,0 +1,13 @@
+Index: sites/all/modules/contrib/domain_xmlsitemap/domain_xmlsitemap.module
+===================================================================
+--- sites/all/modules/contrib/domain_xmlsitemap/domain_xmlsitemap.module
++++ sites/all/modules/contrib/domain_xmlsitemap/domain_xmlsitemap.module
+@@ -16,7 +16,7 @@
+  */
+ function domain_xmlsitemap_xmlsitemap_context() {
+   $domain = domain_get_domain();
+-  $context['domain'] = $domain['domain_id'];
++  $context['domain'] = (string) $domain['domain_id'];
+   return $context;
+ }
+

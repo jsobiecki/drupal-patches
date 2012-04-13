@@ -1,0 +1,13 @@
+diff --git a/better_messages.js b/better_messages.js
+index 1e5fb28..c083016 100755
+--- a/better_messages.js
++++ b/better_messages.js
+@@ -38,7 +38,7 @@ if (Drupal.jsEnabled) {
+ 				if(seconds > 0) {
+ 					seconds--;
+ 					if (betterMessages.show_countdown == '1') {
+-						$('.message-timer').text(Drupal.t('Closing in' + ' ' + seconds + ' ' + Drupal.t('seconds')));
++						$('.message-timer').text(Drupal.t('Closing in !s seconds', {"!s": seconds}));
+ 					}
+ 	        if(seconds > 0) {
+ 	        	betterMessages.countDown = setTimeout( function() {betterMessages.countDownClose(seconds);}, 1000 );

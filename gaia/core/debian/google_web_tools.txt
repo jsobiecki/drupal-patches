@@ -1,0 +1,29 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch adds file used by google webmasters tools used in verification of site ownership.
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+google7da47b8286f43103.html
+
+
+Target Process
+==============
+
+-
+
+
+Related issue
+=============
+

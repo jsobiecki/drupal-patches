@@ -1,0 +1,25 @@
+Memcache API and Integration (http://drupal.org/project/memcache)
+----------------------------------------------------
+
+Description
+===========
+
+Fixes error quoted below:
+- Fatal error: Call to undefined function dmemcache_object() in memcache/memcache_admin/memcache_admin.module on line 411
+- Fatal error: Call to undefined function dmemcache_stats() in memcache/memcache_admin/memcache_admin.module on line 230
+
+Compatibility
+=============
+
+6.x-1.9 (last release).
+
+Modified files
+==============
+
+memcache_admin.module
+
+Related issue
+=============
+
+http://drupal.org/node/1156354#comment-4678820
+http://drupal.org/node/1156354#comment-4752046

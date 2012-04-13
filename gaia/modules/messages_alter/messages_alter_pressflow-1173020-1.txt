@@ -1,0 +1,22 @@
+Messages Alter (http://drupal.org/project/messages_alter)
+---------------------------------------------------------
+
+Description
+===========
+
+Make Messages Alter compatible with Pressflow and Lazy session creation.
+
+Compatibility
+=============
+
+6.x-1.2.
+
+Modified files
+==============
+
+messages_alter.module
+
+Related issue
+=============
+
+http://drupal.org/files/issues/messages_alter_pressflow-1173020-1.patch

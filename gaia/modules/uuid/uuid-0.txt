@@ -1,0 +1,22 @@
+Universally Unique IDentifier (UUID) (http://drupal.org/project/uuid)
+-----------------------------------------------------------
+
+Description
+===========
+
+Elimination of errors in watchdog.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+uuid.module
+
+Related issue
+=============
+
+

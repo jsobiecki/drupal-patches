@@ -1,0 +1,17 @@
+Index: custom_breadcrumbs_taxonomy/custom_breadcrumbs_taxonomy.inc
+===================================================================
+--- custom_breadcrumbs_taxonomy/custom_breadcrumbs_taxonomy.inc	(revision 6397)
++++ custom_breadcrumbs_taxonomy/custom_breadcrumbs_taxonomy.inc	(working copy)
+@@ -153,7 +153,11 @@
+  */
+ function _custom_breadcrumbs_taxonomy_recent_term($tid = NULL) {
+   if (!is_null($tid)) {
+-    $_SESSION['custom_breadcrumbs_previous_term'] = $tid;
++    // Skip session for anonymous users to make sure pressflow cache is working properly.
++    global $user;
++    if ($user->uid != 0) {
++      $_SESSION['custom_breadcrumbs_previous_term'] = $tid;
++    }
+   }
+   elseif (isset($_SESSION['custom_breadcrumbs_previous_term'])) {
+     return $_SESSION['custom_breadcrumbs_previous_term'];

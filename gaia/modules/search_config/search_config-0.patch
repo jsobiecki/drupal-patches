@@ -1,0 +1,13 @@
+Index: search_config.module
+===================================================================
+--- search_config.module	(wersja 6845)
++++ search_config.module	(kopia robocza)
+@@ -35,7 +35,7 @@
+     $form['#submit'] = array('search_config_form_submit');
+     $form['module']['#value'] = variable_get('search_config_default_search', 'node');
+     $form['module']['#type'] = 'value';
+-    $form['processed_keys'] = $form['search_theme_form_keys'];
++    $form['processed_keys'] = isset($form['search_theme_form_keys']) ? $form['search_theme_form_keys'] : NULL;
+     $form['processed_keys']['#weight'] = -1;
+     unset($form['search_theme_form_keys']);
+   }

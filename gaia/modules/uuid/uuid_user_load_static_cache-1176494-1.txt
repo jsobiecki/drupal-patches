@@ -1,0 +1,22 @@
+UUID (http://drupal.org/project/uuid)
+-----------------------------------------------------------
+
+Description
+===========
+
+Add static cache to uuid_user($op = 'load').
+
+Compatibility
+=============
+
+6.x-1.x-dev
+
+Modified files
+==============
+
+uuid.module
+
+Related issue
+=============
+
+http://drupal.org/node/1176494#comment-4548638

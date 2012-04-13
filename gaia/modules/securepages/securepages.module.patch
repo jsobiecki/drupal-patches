@@ -1,0 +1,70 @@
+Index: securepages.module
+===================================================================
+--- securepages.module	(revision 6133)
++++ securepages.module	(working copy)
+@@ -10,6 +10,16 @@
+  * Implementation of hook_boot().
+  */
+ function securepages_boot() {
++  // Load modules implementing hook_url_inbound_alter().
++  // For some reason drupal doesn't invoke this hook unless modules implementing
++  // it are loaded explicitly. Be sure to keep this list up to date.
++  drupal_load('module', 'url_alter');
++  drupal_load('module', 'subpath_alias');
++
++  // Call bootstrap for path a bit earlier. We want this hook_boot() operate
++  // on normal path, not aliases.
++  _drupal_bootstrap(DRUPAL_BOOTSTRAP_PATH);
++
+   $path = isset($_GET['q']) ? $_GET['q'] : '';
+   if ($path == 'admin/build/securepages/test') {
+     if (securepages_is_secure()) {
+@@ -37,32 +47,10 @@
+     return;
+   }
+ 
+-  if (!isset($_SESSION['securepages_redirect'])) {
+-    securepages_redirect();
+-  }
++  securepages_redirect();
+ }
+ 
+ /**
+- * Implementation of hook_init().
+- */
+-function securepages_init() {
+-  if (!variable_get('securepages_enable', 0) || basename($_SERVER['PHP_SELF']) != 'index.php' || php_sapi_name() == 'cli') {
+-    return;
+-  }
+-
+-  /**
+-   * If we have redirected in the hook_boot(). Then don't try to redirect
+-   * again. This will prevent a loop
+-   */
+-  if (!isset($_SESSION['securepages_redirect'])) {
+-    securepages_redirect();
+-  }
+-  else {
+-    unset($_SESSION['securepages_redirect']);
+-  }
+-}
+-
+-/**
+  * Implementation of hook_menu().
+  */
+ function securepages_menu() {
+@@ -173,7 +161,6 @@
+ function securepages_goto($secure) {
+   global $base_root;
+ 
+-  $_SESSION['securepages_redirect'] = TRUE;
+   $path = !empty($_REQUEST['q']) ? $_REQUEST['q'] : '';
+   $query = count($_GET) > 1 ? securepages_get_query($_GET) : NULL;
+   $url = securepages_url($path, array('query' => $query, 'secure' => $secure));
+@@ -441,4 +428,4 @@
+   }
+ 
+   return TRUE;
+-}
+\ No newline at end of file
++}

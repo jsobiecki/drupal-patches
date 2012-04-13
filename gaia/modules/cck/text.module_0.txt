@@ -1,0 +1,22 @@
+Text (http://drupal.org/project/cck
+----------------------------------------------------
+
+Description
+===========
+
+Some CCK field labels where not translated.
+
+Compatibility
+=============
+
+6.x-2.8
+
+Modified files
+==============
+
+text.module
+
+Related issue
+=============
+
+-

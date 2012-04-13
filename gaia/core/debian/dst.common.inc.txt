@@ -1,0 +1,30 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch is required by dst module to work properly.
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+includes/common.inc
+
+
+Redmine
+==============
+
+#2262
+
+
+Related issue
+=============
+
+http://drupal.org/project/dst

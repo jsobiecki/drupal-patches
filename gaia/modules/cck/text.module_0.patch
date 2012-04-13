@@ -1,0 +1,13 @@
+Index: app/sites/all/modules/contrib/cck/modules/text/text.module
+===================================================================
+--- app/sites/all/modules/contrib/cck/modules/text/text.module	(wersja 7232)
++++ app/sites/all/modules/contrib/cck/modules/text/text.module	(kopia robocza)
+@@ -157,7 +157,7 @@
+               form_set_error($error_element, t('%name: illegal value.', array('%name' => t($field['widget']['label']))));
+             }
+             if (!empty($field['max_length']) && drupal_strlen($item['value']) > $field['max_length']) {
+-              form_set_error($error_element, t('%name: the value may not be longer than %max characters.', array('%name' => $field['widget']['label'], '%max' => $field['max_length'])));
++              form_set_error($error_element, t('%name: the value may not be longer than %max characters.', array('%name' => t($field['widget']['label']), '%max' => $field['max_length'])));
+             }
+           }
+         }

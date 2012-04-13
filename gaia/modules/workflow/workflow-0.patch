@@ -1,0 +1,13 @@
+Index: workflow.module
+===================================================================
+--- workflow.module	(wersja 6845)
++++ workflow.module	(kopia robocza)
+@@ -1524,7 +1524,7 @@
+     case 'workflow':
+       $node = (object)$object;
+ 
+-      if ($wid = workflow_get_workflow_for_type($node->type)) {
++      if (isset($node->type) && $wid = workflow_get_workflow_for_type($node->type)) {
+         $values['workflow-name'] = workflow_get_name($wid);
+         $states = workflow_get_states($wid);
+       }

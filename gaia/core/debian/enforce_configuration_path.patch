@@ -1,0 +1,24 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## Allow override of configuration directory.dpatch by  <jsobiecki@ubuntu>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: jaroslaw.sobiecki@mediaregionalne.pl
+
+@DPATCH@
+
+--- drupal6-dla-igc~/includes/bootstrap.inc	(wersja 4701)
++++ drupal6-dla-igc/includes/bootstrap.inc	(kopia robocza)
+@@ -318,7 +318,13 @@
+  *   The path of the matching directory.
+  */
+ function conf_path($require_settings = TRUE, $reset = FALSE) {
++  global $enforce_configuration_path;
+   static $conf = '';
++  
++  //I have kitten blood on my hands :\
++  if (!empty($enforce_configuration_path)) {
++    return $enforce_configuration_path;
++  }
+ 
+   if ($conf && !$reset) {
+     return $conf;

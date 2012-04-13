@@ -1,0 +1,22 @@
+EPSA Crop (http://drupal.org/project/epsa_crop)
+----------------------------------------------------
+
+Description
+===========
+
+Flush image miniatures only when the cropping area has changed.
+
+Compatibility
+=============
+
+6.x-1.2 (last release).
+
+Modified files
+==============
+
+epsacrop.module
+
+Related issue
+=============
+
+http://drupal.org/node/1160610#comment-4481392

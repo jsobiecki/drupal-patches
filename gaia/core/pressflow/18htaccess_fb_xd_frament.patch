@@ -1,0 +1,17 @@
+Index: .htaccess
+===================================================================
+--- .htaccess	(revision 8049)
++++ .htaccess	(working copy)
+@@ -127,6 +127,12 @@
+   RewriteCond %{QUERY_STRING} quicktabs_\d{1,2}=\d{1,2}
+   RewriteRule ^(.*)$ 404-error.php [L]
+ 
++  # Facebook Redirect For Added String
++  # If variable fb_xd_fragment present in url
++  # rewrite it - not add variables
++  RewriteCond %{QUERY_STRING} .*fb_xd_fragment.*
++  RewriteRule ^(.*)$ $1? [R=301,L]
++
+   # HTTPS redirect policy. [#3470]
+   RewriteCond %{HTTPS} on
+   RewriteCond %{REQUEST_URI}      !^/(user|dolacz-do-nas|przypomnij-haslo)$

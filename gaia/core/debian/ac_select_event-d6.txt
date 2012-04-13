@@ -1,0 +1,31 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch adds custom jQuery event "autocomplete_select" that is triggered
+when item is selected.
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+misc/autocomplete.js
+
+
+Target Process
+==============
+
+-
+
+
+Related issue
+=============
+
+http://drupal.org/node/365241

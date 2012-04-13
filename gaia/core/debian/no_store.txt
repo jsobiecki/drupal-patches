@@ -1,0 +1,31 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Sets 'no-store' for 'Cache-Controle' headers.
+
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+boostrap.inc
+
+
+Redmine
+==============
+
+#4421
+
+
+Related issue
+=============
+
+None.

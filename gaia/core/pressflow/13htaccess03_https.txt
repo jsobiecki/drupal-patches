@@ -1,0 +1,22 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+HTTPS rewrite policy.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+.htaccess
+
+Related issue
+=============
+
+https://redmine.serwisyregionalne.pl/issues/3470

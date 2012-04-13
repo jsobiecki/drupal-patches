@@ -1,0 +1,13 @@
+Index: search_config.module
+===================================================================
+--- search_config.module	(revision 4457)
++++ search_config.module	(working copy)
+@@ -40,7 +40,7 @@
+     unset($form['search_theme_form_keys']);
+   }
+ 
+-  if ($form_id == 'search_form') {
++  if ($form_id == 'search_form' && $form['module']['#value'] == 'node') {
+     $default_search = variable_get('search_config_default_search', 'node');
+ 
+     // Keywords

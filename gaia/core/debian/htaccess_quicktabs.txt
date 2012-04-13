@@ -1,0 +1,23 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Redirect all request with quicktab_XX get parameter to 404.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+.htaccess
+
+Related issue
+=============
+
+RM #4797
+RM #5554

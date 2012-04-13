@@ -1,0 +1,23 @@
+User comment (http://drupal.org/project/usercomment)
+----------------------------------------------------
+
+Description
+===========
+
+Allow admin to user administer comments permission for separate node types.
+
+Compatibility
+=============
+
+6.x-2.0 (last release).
+
+Modified files
+==============
+
+usercomment.install
+usercomment.module
+
+Related issue
+=============
+
+http://drupal.org/node/723080#comment-4092260

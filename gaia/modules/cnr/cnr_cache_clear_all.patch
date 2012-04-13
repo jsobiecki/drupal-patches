@@ -1,0 +1,13 @@
+Index: corresponding_node_references.module
+===================================================================
+--- corresponding_node_references.module
++++ corresponding_node_references.module
+@@ -280,7 +280,7 @@
+  * Clears cache for a specific node
+  */ 
+ function corresponding_node_references_clear_cache($node) {
+-  db_query("DELETE FROM {cache_content} WHERE cid = '%s'", 'content:'.$node->nid.':'.$node->vid);
++  cache_clear_all('content:'.$node->nid.':'.$node->vid, 'cache_content');
+ }
+ 
+ /**

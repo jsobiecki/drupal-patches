@@ -1,0 +1,22 @@
+FileField (http://drupal.org/project/filefield)
+----------------------------------------------------
+
+Description
+===========
+
+Some CCK field labels where not translated.
+
+Compatibility
+=============
+
+6.x-3.5.
+
+Modified files
+==============
+
+filefield_widget.inc
+
+Related issue
+=============
+
+-

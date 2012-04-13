@@ -1,0 +1,23 @@
+Imagecache profiles (http://drupal.org/project/imagecache_profiles)
+----------------------------------------------------
+
+Description
+===========
+
+Translation of the "Minimum height is" always shows even if variable is empty. 
+This patch fixed that.
+
+Compatibility
+=============
+
+6.x-1.3.
+
+Modified files
+==============
+
+imagecache_profiles.module
+
+Related issue
+=============
+
+http://drupal.org/node/918520

@@ -1,0 +1,228 @@
+Index: modules/statistics/statistics.admin.inc
+===================================================================
+--- modules/statistics/statistics.admin.inc	(.../trunk/app/modules/statistics)	(wersja 4545)
++++ modules/statistics/statistics.admin.inc	(.../branches/jsobiecki-trunk/app/modules/statistics)	(wersja 7658)
+@@ -210,6 +210,24 @@
+     '#default_value' => variable_get('statistics_count_content_views', 0),
+     '#options' => $options,
+     '#description' => t('Increment a counter each time content is viewed.'));
+-
++  $form['content']['statistics_content_use_memcache'] = array(
++    '#type' => 'select',
++    '#title' => t('Use memcache for node_counter statistics'),
++    '#options' => array(FALSE => t('Disabled'), TRUE => t('Enabled')),
++    '#access' => function_exists('dmemcache_get'),
++    '#default_value' => variable_get('statistics_content_use_memcache', FALSE),
++    '#description' => t('Store statistics in memcache server and synchronize with db at cron call')
++  );
++  $form['content']['statistics_content_use_memcache_cron_bulk'] = array(
++    '#type' => 'select',
++    '#title' => t('Limit of memcache data chunks to synchronize at cron call'),
++    '#default_value' => variable_get('statistics_content_use_memcache_cron_bulk', 0),
++    '#access' => function_exists('dmemcache_get'),
++    '#options' => array_merge(
++      array(0 => t('No limit')),
++      array_combine(range(1, 500), range(1, 500))
++    ),
++    '#description' => t('How many chunks of node statistics should be synchronized at one cron call. Each chunk can count up to 500 nodes.')
++  );
+   return system_settings_form($form);
+ }
+Index: modules/statistics/statistics.module
+===================================================================
+--- modules/statistics/statistics.module	(.../trunk/app/modules/statistics)	(wersja 4545)
++++ modules/statistics/statistics.module	(.../branches/jsobiecki-trunk/app/modules/statistics)	(wersja 7658)
+@@ -47,25 +47,130 @@
+ 
+   drupal_bootstrap(DRUPAL_BOOTSTRAP_PATH);
+ 
+-  if (variable_get('statistics_count_content_views', 0)) {
+-    // We are counting content views.
+-    if ((arg(0) == 'node') && is_numeric(arg(1)) && arg(2) == '') {
+-      // A node has been viewed, so update the node's counters.
+-      db_query('UPDATE {node_counter} SET daycount = daycount + 1, totalcount = totalcount + 1, timestamp = %d WHERE nid = %d', time(), arg(1));
+-      // If we affected 0 rows, this is the first time viewing the node.
+-      if (!db_affected_rows()) {
+-        // We must create a new row to store counters for the new node.
+-        db_query('INSERT INTO {node_counter} (nid, daycount, totalcount, timestamp) VALUES (%d, 1, 1, %d)', arg(1), time());
+-      }
+-    }
++
++  // Two possible cases:
++  // 1. We want to store statistics, we are on single node page
++  // and we want to use memcache backend for statistics store.
++  // 2. We want to store statistics, we are on single node page but
++  // we don't have memcache backend
++  if (
++    variable_get('statistics_count_content_views', 0) &&
++    arg(0) == 'node' &&
++    is_numeric(arg(1)) &&
++    arg(2) == '' &&
++    variable_get('statistics_content_use_memcache', FALSE) &&
++    function_exists('dmemcache_get')
++  ) {
++    _statistics_node_counter_memcache_update(arg(1));
+   }
++  else if (
++    variable_get('statistics_count_content_views', 0) &&
++    arg(0) == 'node' &&
++    is_numeric(arg(1)) &&
++    arg(2) == ''
++  ) {
++    _statistics_node_counter_db_update(arg(1));
++  }
++
++
+   if ((variable_get('statistics_enable_access_log', 0)) && (module_invoke('throttle', 'status') == 0)) {
+     // Log this page access.
+     db_query("INSERT INTO {accesslog} (title, path, url, hostname, uid, sid, timer, timestamp) values('%s', '%s', '%s', '%s', %d, '%s', %d, %d)", strip_tags(drupal_get_title()), $_GET['q'], referer_uri(), ip_address(), $user->uid, session_id(), timer_read('page'), time());
+   }
+ }
+ 
++function _statistics_node_counter_memcache_update($node_nid) {
++  // We store statistics in chunks (500 elements per chunk).
++  $chunk_id = (int) floor($node_nid / 500);
++  $node_counter = dmemcache_get('node_counter_'. $chunk_id, 'node_counter');
++
++  if ($node_counter != FALSE) {
++    $node_counter[$node_nid] = isset($node_counter[$node_nid]) ?
++      $node_counter[$node_nid] :
++      array('timestamp' => time(), 'totalcount' => 0, 'daycount' => 0);
++
++    $node_counter[$node_nid]['timestamp'] = time();
++    $node_counter[$node_nid]['totalcount']++;
++     $node_counter[$node_nid]['daycount']++;
++
++    dmemcache_set(
++      'node_counter_'. $chunk_id,
++      $node_counter,
++      0,
++      'node_counter'
++    );
++  }
++  else {
++    $node_counter = array();
++    $node_counter[$node_nid] = array(
++      'timestamp' => time(),
++      'totalcount' => 1,
++      'daycount' => 1
++    );
++    dmemcache_add(
++      'node_counter_'. $chunk_id,
++      $node_counter,
++      0,
++      'node_counter'
++    );
++  }
++
++  // Update chunk list buffer
++  $chunk_buffer = dmemcache_get('chunk_list', 'node_counter');
++  $chunk_buffer = is_array($chunk_buffer) ? $chunk_buffer : array();
++
++  if ($chunk_buffer != FALSE) {
++    $chunk_buffer[$chunk_id] = TRUE;
++    dmemcache_set('chunk_list', $chunk_buffer, 0, 'node_counter');
++  }
++  else {
++    $chunk_buffer = array($chunk_id => TRUE);
++    dmemcache_delete('chunk_list', 'node_counter');
++    dmemcache_add('chunk_list', $chunk_buffer, 0, 'node_counter');
++  }
++}
++
++function _statistics_node_counter_memcache_db_sync($nid, $node_stats) {
++  // A node has been viewed, so update the node's counters.
++  db_query(
++    'UPDATE {node_counter} SET daycount = daycount + %d, totalcount = totalcount + %d, timestamp = %d WHERE nid = %d',
++    $node_stats['daycount'],
++    $node_stats['totalcount'],
++    $node_stats['timestamp'],
++    $nid
++  );
++
++
++  // If we affected 0 rows, this is the first time viewing the node.
++  if (!db_affected_rows()) {
++    // We must create a new row to store counters for the new node.
++    db_query(
++      'INSERT INTO {node_counter} (nid, daycount, totalcount, timestamp) VALUES (%d, %d, %d, %d)',
++      $nid,
++      $node_stats['daycount'],
++      $node_stats['totalcount'],
++      $node_stats['timestamp']
++    );
++  }
++}
++
++
+ /**
++ * Update node_counter
++ */
++function _statistics_node_counter_db_update($node_nid) {
++
++  // A node has been viewed, so update the node's counters.
++  db_query('UPDATE {node_counter} SET daycount = daycount + 1, totalcount = totalcount + 1, timestamp = %d WHERE nid = %d', time(), arg(1));
++  // If we affected 0 rows, this is the first time viewing the node.
++  if (!db_affected_rows()) {
++    // We must create a new row to store counters for the new node.
++    db_query('INSERT INTO {node_counter} (nid, daycount, totalcount, timestamp) VALUES (%d, 1, 1, %d)', arg(1), time());
++  }
++}
++
++
++/**
+  * Implementation of hook_perm().
+  */
+ function statistics_perm() {
+@@ -189,8 +294,51 @@
+   if (variable_get('statistics_flush_accesslog_timer', 259200) > 0) {
+     db_query('DELETE FROM {accesslog} WHERE timestamp < %d', time() - variable_get('statistics_flush_accesslog_timer', 259200));
+   }
++
++
++  // We need list of all modified stats chunks, limit of chunk
++  // synchronization.
++  if (
++    function_exists('dmemcache_get') &&
++    variable_get('statistics_content_use_memcache', FALSE) == TRUE
++  ) {
++    $used_chunks = dmemcache_get('chunk_list', 'node_counter');
++    $chunk_limit = variable_get('statistics_content_use_memcache_cron_bulk', 0);
++    $synchronized_chunks = 0;
++
++    $used_chunks = array_keys($used_chunks);
++    shuffle($used_chunks);
++    if ($used_chunks !== FALSE) {
++      foreach ($used_chunks as $key => $chunk_id) {
++
++        // Get all node stats for current chunk of data.
++        $nodes = dmemcache_get('node_counter_'. $chunk_id, 'node_counter');
++
++        // Synchronize all stats for nodes from chunk
++        foreach ($nodes as $nid => $node_stats) {
++          _statistics_node_counter_memcache_db_sync($nid, $node_stats);
++        }
++
++        // After chunk synchronization, remove stats at memcache for this chunk
++        dmemcache_delete('node_counter_'. $chunk_id, 'node_counter');
++        $synchronized_chunks++;
++
++        unset($used_chunks[$key]);
++
++        if ($synchronized_chunks >= $chunk_limit && $chunk_limit != 0) {
++          dmemcache_set('chunk_list', array_flip($used_chunks), 0, 'node_counter');
++          break;
++        }
++      }
++
++      if (!($synchronized_chunks >= $chunk_limit && $chunk_limit != 0)) {
++        dmemcache_set('chunk_list', array_flip($used_chunks), 0, 'node_counter');
++      }
++    }
++  }
+ }
+ 
++
+ /**
+  * Returns all time or today top or last viewed node(s).
+  *

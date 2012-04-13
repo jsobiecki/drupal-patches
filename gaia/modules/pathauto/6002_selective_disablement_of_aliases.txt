@@ -1,0 +1,22 @@
+Pathauto (http://drupal.org/project/pathauto)
+----------------------------------------------------
+
+Description
+===========
+
+This patch allows us to temporary disable generation of aliases only
+if variable selective_pathauto_blockade is set to TRUE
+
+Compatibility
+=============
+
+6.x-1.4
+
+Modified files
+==============
+
+pathauto.module
+
+Related issue
+=============
+https://redmine.serwisyregionalne.pl/issues/6002

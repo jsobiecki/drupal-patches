@@ -1,0 +1,25 @@
+Domain (http://drupal.org/project/domain)
+----------------------------------------------------
+
+Description
+===========
+
+During the first call domain_domains() produces many sql queries, if you 
+have many subdomains created.
+
+This patch makes domain_domains() fetch all information in one query.
+
+Compatibility
+=============
+
+6.x-2.7 and higher.
+
+Modified files
+==============
+
+domain.module
+
+Related issue
+=============
+
+http://drupal.org/node/1170608#comment-4524128

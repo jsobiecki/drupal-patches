@@ -1,0 +1,15 @@
+--- .htaccess
++++ .htaccess
+@@ -106,6 +106,12 @@
+   # uncomment the following line:
+   # RewriteBase /
+ 
++  # Please check #2989 (301 for portal.regiopraca.pl => regiopraca.pl)
++  RewriteCond %{HTTP_HOST} ^portal\.regiopraca\.pl$ [NC]
++  RewriteCond %{REQUEST_URI} !^/(webapi/.*)$
++  RewriteCond %{QUERY_STRING} !^.*(q=webapi/.*)$
++  RewriteRule ^(.*)$ http://regiopraca.pl/$1 [L,R=301]
++
+   # Rewrite URLs of the form 'x' to the form 'index.php?q=x'.
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-d

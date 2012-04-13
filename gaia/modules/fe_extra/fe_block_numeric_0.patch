@@ -1,0 +1,22 @@
+? fe_block_numeric_0.patch
+? fe_nodequeue-array-ordering-879588-769660.patch
+? fe_nodequeue-array-ordering-update.patch
+? features_extra-769660.patch
+? features_extra-features_get_default.patch
+? patch_fe_block.module_0.txt
+Index: fe_block.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/features_extra/Attic/fe_block.module,v
+retrieving revision 1.1.2.5
+diff -u -p -r1.1.2.5 fe_block.module
+--- fe_block.module	14 Mar 2010 13:31:28 -0000	1.1.2.5
++++ fe_block.module	27 Aug 2010 00:15:45 -0000
+@@ -452,7 +452,7 @@ function _fe_block_get_bid($machine_name
+  * Generate block ID.
+  */
+ function _fe_block_build_id($block) {
+-  if (empty($block['module']) || empty($block['delta'])) {
++  if (empty($block['module']) || (empty($block['delta']) && !is_numeric($block['delta'])) ) {
+     return NULL;
+   }
+   if ($block['module'] == 'block') {

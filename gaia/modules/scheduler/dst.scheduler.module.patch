@@ -1,0 +1,19 @@
+Index: scheduler.module
+===================================================================
+--- scheduler.module	(revision 6302)
++++ scheduler.module	(working copy)
+@@ -302,7 +302,13 @@
+     $results['hour'] += 12;
+   }
+ 
+-  $time = gmmktime( $results['hour'], $results['minute'], $results['second'], $results['month'], $results['day'], $results['year'] );
++  if (variable_get('dst_used', 0)) {
++    $time = mktime( $results['hour'], $results['minute'], $results['second'], $results['month'], $results['day'], $results['year'] );
++  }
++  else {
++    $time = gmmktime( $results['hour'], $results['minute'], $results['second'], $results['month'], $results['day'], $results['year'] );
++  }
++
+   return $time;
+ }
+ 

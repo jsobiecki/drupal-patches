@@ -1,0 +1,23 @@
+Search Config (http://drupal.org/project/search_config)
+----------------------------------------------------
+
+Description
+===========
+
+Hide advanced options on non-node search forms.
+
+Compatibility
+=============
+
+6.x-1.6 (last release).
+
+Modified files
+==============
+
+search_config.module
+
+Related issue
+=============
+
+http://drupal.org/node/848588#comment-3964328
+http://drupal.org/node/825308#comment-3964336

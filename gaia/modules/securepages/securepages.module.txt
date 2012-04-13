@@ -1,0 +1,38 @@
+Secure Pages (http://drupal.org/project/securepages)
+----------------------------------------------------
+
+Description
+===========
+
+Patch solves various redirection problems:
+1. The same address being redirected back and forth to http and https (e.g. user/[uid]/edit).
+2. Pages incorrectly served via httpd.
+3. Pages incorrectly served via http.
+
+These problems were occurring randomly (?) as a user surfed the site.
+
+Compatibility
+=============
+
+6.x-1.9 (last release).
+
+Modified files
+==============
+
+securepages.module
+
+Related issue
+=============
+
+http://drupal.org/node/587000#comment-4519010
+http://drupal.org/node/846962
+http://drupal.org/node/852084
+http://drupal.org/node/797988
+http://drupal.org/node/841274
+http://drupal.org/node/420712
+http://drupal.org/node/959414
+http://drupal.org/node/968536
+http://drupal.org/node/584584
+http://drupal.org/node/160696
+http://drupal.org/node/481450
+http://drupal.org/node/700354

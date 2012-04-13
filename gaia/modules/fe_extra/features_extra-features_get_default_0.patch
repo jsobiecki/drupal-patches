@@ -1,0 +1,75 @@
+Index: fe_block.module
+===================================================================
+--- fe_block.module
++++ fe_block.module
+@@ -154,7 +154,7 @@
+ function fe_block_settings_features_revert($module_name = NULL) {
+   global $custom_theme, $theme_key;
+   $component = 'fe_block_settings';
+-  $defaults = features_get_default($module_name, $component);
++  $defaults = features_get_default($component, $module_name);
+ 
+   // Revert.
+   foreach ($defaults as $_theme_key => $theme) {
+@@ -259,7 +259,7 @@
+  */
+ function fe_block_boxes_features_rebuild($module_name = NULL) {
+   $table = 'fe_block_boxes';
+-  $defaults = features_get_default($module_name, $table);
++  $defaults = features_get_default($table, $module_name);
+   if (empty($defaults)) {
+     return;
+   }
+@@ -288,7 +288,7 @@
+  */
+ function fe_block_boxes_features_revert($module_name = NULL) {
+   $table = 'fe_block_boxes';
+-  $defaults = features_get_default($module_name, $table);
++  $defaults = features_get_default($table, $module_name);
+   if (empty($defaults)) {
+     return;
+   }
+Index: fe_nodequeue.module
+===================================================================
+--- fe_nodequeue.module	(revision 1545)
++++ fe_nodequeue.module	(working copy)
+@@ -122,7 +122,7 @@
+  */
+ function fe_nodequeue_queue_features_rebuild($module_name = NULL) {
+   $table = 'fe_nodequeue_queue';
+-  $defaults = features_get_default($module_name, $table);
++  $defaults = features_get_default($table, $module_name);
+   if (empty($defaults)) {
+     return;
+   }
+@@ -151,7 +151,7 @@
+  */
+ function fe_nodequeue_queue_features_revert($module_name = NULL) {
+   $table = 'fe_nodequeue_queue';
+-  $defaults = features_get_default($module_name, $table);
++  $defaults = features_get_default($table, $module_name);
+   if (empty($defaults)) {
+     return;
+   }
+Index: fe_taxonomy.module
+===================================================================
+--- fe_taxonomy.module	(revision 1545)
++++ fe_taxonomy.module	(working copy)
+@@ -117,7 +117,7 @@
+  */
+ function fe_taxonomy_vocabulary_features_rebuild($module_name = NULL) {
+   $table = 'fe_taxonomy_vocabulary';
+-  $defaults = features_get_default($module_name, $table);
++  $defaults = features_get_default($table, $module_name);
+   if (empty($defaults)) {
+     return;
+   }
+@@ -146,7 +146,7 @@
+  */
+ function fe_taxonomy_vocabulary_features_revert($module_name = NULL) {
+   $table = 'fe_taxonomy_vocabulary';
+-  $defaults = features_get_default($module_name, $table);
++  $defaults = features_get_default($table, $module_name);
+   if (empty($defaults)) {
+     return;
+   }

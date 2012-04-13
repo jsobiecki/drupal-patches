@@ -1,0 +1,25 @@
+diff --git includes/features.menu.inc includes/features.menu.inc
+index 8af814b..fa5e705 100644
+--- includes/features.menu.inc
++++ includes/features.menu.inc
+@@ -257,6 +257,12 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
+             $all_links[$identifier] = $link;
+             unset($unordered[$key]);
+           }
++          elseif (!empty($parent)) {
++            $ordered[$parent] = 0;
++            $ordered[$identifier] = $ordered[$parent] + 1;
++            $all_links[$identifier] = $link;
++            unset($unordered[$key]);
++          }
+         }
+       } while (count($unordered) < $current);
+     }
+@@ -279,6 +285,7 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
+       else {
+         $link['plid'] = 0;
+       }
++      $link['customized'] = TRUE;
+       menu_link_save($link);
+     }
+   }

@@ -1,0 +1,33 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch adds delay to update of statistics. Statistics are stored on
+memcache server. At cron call, it synchronizes memcache stats with database.
+It work's best with elysia cron replacement. Statistics should be synchronized
+off business hours.
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+statistics/statistics.module
+statistics/statistics.admin.inc
+
+
+Redmine
+==============
+
+#5815
+
+
+Related issue
+=============
+

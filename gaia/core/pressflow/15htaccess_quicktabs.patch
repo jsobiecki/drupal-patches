@@ -1,0 +1,15 @@
+Index: .htaccess
+===================================================================
+--- .htaccess	(revision 30)
++++ .htaccess	(working copy)
+@@ -123,6 +123,10 @@
+   RewriteCond %{REQUEST_URI} !^404.%1$
+   RewriteRule ^(.*)$ 404.%1 [L]
+ 
++  # See: RM #4797 (quicktabs)
++  RewriteCond %{QUERY_STRING} quicktabs_\d{1,2}=\d{1,2}
++  RewriteRule ^(.*)$ 404-error.php [L]
++
+   # HTTPS redirect policy. [#3470]
+   RewriteCond %{HTTPS} on
+   RewriteCond %{REQUEST_URI}      !^/(user|dolacz-do-nas|przypomnij-haslo)$

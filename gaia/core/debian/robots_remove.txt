@@ -1,0 +1,31 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch removes robots.txt file from drupal6 core repository at package build stage.
+It's required by robotstxt module.
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+robots.txt
+
+
+Target Process
+==============
+
+-
+
+
+Related issue
+=============
+
+-

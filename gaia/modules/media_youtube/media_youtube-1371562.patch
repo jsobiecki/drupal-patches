@@ -1,0 +1,38 @@
+Index: youtube.inc
+===================================================================
+--- youtube.inc
++++ youtube.inc
+@@ -153,12 +153,16 @@
+ /**
+  * this is a wrapper for emvideo_request_xml that includes youtube's api key
+  */
+-function emvideo_youtube_request($video_id, $cached = TRUE) {
+-  $args['dev_id'] = trim(media_youtube_variable_get('api_key'));
+-  $args['method'] = $method;
++function emvideo_youtube_request($video_id, $cached = TRUE, $reset = FALSE) {
++  // Cache a variable.
++  static $cache_video = array();
+ 
+-  $request = emfield_request_xml('youtube', MEDIA_YOUTUBE_REST_ENDPOINT .'/'. $code, array('video' => $code, 'v' => '2'), $cached);
+-  return $request;
++  if (!isset($cache_video[$video_id]) || $reset) {
++    $args['dev_id'] = trim(media_youtube_variable_get('api_key'));
++    $args['method'] = $method;
++    $cache_video[$video_id] = emfield_request_xml('youtube', MEDIA_YOUTUBE_REST_ENDPOINT .'/'. $code, array('video' => $code, 'v' => '2'), $cached);
++  }
++  return $cache_video[$video_id];
+ }
+ 
+ /**
+@@ -217,7 +221,10 @@
+   if (!isset($item['data']['emvideo_youtube_version']) || $item['data']['emvideo_youtube_version'] < 3) {
+     $item['data'] = emvideo_youtube_data(NULL, $item);
+   }
+-  return isset($item['data']['duration']) ? $item['data']['duration'] : 0;
++  $return = isset($item['data']['duration']) ? $item['data']['duration'] : 0;
++  // Destroys the specified variables and release the memory usage.
++  unset($item['data']);
++  return $return;
+ }
+ 
+ function emvideo_youtube_convert_color($color = NULL) {

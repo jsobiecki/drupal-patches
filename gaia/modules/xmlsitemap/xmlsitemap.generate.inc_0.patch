@@ -1,0 +1,25 @@
+Index: sites/all/modules/contrib/xmlsitemap/xmlsitemap.generate.inc
+===================================================================
+--- sites/all/modules/contrib/xmlsitemap/xmlsitemap.generate.inc
++++ sites/all/modules/contrib/xmlsitemap/xmlsitemap.generate.inc
+@@ -207,7 +207,12 @@
+   while ($link = db_fetch_array($query)) {
+     $link['language'] = $link['language'] ? xmlsitemap_language_load($link['language']) : $url_options['language'];
+     if ($url_options['alias']) {
+-      $link['loc'] = xmlsitemap_get_path_alias($link['loc'], $link['language']->language);
++      if (function_exists('domain_path') && isset($sitemap->context['domain'])) {
++        // Check if any module implements hook_domainpath.
++        $modules = _domain_path_modules();
++        if ($modules) {
++          $link['loc'] = domain_path($sitemap->context['domain'], $link['loc']);
++        }
++        else {
++          $link['loc'] = xmlsitemap_get_path_alias($link['loc'], $link['language']->language);
++        }
++      }
++      else {
++        $link['loc'] = xmlsitemap_get_path_alias($link['loc'], $link['language']->language);
++      }
+     }
+     $link_options = array(
+       'language' => $link['language'],

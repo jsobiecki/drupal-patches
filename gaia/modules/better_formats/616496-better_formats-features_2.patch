@@ -1,0 +1,150 @@
+? 616496-better_formats-features.patch
+Index: better_formats.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/better_formats/better_formats.module,v
+retrieving revision 1.23.2.17
+diff -u -p -r1.23.2.17 better_formats.module
+--- better_formats.module	5 Feb 2010 13:59:18 -0000	1.23.2.17
++++ better_formats.module	31 Dec 2010 01:29:27 -0000
+@@ -132,6 +132,141 @@ function better_formats_form_alter(&$for
+ }
+ 
+ /**
++ * Implementation of hook_features_api().
++ */
++function better_formats_features_api() {
++  return array(
++    'better_formats' => array(
++      'name' => t('Better Formats'),
++      'default_hook' => 'better_formats_default',
++      'features_source' => TRUE,
++      'default_file' => FEATURES_DEFAULTS_INCLUDED,
++    ),
++  );
++}
++
++/**
++ * Implementation of hook_features_export_options().
++ */
++function better_formats_features_export_options() {
++  $result = db_query("SELECT DISTINCT rid FROM {better_formats_defaults}");
++  $roles = user_roles();
++  while ($rid = db_fetch_array($result)) {
++    // Add format to exports
++    $options[$roles[$rid['rid']]] = $roles[$rid['rid']];
++  }
++  return $options;
++}
++
++/**
++ * Implementation of hook_features_export().
++ */
++function better_formats_features_export($data, &$export, $module_name = '') {
++  // The filter_default_formats() hook integration is provided by the
++  // features module so we need to add it as a dependency.
++  $export['dependencies']['features'] = 'features';
++  
++  foreach ($data as $role) {
++    $export['features']['better_formats'][$role] = $role;
++  }
++
++  return array();
++}
++
++/**
++ * Implementation of hook_features_export_render().
++ */
++function better_formats_features_export_render($module = 'foo', $data) {
++  // @todo - without this there is an undefined function features_var_export().
++  module_load_include('inc', 'features', 'features.export');
++  $code = array();
++  $code[] = '  $defaults = array();';
++  $code[] = '';
++
++  $sql = "SELECT bf.*, role.name AS role_name, export.machine AS format_name
++          FROM {better_formats_defaults} bf
++          JOIN {role} role ON bf.rid = role.rid
++          LEFT OUTER JOIN {exportables} export ON bf.format = export.id AND export.type = 'input_formats'
++          WHERE role.name IN ('" . implode("','", $data) . "');";
++  
++  $result = db_query($sql);
++  while ($row = db_fetch_array($result)) {
++    $code[] = '  $defaults[] = '. features_var_export($row, '  ') .';';
++    $code[] = '';
++  }
++
++  $code[] = '  return $defaults;';
++  $code = implode("\n", $code);
++  return array('better_formats_default' => $code);
++}
++
++/**
++ * Implementation of hook_features_export_revert().
++ */
++function better_formats_features_revert($module) {
++  better_formats_features_rebuild($module);
++}
++
++/**
++ * Implementation of hook_features_export_rebuild().
++ */
++function better_formats_features_rebuild($module) {
++  if ($defaults = features_get_default('better_formats', $module)) {
++    $roles = array_flip(user_roles()); // we want role names as keys and role id's as values
++
++    foreach ($defaults as $default) {
++      
++      // Get the current site's rid for the role machine name
++      if (array_key_exists($default['role_name'], $roles)) {
++        $role_id = $roles[$default['role_name']];
++      } else {
++        watchdog('better_formats', "Could not find current site's id for '%role' role. Continuing to next role.", array('%role' => $default['role_name']), WATCHDOG_ERROR);
++        continue;
++      }
++      
++      // Get the current site's input format id for the input format machine name
++      if ($input_format = input_formats_load_by_name($default['format_name'])) {
++        $input_format_id = $input_format->format;
++      } else {
++        // Exported format_name was probably NULL.  This is because better formats stores
++        // a non-existent input format, 'site default', as id 0. We need to set this
++        // input format's id to 0.
++        $input_format_id = 0;
++      }
++      
++      if ($better_format = better_formats_load($role_id, $default['type'])) {
++        $sql = "UPDATE {better_formats_defaults} SET rid = %d, type = '%s', format = %d, type_weight = %d, weight = %d WHERE rid = %d AND type = '%s'";
++      } else {
++        $sql = "INSERT INTO {better_formats_defaults} (rid, type, format, type_weight, weight) VALUES (%d, '%s', %d, %d, %d)";
++      }
++      
++      // If this is an INSERT, the last two arguments passed in will just be ignored
++      db_query($sql, $role_id, $default['type'], $input_format_id, $default['type_weight'], $default['weight'], $role_id, $default['type']);
++    }
++  }
++}
++
++/**
++ * Load a better_formats row using a role id and a type (compound key).
++ *
++ * @param $rid
++ *   A numeric role id.
++ * @param $type
++ *   A string type (examples are node, comment, and block).
++ * @return
++ *   An array representing one row of the better_formats_default table,
++ *   or null if the row could not be loaded.
++ */
++function better_formats_load($rid, $type) {
++  $better_format = null;
++  $sql = "SELECT * FROM {better_formats_defaults} WHERE rid = %d AND type = '%s'";
++  if ($result = db_query($sql, $rid, $type)) {
++    $better_format = db_fetch_array($result);
++  }
++  return $better_format;
++}
++
++/**
+  * FAPI form to add to the content type edit form.
+  *
+  * @see better_formats_node_type_form_validate()

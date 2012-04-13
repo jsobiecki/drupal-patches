@@ -1,0 +1,22 @@
+User Prune (http://drupal.org/project/user_prune)
+----------------------------------------------------
+
+Description
+===========
+
+Allows to exclude users that added content or post comments
+
+Compatibility
+=============
+
+6.x-1.2 (last release).
+
+Modified files
+==============
+
+user_prune.module
+user_prune.admin.inc
+
+Related issue
+=============
+

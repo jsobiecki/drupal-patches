@@ -1,0 +1,22 @@
+Secure Pages (http://drupal.org/project/subpath_alias)
+----------------------------------------------------
+
+Description
+===========
+
+Add query static cache.
+
+Compatibility
+=============
+
+6.x-1.1
+
+Modified files
+==============
+
+subpath_alias.module
+
+Related issue
+=============
+
+-

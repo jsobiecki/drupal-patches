@@ -1,0 +1,35 @@
+Index: index.php
+===================================================================
+--- index.php	(revision 22)
++++ index.php	(working copy)
+@@ -14,6 +14,30 @@
+ require_once './includes/bootstrap.inc';
+ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+ 
++register_shutdown_function('pressflow_cookie_monitor');
++
++function pressflow_cookie_monitor() {
++  global $user;
++  if ($user->uid == 0 && (count($_COOKIE) || count($_SESSION))) {
++    $pcm = variable_get('pressflow_cookie_monitor', array());
++    $type = 'anonymous_cookie';
++    if (!empty($_SESSION)) {
++      $type = 'anonymous_session';
++    }
++    $cookie = (is_array($_COOKIE) ? $_COOKIE : array('none' => 'none'));
++    $cookie = (empty($_COOKIE) ? array('empty' => 'empty') : $_COOKIE);
++    $session = (is_array($_SESSION) ? $_SESSION : array('none' => 'none'));
++    $session = (empty($_SESSION) ? array('empty' => 'empty') : $_SESSION);
++    $message = t("Cookie set for anonymous user. Cookies: @cookies. Session: @session.", array('@cookies' => implode(', ', array_keys($cookie)), '@session' => implode(', ', array_keys($session))));
++    $hash = md5($message);
++    if (!in_array($hash, $pcm)) {
++      watchdog($type, $message, array(), WATCHDOG_WARNING);
++      $pcm[] = $hash;
++      variable_set('pressflow_cookie_monitor', $pcm);
++    }
++  }
++}
++
+ $return = menu_execute_active_handler();
+ 
+ // Menu status constants are integers; page content is a string.

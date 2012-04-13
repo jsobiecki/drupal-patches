@@ -1,0 +1,22 @@
+Custom Breadcrumbs (http://drupal.org/project/custom_breadcrumbs)
+----------------------------------------------------
+
+Description
+===========
+
+Prevents creation of session for anonymous users. Side efect: when anonymous user visits node page only ligtest term will be showed in breadcrumbs (option to show a term from previously visited term page won't work for anonymous users).
+
+Compatibility
+=============
+
+6.x-2.0-rc1 (last release).
+
+Modified files
+==============
+
+custom_breadcrumbs_taxonomy.inc
+
+Related issue
+=============
+
+None

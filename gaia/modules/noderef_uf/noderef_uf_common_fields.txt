@@ -1,0 +1,22 @@
+Nodereference User Friendly
+----------------------------------------------------
+
+Description
+===========
+
+This patch fixes problem with detecting cck fields in hook_init() for fields utilised in more than one content type.
+
+Compatibility
+=============
+
+6.x-1.0-alpha1
+
+Modified files
+==============
+
+noderef_uf.module
+
+Related issue
+=============
+
+N/A

@@ -1,0 +1,19 @@
+Index: revisioning.module
+===================================================================
+--- revisioning.module	(revision 6569)
++++ revisioning.module	(working copy)
+@@ -683,7 +683,14 @@
+  *
+  */
+ function _revisioning_view_edit_access_callback($op, $node) {
++  global $user;
+ 
++  // Restrict access to nodes "created" by anonymous user
++  // (don't apply to drupal admin).
++  if ($user->uid != 1 && $node->uid == 0) {
++    return FALSE;
++  }
++
+   $load_op = _revisioning_load_op($node, $op);
+ 
+   $vid = arg(3);

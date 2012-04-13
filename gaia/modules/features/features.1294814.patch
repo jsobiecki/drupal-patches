@@ -1,0 +1,32 @@
+diff --git includes/features.content.inc includes/features.content.inc
+index e1a1cda..4c2d759 100644
+--- includes/features.content.inc
++++ includes/features.content.inc
+@@ -121,6 +121,10 @@ function content_features_export_render($module, $data) {
+       if (!empty($field['widget']['label'])) {
+         $translatables[] = $field['widget']['label'];
+       }
++      // Add any descriptions to translatables array.
++      if (!empty($field['widget']['description'])) {
++        $translatables[] = $field['widget']['description'];
++      }
+     }
+   }
+   if (!empty($translatables)) {
+   
+Index: includes/features.fieldgroup.inc
+===================================================================
+--- includes/features.fieldgroup.inc
++++ includes/features.fieldgroup.inc
+@@ -81,6 +81,10 @@
+       if (!empty($group['label'])) {
+         $translatables[] = $group['label'];
+       }
++      // Add any descriptions to translatables array.
++      if (!empty($group['settings']['form']['description'])) {
++        $translatables[] = $group['settings']['form']['description'];
++      }
+     }
+   }
+   if (!empty($translatables)) {
+   

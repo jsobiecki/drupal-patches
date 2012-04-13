@@ -1,0 +1,23 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Add 404-error.php file for handling 404 errors of static files like png, css, js.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+404-error.php
+
+Related issue
+=============
+
+https://redmine.serwisyregionalne.pl/issues/2993
+-

@@ -1,0 +1,26 @@
+Tinymce
+----------------------------------------------------
+
+Description
+===========
+
+This patch adds additional field to link widget for tinymce. It adds 
+ability to create link with rel="nofollow" if required.
+
+Compatibility
+=============
+
+Latest stable release
+
+Modified files
+==============
+
+tinymce/jscripts/tiny_mce/themes/advanced/langs/pl_dlg.js
+tinymce/jscripts/tiny_mce/themes/advanced/link.htm
+tinymce/jscripts/tiny_mce/themes/advanced/js/link.js
+
+
+Related issue
+=============
+
+#8176 from redmine

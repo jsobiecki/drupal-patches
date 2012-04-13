@@ -1,0 +1,26 @@
+Index: vud.theme.inc
+===================================================================
+--- vud.theme.inc	(revision 4913)
++++ vud.theme.inc	(working copy)
+@@ -388,7 +388,7 @@
+     else {
+       $commands = array();
+       if (!empty($plugin['widget template'])) {
+-        $commands[] = ctools_ajax_command_replace("#widget-$type-$content_id", theme('vud_widget', $content_id, $type, $tag, $widget));
++        $commands[] = ctools_ajax_command_replace(".widget-$type-$content_id", theme('vud_widget', $content_id, $type, $tag, $widget));
+       }
+ 
+       if (!empty($plugin['votes template'])) {
+Index: widgets/upanddown/widget.tpl.php
+===================================================================
+--- widgets/upanddown/widget.tpl.php	(revision 4913)
++++ widgets/upanddown/widget.tpl.php	(working copy)
+@@ -8,7 +8,7 @@
+  * UpAndDown widget theme for Vote Up/Down
+  */
+ ?>
+-<div class="vud-widget vud-widget-upanddown" id="<?php print $id; ?>">
++<div class="vud-widget vud-widget-upanddown <?php print $id; ?>">
+   <div class="up-score clear-block">
+     <?php if ($show_links): ?>
+       <a href="<?php print $link_up; ?>" rel="nofollow" class="<?php print "$link_class_up $class_up"; ?>" title="<?php print t('Vote up!'); ?>"></a>

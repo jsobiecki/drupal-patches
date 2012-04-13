@@ -1,0 +1,30 @@
+Revisioning (http://drupal.org/project/revisioning)
+----------------------------------------------------
+
+Description
+===========
+
+In revisioning_revisionapi() hook implementation, there is call to rules 
+event which doesn't provide by hook_rules_event_info() - revisioning_pre_publish.
+
+In consequence, rules makes variable_set() on every node save, so cache 
+variables must be updated.
+
+In our situation - more than one node save every 5 minutes - this is the huge 
+performance issue.
+
+Compatibility
+=============
+
+6.x-3.9+
+
+Modified files
+==============
+
+revisioning.rules.inc
+
+Related issue
+=============
+
+http://drupal.org/node/1189128#comment-4604584
+https://redmine.serwisyregionalne.pl/issues/2695

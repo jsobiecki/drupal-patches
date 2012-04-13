@@ -1,0 +1,13 @@
+Index: uuid.module
+===================================================================
+--- uuid.module	(wersja 6845)
++++ uuid.module	(kopia robocza)
+@@ -383,7 +383,7 @@
+     case 'node':
+       $tokens['uuid'] = isset($object->uuid) ? $object->uuid : NULL;
+       $tokens['revision-uuid'] = isset($object->revision_uuid) ? $object->revision_uuid : NULL;
+-      $tokens['author-uuid'] = db_result(db_query("SELECT uuid FROM {uuid_users} WHERE uid = %d", $object->uid));
++      $tokens['author-uuid'] = db_result(db_query("SELECT uuid FROM {uuid_users} WHERE uid = %d", isset($object->uid) ? $object->uid : NULL));
+       break;
+   }
+ 

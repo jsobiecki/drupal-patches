@@ -1,0 +1,17 @@
+TAXONOMY_MANAGER (http://drupal.org/project/taxonomy_manager)
+----------------------------------------------------
+Description
+===========
+fatal error: Argument 2 passed to xmlsitemap_node_form_alter() must be an array, null given in xmlsitemap_node_form_alter()
+
+Compatibility
+=============
+6.x-2.2
+
+Modified files
+==============
+taxonomy_manager.admin.inc
+
+Related issue
+=============
+http://drupal.org/node/1019712

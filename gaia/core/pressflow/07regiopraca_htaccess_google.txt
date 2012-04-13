@@ -1,0 +1,23 @@
+Boost (http://drupal.org/project/boost)
+----------------------------------------------------
+
+Description
+===========
+
+Add redirection rule from portal.regiopraca.pl to regiopraca.pl for all non web-api addresses.
+
+Compatibility
+=============
+
+3.0.0
+
+Modified files
+==============
+
+.htaccess
+
+Related issue
+=============
+
+https://redmine.serwisyregionalne.pl/issues/2989
+-

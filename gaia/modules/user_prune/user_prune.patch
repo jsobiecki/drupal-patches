@@ -1,0 +1,94 @@
+Index: user_prune.admin.inc
+===================================================================
+--- user_prune.admin.inc
++++ user_prune.admin.inc
+@@ -88,6 +88,25 @@
+    '#options' => array(500 => 500, 200 => 200, 100 => 100, 75 => 75, 50 => 50, 25 => 25, 10 => 10),
+    '#default_value' => variable_get('prune_per_run', 100)
+  );
++
++  $form['exceptions'] = array(
++   '#type' => 'fieldset',
++   '#title' => t('Exceptions'),
++   '#description' => t('You may exclude users that have created content or posted comments'),
++ );
++  $form['exceptions']['prune_except_content_types'] = array(
++    '#type' => 'checkboxes',
++    '#title' => t('Nodes'),
++    '#default_value' => variable_get('prune_except_content_types', array()),
++    '#options' => array_map('check_plain', node_get_types('names')),
++    '#description' => t("Don't prune users who have added content of selected content types."),
++  );
++  $form['exceptions']['prune_except_comments'] = array(
++    '#type' => 'checkbox',
++    '#title' => t('Comments'),
++    '#description' => t("Don't prune users who have posted any comments."),
++    '#default_value' => variable_get('prune_except_comments', FALSE),
++  );
+  
+  $form['prune_now'] = array(
+    '#type' => 'fieldset',
+@@ -162,6 +181,9 @@
+      variable_set('prune_logged_in_registered_limit_unit', $values['prune_logged_in_registered_limit_unit']);
+    }
+    variable_set('prune_per_run', $values['prune_per_run']);
++
++    variable_set('prune_except_content_types', $values['prune_except_content_types']);
++    variable_set('prune_except_comments', $values['prune_except_comments']);
+    
+    drupal_set_message(t('The configuration options have been saved.'));
+  }
+@@ -214,6 +236,29 @@
+      $uids[] = $data->uid;
+    }
+  }
++
++  if ($values['prune_except_content_types']) {
++    $content_types = $values['prune_except_content_types'];
++    $uid_placeholders = db_placeholders($uids, 'int');
++    $type_placeholders = db_placeholders($content_types, 'text');
++    $types_sql = "SELECT DISTINCT uid FROM {node} WHERE uid IN ($uid_placeholders) AND type IN ($type_placeholders)";
++    $types_sql = db_rewrite_sql($types_sql);
++    $result = db_query($types_sql, $uids + $content_types);
++    $exclude = array();
++    while ($user = db_fetch_object($result)) {
++      $exclude[] = $user->uid;
++    }
++    $uids = array_diff($uids, $exclude);
++  }
++
++  if ($values['prune_except_comments']) {
++    $result = db_query('SELECT DISTINCT uid FROM {comments} WHERE uid IN (%s)', implode(', ', $uids));
++    $exclude = array();
++    while ($user = db_fetch_object($result)) {
++      $exclude[] = $user->uid;
++    }
++    $uids = array_diff($uids, $exclude);
++  }
+  
+  // check to make sure the number of uids are in the per-run limit and if not force it to be
+  if (count($uids) > $values['prune_per_run']) {
+@@ -235,4 +280,4 @@
+  
+    drupal_set_message($message);
+  }
+-}
+\ No newline at end of file
++}
+Index: user_prune.module
+===================================================================
+--- user_prune.module (revision 6198)
++++ user_prune.module (working copy)
+@@ -40,8 +40,10 @@
+  $config['prune_logged_in_registered_limit_length'] = variable_get('prune_logged_in_registered_limit_length', '');
+  $config['prune_logged_in_registered_limit_unit'] = variable_get('prune_logged_in_registered_limit_unit', 2629744);
+  $config['prune_per_run'] = variable_get('prune_per_run', 50);
++  $config['prune_except_content_types'] = variable_get('prune_except_content_types', array());
++  $config['prune_except_comments'] = variable_get('prune_except_comments', FALSE);
+  
+  module_load_include('admin.inc', 'user_prune', 'user_prune');
+  
+  user_prune_delete($config, TRUE);
+-}
+\ No newline at end of file
++}

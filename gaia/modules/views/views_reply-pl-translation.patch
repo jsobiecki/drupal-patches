@@ -1,0 +1,14 @@
+Index: translations/pl.po
+===================================================================
+--- translations/pl.po
++++ translations/pl.po
+@@ -2861,7 +2861,7 @@
+ 
+ #: modules/comment.views.inc:621
+ msgid "reply"
+-msgstr "powtórz"
++msgstr "odpowiedz"
+ 
+ #: modules/comment.views.inc:764
+ msgid "Link this field to new comments"
+

@@ -1,0 +1,23 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This module will prevent call of taxonomy_form_all at advanced search form generation. This should prevent out of memory problems.
+
+Compatibility
+=============
+
+6.x-20
+
+Modified files
+==============
+
+node/node.module
+
+Related issue
+=============
+
+#4972
+-

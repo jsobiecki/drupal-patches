@@ -1,0 +1,25 @@
+DOMAIN XMLSITEMAP (http://drupal.org/project/domain_xmlsitemap)
+----------------------------------------------------
+
+Description
+===========
+
+Name of the xml sitemaps folders are generated on the domain number basis.
+Sometimes this number was considered as a string and sometimes as an integer
+which caused different hash'es. So the file created had a different name than
+the file that was searched for while creating a sitemap.xml site.
+
+Compatibility
+=============
+
+6.x-1.0-beta2.
+
+Modified files
+==============
+
+domain_xmlsitemap.module
+
+Related issue
+=============
+
+http://drupal.org/node/1104282

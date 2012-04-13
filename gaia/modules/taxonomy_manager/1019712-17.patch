@@ -1,0 +1,15 @@
+Index: taxonomy_manager.admin.inc
+===================================================================
+--- taxonomy_manager.admin.inc  (revision 1403)
++++ taxonomy_manager.admin.inc  (working copy)
+@@ -807,7 +807,9 @@
+   $form = form_get_cache($params['form_build_id'], $form_state);
+   unset($form['term_data']);
+   $form = form_builder($param['form_id'], $form, $form_state);*/
+-  
++
++  $form_state = array();
++
+   $term_form = taxonomy_manager_form_term_data($tid);
+   $term_form['term_data']['save'] = array(
+     '#type' => 'submit',

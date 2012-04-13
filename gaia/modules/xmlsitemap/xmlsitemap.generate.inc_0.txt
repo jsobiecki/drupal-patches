@@ -1,0 +1,20 @@
+XMLSITEMAP (http://drupal.org/project/xmlsitemap)
+----------------------------------------------------
+
+Description
+===========
+
+Not all of the paths in the sitemap were properly changed to aliases.
+Change of the way the aliases are checked, so that the checking includes
+domain (if hook_domainpath is implemented in any module) to which the path
+belongs and does not include checking of the language.
+
+Compatibility
+=============
+
+6.x-2.0-beta2
+
+Modified files
+==============
+
+xmlsitemap.generate.inc

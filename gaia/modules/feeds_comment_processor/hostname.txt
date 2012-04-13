@@ -1,0 +1,22 @@
+EPSA Crop (http://drupal.org/project/feeds_comment_processor)
+----------------------------------------------------
+
+Description
+===========
+Fixes bug with ignoring hostname at import phase.
+
+Compatibility
+=============
+
+6.x-1.0beta
+
+Modified files
+==============
+
+FeedsCommentProcessor.inc
+
+Related issue
+=============
+http://drupal.org/node/1151810
+
+~                 

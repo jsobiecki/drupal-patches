@@ -1,0 +1,37 @@
+Index: path_redirect.module
+===================================================================
+--- path_redirect.module	(wersja 7476)
++++ path_redirect.module	(kopia robocza)
+@@ -118,8 +118,12 @@
+     // Create the absolute redirection URL.
+     $redirect['redirect_url'] = url($redirect['redirect'], array('query' => $redirect['query'], 'fragment' => $redirect['fragment'], 'absolute' => TRUE));
+ 
+-    // Update the last used timestamp so that unused redirects can be purged.
+-    db_query("UPDATE {path_redirect} SET last_used = %d WHERE rid = %d", time(), $redirect['rid']);
++    // Update the last used timestamp so that unused redirects can be purged. By
++    // default only update this once per day to avoid too many database writes.
++    $update_interval = variable_get('path_redirect_update_last_used_interval', 86400);
++    if ($update_interval && (time() - $redirect['last_used'] > $update_interval)) {
++      db_query("UPDATE {path_redirect} SET last_used = %d WHERE rid = %d", time(), $redirect['rid']);
++    }
+ 
+     if (url($redirect['redirect']) == url($_GET['q'])) {
+       // Prevent infinite loop redirection.
+Index: path_redirect.admin.inc
+===================================================================
+--- path_redirect.admin.inc	(wersja 7476)
++++ path_redirect.admin.inc	(kopia robocza)
+@@ -517,6 +517,13 @@
+     '#default_value' => variable_get('path_redirect_purge_inactive', 0),
+     '#options' => array(0 => t('Never (do not discard)')) + drupal_map_assoc(array(604800, 1209600, 2419200, 4838400, 7257600, 9676800, 31536000), 'format_interval'),
+   );
++  $form['path_redirect_update_last_used_interval'] = array(
++    '#type' => 'select',
++    '#title' => t('Minimum time between updates of the "last used" field'),
++    '#default_value' => variable_get('path_redirect_update_last_used_interval', 86400),
++    '#options' => array(1 => t('Update in every request')) + drupal_map_assoc(array(3600, 10800, 86400, 604800, 2419200, 9676800), 'format_interval') + array(0 => t('Never update')),
++    '#description' => 'For performance reasons you may not want to update the "last used" field every time a redirect is used. This interval should be lower than the above interval used for discarding inactive redirects.',
++  );
+   $form['path_redirect_default_status'] = array(
+     '#type' => 'select',
+     '#title' => t('Default redirect status'),

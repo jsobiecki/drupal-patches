@@ -1,0 +1,270 @@
+Index: pathauto.module
+===================================================================
+--- pathauto.module	(wersja 7681)
++++ pathauto.module	(kopia robocza)
+@@ -216,47 +216,50 @@
+  * Implements hook_nodeapi().
+  */
+ function pathauto_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
+-  switch ($op) {
+-    case 'presave':
+-      // About to be saved (before insert/update)
+-      if (!empty($node->pathauto_perform_alias) && isset($node->old_alias)
+-          && $node->path == '' && $node->old_alias != '') {
+-        /**
+-         * There was an old alias, but when pathauto_perform_alias was checked
+-         * the javascript disabled the textbox which led to an empty value being
+-         * submitted. Restoring the old path-value here prevents the Path module
+-         * from deleting any old alias before Pathauto gets control.
+-         */
+-        $node->path = $node->old_alias;
+-      }
+-      break;
+-    case 'insert':
+-    case 'update':
+-      _pathauto_include();
+-      // Get the specific pattern or the default
+-      if (variable_get('language_content_type_'. $node->type, 0)) {
+-        $pattern = trim(variable_get('pathauto_node_'. $node->type .'_'. $node->language .'_pattern', FALSE));
+-      }
+-      if (empty($pattern)) {
+-        $pattern = trim(variable_get('pathauto_node_'. $node->type .'_pattern', FALSE));
++  //# 6002 Allow selective disablement of pathauto.
++  if (variable_get('selective_pathauto_blockade', TRUE)) {
++    switch ($op) {
++      case 'presave':
++        // About to be saved (before insert/update)
++        if (!empty($node->pathauto_perform_alias) && isset($node->old_alias)
++            && $node->path == '' && $node->old_alias != '') {
++          /**
++           * There was an old alias, but when pathauto_perform_alias was checked
++           * the javascript disabled the textbox which led to an empty value being
++           * submitted. Restoring the old path-value here prevents the Path module
++           * from deleting any old alias before Pathauto gets control.
++           */
++          $node->path = $node->old_alias;
++        }
++        break;
++      case 'insert':
++      case 'update':
++        _pathauto_include();
++        // Get the specific pattern or the default
++        if (variable_get('language_content_type_'. $node->type, 0)) {
++          $pattern = trim(variable_get('pathauto_node_'. $node->type .'_'. $node->language .'_pattern', FALSE));
++        }
+         if (empty($pattern)) {
+-          $pattern = trim(variable_get('pathauto_node_pattern', FALSE));
++          $pattern = trim(variable_get('pathauto_node_'. $node->type .'_pattern', FALSE));
++          if (empty($pattern)) {
++            $pattern = trim(variable_get('pathauto_node_pattern', FALSE));
++          }
+         }
+-      }
+-      // Only do work if there's a pattern
+-      if ($pattern) {
+-        // Only create an alias if the checkbox was not provided or if the checkbox was provided and is checked
+-        if (!isset($node->pathauto_perform_alias) || $node->pathauto_perform_alias) {
+-          $placeholders = pathauto_get_placeholders('node', $node);
+-          $src = "node/$node->nid";
+-          $node->path = pathauto_create_alias('node', $op, $placeholders, $src, $node->nid, $node->type, $node->language);
++        // Only do work if there's a pattern
++        if ($pattern) {
++          // Only create an alias if the checkbox was not provided or if the checkbox was provided and is checked
++          if (!isset($node->pathauto_perform_alias) || $node->pathauto_perform_alias) {
++            $placeholders = pathauto_get_placeholders('node', $node);
++            $src = "node/$node->nid";
++            $node->path = pathauto_create_alias('node', $op, $placeholders, $src, $node->nid, $node->type, $node->language);
++          }
+         }
+-      }
+-      break;
+-    case 'delete':
+-      path_set_alias('node/'. $node->nid);
+-      path_set_alias('node/'. $node->nid .'/feed');
+-      break;
++        break;
++      case 'delete':
++        path_set_alias('node/'. $node->nid);
++        path_set_alias('node/'. $node->nid .'/feed');
++        break;
++    }
+   }
+ }
+ 
+@@ -406,40 +409,43 @@
+  * Implements hook_taxonomy().
+  */
+ function pathauto_taxonomy($op, $type, $object = NULL) {
+-  switch ($type) {
+-    case 'term':
+-      switch ($op) {
+-        case 'insert':
+-        case 'update':
+-          _pathauto_include();
+-          // Use the category info to automatically create an alias
+-          $term = (object) $object;
++  // #6002: Allow disablement of pathauto  
++  if (variable_get('selective_pathauto_blockade', TRUE)) {
++    switch ($type) {
++      case 'term':
++        switch ($op) {
++          case 'insert':
++          case 'update':
++            _pathauto_include();
++            // Use the category info to automatically create an alias
++            $term = (object) $object;
+ 
+-          // Clear the taxonomy term's static cache.
+-          if ($op == 'update') {
+-            taxonomy_get_term($term->tid, TRUE);
+-          }
++            // Clear the taxonomy term's static cache.
++            if ($op == 'update') {
++              taxonomy_get_term($term->tid, TRUE);
++            }
+ 
+-          if ($term->name) {
+-            $count = _taxonomy_pathauto_alias($term, $op);
+-          }
++            if ($term->name) {
++              $count = _taxonomy_pathauto_alias($term, $op);
++            }
+ 
+-          // For all children generate new alias (important if [catpath] used)
+-          foreach (taxonomy_get_tree($term->vid, $term->tid) as $subcategory) {
+-            $count = _taxonomy_pathauto_alias($subcategory, $op);
+-          }
++            // For all children generate new alias (important if [catpath] used)
++            foreach (taxonomy_get_tree($term->vid, $term->tid) as $subcategory) {
++              $count = _taxonomy_pathauto_alias($subcategory, $op);
++            }
+ 
+-          break;
+-        case 'delete':
+-          // If the category is deleted, remove the path aliases
+-          $term = (object) $object;
+-          path_set_alias('taxonomy/term/'. $term->tid);
+-          path_set_alias(taxonomy_term_path($term));
+-          path_set_alias('forum/'. $term->tid);
+-          path_set_alias('taxonomy/term/'. $term->tid .'/0/feed');
+-          break;
+-      }
+-      break;
++            break;
++          case 'delete':
++            // If the category is deleted, remove the path aliases
++            $term = (object) $object;
++            path_set_alias('taxonomy/term/'. $term->tid);
++            path_set_alias(taxonomy_term_path($term));
++            path_set_alias('forum/'. $term->tid);
++            path_set_alias('taxonomy/term/'. $term->tid .'/0/feed');
++            break;
++        }
++        break;
++    }
+   }
+ }
+ 
+@@ -450,56 +456,58 @@
+  * Implements hook_user().
+  */
+ function pathauto_user($op, &$edit, &$user, $category = NULL) {
+-  switch ($op) {
+-    case 'insert':
+-    case 'update':
+-      _pathauto_include();
+-      // Use the username to automatically create an alias
+-      $pathauto_user = (object) array_merge((array) $user, $edit);
+-      if ($user->name) {
+-        $placeholders = pathauto_get_placeholders('user', $pathauto_user);
+-        $src = 'user/'. $user->uid;
+-        $alias = pathauto_create_alias('user', $op, $placeholders, $src, $user->uid);
++  if (variable_get('selective_pathauto_blockade', TRUE)) {
++    switch ($op) {
++      case 'insert':
++      case 'update':
++        _pathauto_include();
++        // Use the username to automatically create an alias
++        $pathauto_user = (object) array_merge((array) $user, $edit);
++        if ($user->name) {
++          $placeholders = pathauto_get_placeholders('user', $pathauto_user);
++          $src = 'user/'. $user->uid;
++          $alias = pathauto_create_alias('user', $op, $placeholders, $src, $user->uid);
+ 
+-        if (module_exists('blog')) {
+-          $new_user = drupal_clone($user);
+-          if ($category == 'account') {
+-            $new_user->roles = isset($edit['roles']) ? $edit['roles'] : array();
+-            $new_user->roles[DRUPAL_AUTHENTICATED_RID] = 'authenticated user'; // Add this back
++          if (module_exists('blog')) {
++            $new_user = drupal_clone($user);
++            if ($category == 'account') {
++              $new_user->roles = isset($edit['roles']) ? $edit['roles'] : array();
++              $new_user->roles[DRUPAL_AUTHENTICATED_RID] = 'authenticated user'; // Add this back
++            }
++            if (node_access('create', 'blog', $new_user)) {
++              $src = 'blog/'. $user->uid;
++              $alias = pathauto_create_alias('blog', $op, $placeholders, $src, $user->uid);
++            }
++            else {
++              path_set_alias('blog/'. $user->uid);
++              path_set_alias('blog/'. $user->uid .'/feed');
++            }
+           }
+-          if (node_access('create', 'blog', $new_user)) {
+-            $src = 'blog/'. $user->uid;
+-            $alias = pathauto_create_alias('blog', $op, $placeholders, $src, $user->uid);
++          if (module_exists('tracker')) {
++            $src = 'user/'. $user->uid .'/track';
++            $alias = pathauto_create_alias('tracker', $op, $placeholders, $src, $user->uid);
+           }
+-          else {
+-            path_set_alias('blog/'. $user->uid);
+-            path_set_alias('blog/'. $user->uid .'/feed');
++          if (module_exists('contact')) {
++            $src = 'user/'. $user->uid .'/contact';
++            $alias = pathauto_create_alias('contact', $op, $placeholders, $src, $user->uid);
+           }
+         }
+-        if (module_exists('tracker')) {
+-          $src = 'user/'. $user->uid .'/track';
+-          $alias = pathauto_create_alias('tracker', $op, $placeholders, $src, $user->uid);
+-        }
+-        if (module_exists('contact')) {
+-          $src = 'user/'. $user->uid .'/contact';
+-          $alias = pathauto_create_alias('contact', $op, $placeholders, $src, $user->uid);
+-        }
+-      }
+-      break;
+-    case 'delete':
+-      // If the user is deleted, remove the path aliases
+-      $user = (object) $user;
+-      path_set_alias('user/'. $user->uid);
++        break;
++      case 'delete':
++        // If the user is deleted, remove the path aliases
++        $user = (object) $user;
++        path_set_alias('user/'. $user->uid);
+ 
+-      // They may have enabled these modules and/or feeds when the user was created, so let's try to delete all of them
+-      path_set_alias('blog/'. $user->uid);
+-      path_set_alias('blog/'. $user->uid .'/feed');
+-      path_set_alias('user/'. $user->uid .'/track');
+-      path_set_alias('user/'. $user->uid .'/track/feed');
+-      path_set_alias('user/'. $user->uid .'/contact');
+-      break;
+-    default:
+-      break;
++        // They may have enabled these modules and/or feeds when the user was created, so let's try to delete all of them
++        path_set_alias('blog/'. $user->uid);
++        path_set_alias('blog/'. $user->uid .'/feed');
++        path_set_alias('user/'. $user->uid .'/track');
++        path_set_alias('user/'. $user->uid .'/track/feed');
++        path_set_alias('user/'. $user->uid .'/contact');
++        break;
++      default:
++        break;
++    }
+   }
+ }
+ 

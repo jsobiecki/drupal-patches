@@ -1,0 +1,18 @@
+Index: includes/bootstrap.inc
+===================================================================
+--- includes/bootstrap.inc
++++ includes/bootstrap.inc
+@@ -325,7 +325,13 @@
+  *   The path of the matching directory.
+  */
+ function conf_path($require_settings = TRUE, $reset = FALSE) {
++  global $enforce_configuration_path;
+   static $conf = '';
++  
++  //I have kitten blood on my hands :\
++  if (!empty($enforce_configuration_path)) {
++    return $enforce_configuration_path;
++  }
+ 
+   if ($conf && !$reset) {
+     return $conf;

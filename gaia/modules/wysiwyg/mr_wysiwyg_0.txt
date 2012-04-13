@@ -1,0 +1,24 @@
+WYSIWYG (http://drupal.org/project/wysiwyg)
+----------------------------------------------------
+
+Description
+===========
+
+There was an error detecting TinyMCE version. It read 100 first characters from
+a file inlucding version number but the version of the editor was a bit
+further.
+
+Compatibility
+=============
+
+6.x-2.1
+
+Modified files
+==============
+
+wysiwyg/editors/tinymce.inc
+
+Related issue
+=============
+
+http://groups.drupal.org/node/28262

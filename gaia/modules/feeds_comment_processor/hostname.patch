@@ -1,0 +1,13 @@
+Index: FeedsCommentProcessor.inc
+===================================================================
+--- FeedsCommentProcessor.inc	(wersja 5950)
++++ FeedsCommentProcessor.inc	(wersja 6007)
+@@ -480,7 +480,7 @@
+       $edit['name'] = $user->name;
+     }
+ 
+-    db_query("INSERT INTO {comments} (nid, pid, uid, subject, comment, format, hostname, timestamp, status, thread, name, mail, homepage) VALUES (%d, %d, %d, '%s', '%s', %d, '%s', %d, %d, '%s', '%s', '%s', '%s')", $edit['nid'], $edit['pid'], $edit['uid'], $edit['subject'], $edit['comment'], $edit['format'], ip_address(), $edit['timestamp'], $edit['status'], $thread, $edit['name'], $edit['mail'], $edit['homepage']);
++    db_query("INSERT INTO {comments} (nid, pid, uid, subject, comment, format, hostname, timestamp, status, thread, name, mail, homepage) VALUES (%d, %d, %d, '%s', '%s', %d, '%s', %d, %d, '%s', '%s', '%s', '%s')", $edit['nid'], $edit['pid'], $edit['uid'], $edit['subject'], $edit['comment'], $edit['format'], isset($edit['hostname']) ? $edit['hostname'] : ip_address() , $edit['timestamp'], $edit['status'], $thread, $edit['name'], $edit['mail'], $edit['homepage']);
+     $edit['cid'] = db_last_insert_id('comments', 'cid');
+ 
+     // Tell the other modules a new comment has been submitted.

@@ -1,0 +1,23 @@
+Print (http://drupal.org/project/print)
+----------------------------------------------------
+
+Description
+===========
+
+The patch below allows other modules to know if the page is being printed also on non-node pages by calling print_printing() with or without argument.
+
+Compatibility
+=============
+
+6.x-1.2 (last release).
+
+Modified files
+==============
+
+print.module
+print.pages.inc
+
+Related issue
+=============
+
+http://drupal.org/node/60817#comment-4448826

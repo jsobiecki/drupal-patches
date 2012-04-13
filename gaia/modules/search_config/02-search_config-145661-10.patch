@@ -1,0 +1,54 @@
+Index: search_config.module
+===================================================================
+--- search_config.module	(revision 4464)
++++ search_config.module	(working copy)
+@@ -113,6 +113,15 @@
+           }
+         }
+ 
++        $disabled_vocabularies = variable_get('search_config_disable_vocabulary', array());
++        if (count($disabled_vocabularies)) {
++          $result = db_query("SELECT t.tid FROM {vocabulary} v LEFT JOIN {term_data} t USING (vid) WHERE v.vid IN (%s)", implode(',', $disabled_vocabularies));
++
++          while ($row = db_fetch_object($result)) {
++            $terms[$row->tid] = $row->tid;
++          }
++        }
++
+         // FIXME: What about multiple hierarchy categories?
+         foreach ($taxonomy as $vocab => $term) {
+           foreach ($term as $k => $v) {
+@@ -238,6 +247,15 @@
+           '#default_value' => variable_get('search_config_disable_category', array()),
+           '#description' => t('Disable searching by the selected categories')
+         );
++        $form['search_config']['category']['search_config_disable_vocabulary'] = array(
++          '#type' => 'select',
++          '#title' => t('Vocabularies'),
++          '#options' => search_config_get_vocabularies(),
++          '#size' => 10,
++          '#multiple' => TRUE,
++          '#default_value' => variable_get('search_config_disable_vocabulary', array()),
++          '#description' => t('Disable searching by the selected vocabularies')
++        );
+       }
+ 
+       // Node types
+@@ -341,3 +359,17 @@
+     }
+   }
+ }
++
++/**
++ *
++ */
++function search_config_get_vocabularies() {
++  $result = db_query('SELECT v.vid, v.name FROM {vocabulary} v ORDER BY v.weight, v.name');
++
++  $vocabularies = array();
++  while ($voc = db_fetch_object($result)) {
++    $vocabularies[$voc->vid] = $voc->name;
++  }
++
++  return $vocabularies;
++}

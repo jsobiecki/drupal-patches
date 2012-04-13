@@ -1,0 +1,22 @@
+Captcha (http://drupal.org/project/captcha)
+----------------------------------------------------
+
+Description
+===========
+
+Prevents creation of session for anonymous users. Side efect: anonymous users have to pass captcha test for every form submission (option skipping captcha after first successful submitions won't work).
+
+Compatibility
+=============
+
+6.x-2.2 (last release).
+
+Modified files
+==============
+
+captcha.module
+
+Related issue
+=============
+
+None

@@ -1,0 +1,19 @@
+Index: workflow.module
+===================================================================
+--- workflow.module	(wersja 4867)
++++ workflow.module	(kopia robocza)
+@@ -832,6 +832,7 @@
+ function workflow_load($wid) {
+   $workflow = db_fetch_object(db_query('SELECT * FROM {workflows} WHERE wid = %d', $wid));
+   $workflow->options = unserialize($workflow->options);
++  $workflow->name = t($workflow->name);
+   return $workflow;
+ }
+ 
+@@ -1629,4 +1630,4 @@
+     'weight' => 10,
+   );
+   return $extra;
+-}
+\ No newline at end of file
++}

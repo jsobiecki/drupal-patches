@@ -1,0 +1,16 @@
+Index: customerror.module
+===================================================================
+--- customerror.module	(revision 6397)
++++ customerror.module	(working copy)
+@@ -149,7 +149,10 @@
+ 
+ function customerror_page() {
+   $code = arg(1);
+-  $_SESSION['destination'] = $_REQUEST['destination'];
++  // This creates sessions for anonymous users (and keeps the value until user logs in)
++  // Also may cause user to be redirected on 404 after login if he previously tried to
++  // to access unexisting image served via imagecache (see: http://drupal.org/node/986512).
++  //$_SESSION['destination'] = $_REQUEST['destination'];
+ 
+   switch($code) {
+     case 403:

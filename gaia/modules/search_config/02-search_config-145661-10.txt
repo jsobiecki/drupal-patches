@@ -1,0 +1,22 @@
+Search Config (http://drupal.org/project/search_config)
+----------------------------------------------------
+
+Description
+===========
+
+Add a posibility to remove entire vocabularies form advanced search form.
+
+Compatibility
+=============
+
+6.x-1.6 (last release).
+
+Modified files
+==============
+
+search_config.module
+
+Related issue
+=============
+
+http://drupal.org/node/145661#comment-3964782

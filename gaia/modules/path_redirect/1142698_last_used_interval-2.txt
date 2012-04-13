@@ -1,0 +1,24 @@
+Path redirect (http://drupal.org/project/path_redirect)
+----------------------------------------------------
+
+Description
+===========
+
+For performance reasons one might not want to update {path_redirect.}last_used every time a redirect is hit. If automatic purging is disabled, one might not want to update it at all.
+
+With this patch the field is only updated once per X seconds using a logic similar to the one in sess_write() in includes/session.inc.
+
+Compatibility
+=============
+
+6.x-1.x-dev
+
+Modified files
+==============
+
+revisioning.rules.inc
+
+Related issue
+=============
+
+http://drupal.org/node/1142698

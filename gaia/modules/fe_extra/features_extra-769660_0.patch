@@ -1,0 +1,138 @@
+Index: fe_block.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/features_extra/Attic/fe_block.module,v
+retrieving revision 1.1.2.5
+diff -u -p -r1.1.2.5 fe_block.module
+--- fe_block.module	14 Mar 2010 13:31:28 -0000	1.1.2.5
++++ fe_block.module	29 Jul 2010 19:36:48 -0000
+@@ -230,23 +230,24 @@ function fe_block_boxes_features_export_
+   $code[] = '';
+   foreach ($data as $machine_name) {
+     // The object to be exported.
+-    $object = $objects[$machine_name];
++    if ($object = $objects[$machine_name]) {
+ 
+-    $additions = array();
+-    // Load box.
+-    if (!empty($object->bid)) {
+-      $box = block_box_get($object->bid);
+-      $additions = (array) $box;
+-      unset($additions['bid'], $additions['body']);
+-    }
++      $additions = array();
++      // Load box.
++      if (!empty($object->bid)) {
++        $box = block_box_get($object->bid);
++        if ($box) $additions = (array) $box;
++        unset($additions['bid'], $additions['body']);
++      }
+ 
+-    // Code.
+-    $identifier = $schema['export']['identifier'];
+-    $code[] = ctools_export_object($component, $object, '  ', $identifier, $additions)
+-             .'  $'. $identifier .'->body = '. features_var_export($box['body']) .';';
+-    $code[] = '';
+-    $code[] = '  $export[\''. $machine_name .'\'] = $'. $identifier .';';
+-    $code[] = '';
++      // Code.
++      $identifier = $schema['export']['identifier'];
++      $code[] = ctools_export_object($component, $object, '  ', $identifier, $additions)
++               .'  $'. $identifier .'->body = '. features_var_export($box['body']) .';';
++      $code[] = '';
++      $code[] = '  $export[\''. $machine_name .'\'] = $'. $identifier .';';
++      $code[] = '';
++    }
+   }
+   $code[] = '  return $export;';
+   $code = implode("\n", $code);
+Index: fe_nodequeue.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/features_extra/Attic/fe_nodequeue.module,v
+retrieving revision 1.1.2.6
+diff -u -p -r1.1.2.6 fe_nodequeue.module
+--- fe_nodequeue.module	25 May 2010 04:46:43 -0000	1.1.2.6
++++ fe_nodequeue.module	29 Jul 2010 19:36:48 -0000
+@@ -93,23 +93,24 @@ function fe_nodequeue_queue_features_exp
+   $code[] = '';
+   foreach ($data as $machine_name) {
+     // The object to be exported.
+-    $object = $objects[$machine_name];
++    if ($object = $objects[$machine_name]) {
+ 
+-    $additions = array();
+-    // Load nodequeue_queue.
+-    if (!empty($object->qid)) {
+-      $nodequeue_queue = nodequeue_load($object->qid);
+-      $additions = (array) $nodequeue_queue;
+-      unset($additions['qid']);
+-      // TODO: sub
+-      unset($additions['subqueues']);
+-    }
+-
+-    // Code.
+-    $identifier = $schema['export']['identifier'];
+-    $code[] = ctools_export_object($component, $object, '  ', $identifier, $additions);
+-    $code[] = '  $export[\''. $machine_name .'\'] = $'. $identifier .';';
+-    $code[] = '';
++      $additions = array();
++      // Load nodequeue_queue.
++      if (!empty($object->qid)) {
++        $nodequeue_queue = nodequeue_load($object->qid);
++        $additions = (array) $nodequeue_queue;
++        unset($additions['qid']);
++        // TODO: sub
++        unset($additions['subqueues']);
++      }
++
++      // Code.
++      $identifier = $schema['export']['identifier'];
++      $code[] = ctools_export_object($component, $object, '  ', $identifier, $additions);
++      $code[] = '  $export[\''. $machine_name .'\'] = $'. $identifier .';';
++      $code[] = '';
++    }
+   }
+   $code[] = '  return $export;';
+   $code = implode("\n", $code);
+Index: fe_taxonomy.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/features_extra/fe_taxonomy.module,v
+retrieving revision 1.1.2.4
+diff -u -p -r1.1.2.4 fe_taxonomy.module
+--- fe_taxonomy.module	9 Apr 2010 05:05:23 -0000	1.1.2.4
++++ fe_taxonomy.module	29 Jul 2010 19:36:48 -0000
+@@ -90,21 +90,22 @@ function fe_taxonomy_vocabulary_features
+   $code[] = '';
+   foreach ($data as $machine_name) {
+     // The object to be exported.
+-    $object = $objects[$machine_name];
++    if ($object = $objects[$machine_name]) {
+ 
+-    $additions = array();
+-    // Load vocabulary.
+-    if (!empty($object->vid)) {
+-      $vocabulary = taxonomy_vocabulary_load($object->vid);
+-      $additions = (array) $vocabulary;
+-      unset($additions['vid']);
+-    }
++      $additions = array();
++      // Load vocabulary.
++      if (!empty($object->vid)) {
++        $vocabulary = taxonomy_vocabulary_load($object->vid);
++        $additions = (array) $vocabulary;
++        unset($additions['vid']);
++      }
+ 
+-    // Code.
+-    $identifier = $schema['export']['identifier'];
+-    $code[] = ctools_export_object($component, $object, '  ', $identifier, $additions);
+-    $code[] = '  $export[\''. $machine_name .'\'] = $'. $identifier .';';
+-    $code[] = '';
++      // Code.
++      $identifier = $schema['export']['identifier'];
++      $code[] = ctools_export_object($component, $object, '  ', $identifier, $additions);
++      $code[] = '  $export[\''. $machine_name .'\'] = $'. $identifier .';';
++      $code[] = '';
++    }
+   }
+   $code[] = '  return $export;';
+   $code = implode("\n", $code);

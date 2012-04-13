@@ -1,0 +1,20 @@
+Index: epsacrop.module
+===================================================================
+--- epsacrop.module	(revision 6050)
++++ epsacrop.module	(working copy)
+@@ -157,7 +157,15 @@
+     case'update':
+       if (!empty($node->epsacropcoords)) {
+         $coords = json_decode($node->epsacropcoords, TRUE);
++        if ($node->nid) {
++          // If node exists (op=update) get previous cropping data.
++          $previous_data = _epsacrop_get_coords_from_nid($node->nid);
++        }
+         foreach ($coords as $fid => $coord) {
++          // Skip file update for the files that the cropping area haven't changed for any of the presets.
++          if (strcmp(serialize($coord), serialize($previous_data[$fid])) == 0) {
++            continue;
++          }
+           _epsacrop_update_file($fid, $coord, $node->nid);
+         }
+       }

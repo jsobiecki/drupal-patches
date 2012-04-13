@@ -1,0 +1,54 @@
+diff --git a/uuid.module b/uuid.module
+index c4b918d..df5dae1 100644
+--- a/uuid.module
++++ b/uuid.module
+@@ -191,7 +191,7 @@ function node_get_by_revision_uuid($revision_uuid) {
+ function uuid_user($op, &$edit, &$user, $category = NULL) {
+   switch ($op) {
+     case 'load':
+-      $user->uuid = db_result(db_query('SELECT uuid FROM {uuid_users} WHERE uid = %d', $user->uid));
++      $user->uuid = _uuid_user_load($user->uid);
+       break;
+     case 'insert':
+       $insert = NULL;
+@@ -207,6 +207,7 @@ function uuid_user($op, &$edit, &$user, $category = NULL) {
+       if ($insert) {
+         db_query("INSERT INTO {uuid_users} (uid, uuid) VALUES (%d, '%s')", $user->uid, $user->uuid);
+       }
++      _uuid_user_load($user->uid, TRUE);
+       break;
+     case 'update':
+       if (isset($user->uuid) && uuid_is_valid($user->uuid)) {
+@@ -216,6 +217,7 @@ function uuid_user($op, &$edit, &$user, $category = NULL) {
+           db_query("INSERT INTO {uuid_users} (uid, uuid) VALUES (%d, '%s')", $user->uid, $user->uuid);
+         }
+       }
++      _uuid_user_load($user->uid, TRUE);
+       break;
+     case 'delete':
+       db_query('DELETE FROM {uuid_users} WHERE uid = %d', $node->uid);
+@@ -408,3 +410,24 @@ function uuid_token_list($type = 'all') {
+ 
+   return $tokens;
+ }
++
++/**
++ * Load UUID for given user.
++ * 
++ * @param $uid
++ *   User ID.
++ * @param $reset
++ *   TRUE to reset static cache.
++ */
++function _uuid_user_load($uid, $reset = FALSE) {
++  static $uuid = array();
++
++  if (!isset($uuid[$uid]) || $reset) {
++    $uuid[$uid] = db_result(db_query(
++    	'SELECT uuid FROM {uuid_users} WHERE uid = %d', 
++      $uid
++    ));
++  }
++  
++  return $uuid[$uid];
++}

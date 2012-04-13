@@ -1,0 +1,21 @@
+Media: Youtube (http://drupal.org/project/media_youtube)
+----------------------------------------------------
+
+Description
+===========
+Patch reduces memory consumption.
+
+
+Compatibility
+=============
+6.x-1.2
+
+
+Modified files
+==============
+- youtube.inc
+
+
+Related issue
+=============
+http://drupal.org/node/1371562

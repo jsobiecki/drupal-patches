@@ -1,0 +1,16 @@
+Index: .htaccess
+===================================================================
+--- .htaccess	(revision 7840)
++++ .htaccess	(working copy)
+@@ -167,6 +167,11 @@
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_URI} !=/favicon.ico
+   RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
++
++  #Facebook Redirect For Added String
++  RewriteCond %{QUERY_STRING} ^((([^&]+&)*([^&]+)+)&)?fb_xd_fragment
++  RewriteRule (.*) $1?%2 [R=301,L]
++
+ </IfModule>
+ 
+ # $Id: .htaccess,v 1.90.2.5 2010/02/02 07:25:22 dries Exp $

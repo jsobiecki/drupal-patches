@@ -1,0 +1,27 @@
+Index: context.core.inc
+===================================================================
+--- context.core.inc	(revision 4305)
++++ context.core.inc	(working copy)
+@@ -145,6 +145,7 @@
+   // Prevent this from firing on admin pages... damn form driven apis...
+   if ($form['#id'] === 'node-form' && arg(0) != 'admin') {
+     context_node_condition($form['#node'], 'form');
++    $form['#validate'][] = 'context_form_alter_node_validate';
+   }
+   else if ($form_id == 'system_modules') {
+     context_invalidate_cache();
+@@ -183,6 +184,14 @@
+ }
+ 
+ /**
++ * Set context also on validate, otherwise forms that don't validate drop out
++ * of context.
++ */
++function context_form_alter_node_validate($form, &$form_state) {
++  context_node_condition($form['#node'], 'form');
++}
++
++/**
+  * Implementation of hook_form_alter() for comment_form.
+  */
+ function context_form_comment_form_alter(&$form, $form_state) {

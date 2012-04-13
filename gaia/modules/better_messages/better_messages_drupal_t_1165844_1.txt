@@ -1,0 +1,23 @@
+Better Messages (http://drupal.org/project/print)
+----------------------------------------------------
+
+Description
+===========
+
+Translation of the message "Closing in ... seconds" doesn't use the placeholders. 
+This patch fixed that and use Drupal.t() in right way.
+
+Compatibility
+=============
+
+6.x-1.3.
+
+Modified files
+==============
+
+better_messages.js
+
+Related issue
+=============
+
+http://drupal.org/node/1165844#comment-4503162

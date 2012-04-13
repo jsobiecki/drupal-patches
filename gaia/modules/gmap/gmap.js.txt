@@ -1,0 +1,22 @@
+GMap Module (http://drupal.org/project/gmap)
+----------------------------------------------------
+
+Description
+===========
+
+The patch solves issues with google maps rendered uncorrectly if placed in vertical tabs.
+
+Compatibility
+=============
+
+6.x-1.1 (last release).
+
+Modified files
+==============
+
+js/gmap.js
+
+Related issue
+=============
+
+http://drupal.org/node/1064448

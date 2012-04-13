@@ -1,0 +1,40 @@
+Index: print.module
+===================================================================
+--- print.module	(revision 5979)
++++ print.module	(working copy)
+@@ -862,3 +862,23 @@
+ 
+   return implode('&', $params);
+ }
++
++/**
++ * Pseudo-singleton. Set or check if the page is being printed.
++ *
++ * param bool @print
++ *    Value the singleton to be set to.
++ *
++ * return bool
++ *     Value the singleton was last set to.
++ */
++function print_printing($print = 0) {
++  static $printing;
++  if (!isset($printing) && $print === 0) {
++    $printing = FALSE;
++  }
++  else if (!isset($printing) || is_bool($print)) {
++    $printing = $print;
++  }
++  return $printing;
++}
+Index: print.pages.inc
+===================================================================
+--- print.pages.inc	(revision 5979)
++++ print.pages.inc	(working copy)
+@@ -626,6 +626,7 @@
+   $path = drupal_get_normal_path($path);
+ 
+   menu_set_active_item($path);
++  print_printing(TRUE);
+   // Adapted from index.php.
+   $node = new stdClass();
+   $node->body = menu_execute_active_handler($path);

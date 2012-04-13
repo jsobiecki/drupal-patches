@@ -1,0 +1,22 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Replace cron.php by Elysia Cron's equivalent.
+
+Compatibility
+=============
+
+6.x-20
+
+Modified files
+==============
+
+-
+
+Related issue
+=============
+
+-

@@ -1,0 +1,22 @@
+Workflow (http://drupal.org/project/workflow)
+-----------------------------------------------------------
+
+Description
+===========
+
+Elimination of errors in watchdog.
+
+Compatibility
+=============
+
+
+
+Modified files
+==============
+
+workflow.module
+
+Related issue
+=============
+
+

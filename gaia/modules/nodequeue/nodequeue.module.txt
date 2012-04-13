@@ -1,0 +1,27 @@
+Nodequeue (http://drupal.org/project/nodequeue)
+-----------------------------------------------
+
+Description
+===========
+
+This patch allows users with 'manipulate all queues' or 'manipulate queues' permissions to add unpublished nodes to the queues (previously it required 'administer nodes' permission).
+
+Compatibility
+=============
+
+6.x-2.9
+
+Modified files
+==============
+
+nodequeue.module
+
+Related issue
+=============
+
+N/A
+
+Redmine
+=======
+
+#6059

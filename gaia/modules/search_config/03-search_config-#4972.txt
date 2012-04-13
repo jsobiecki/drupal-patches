@@ -1,0 +1,22 @@
+Search config (http://drupal.org/project/search_config)
+-----------------------------------------------------------
+
+Description
+===========
+
+This patch will add additional sentry at search_config module, wich will prevent from unnescessary call of taxonomy_form_all function.
+On large content set, this function is real memory hog and kills search request.
+
+Compatibility
+=============
+
+
+Modified files
+==============
+
+search_config.module
+
+Related issue
+=============
+
+Redmine #4972

@@ -1,0 +1,122 @@
+Index: tests/memcache.test
+===================================================================
+--- tests/memcache.test	(wersja 8247)
++++ tests/memcache.test	(kopia robocza)
+@@ -146,6 +146,39 @@
+     $this->checkVariable(array('drupal1', 'drupal2' => 'drupal3', 'drupal4' => array('drupal5', 'drupal6')));
+   }
+ 
++  function testCreateCacheStatistics() {
++    dvariable_set('cache_write_statistics', TRUE);
++    $this->assertTrue(
++      cache_write_statistics('cache_get', 'bin_name', 'cid_name', FALSE, 'nop'),
++      t('Statistics write returned TRUE')
++    );
++
++    $this->assertTrue(
++      file_exists(file_directory_path() .'/cache_statistics.csv'),
++      t('Statistics file created succesfully')
++    );
++
++    $file = fopen(file_directory_path() .'/cache_statistics.csv', 'r');
++    $this->assertTrue(
++      is_array(fgetcsv($file)),
++      t('Statistics file created succesfully')
++    );
++
++    file_delete(file_directory_path() .'/cache_statistics.csv');
++
++    variable_set('cache_write_statistics', FALSE);
++    $this->assertFalse(
++      cache_write_statistics('cache_get', 'bin_name', 'cid_name', TRUE, 'nop'),
++      t('When statistics writing disabled, no file were created')
++    );
++
++    $this->assertTrue(
++      !file_exists(file_directory_path() .'/cache_statistics.csv'),
++      t('Statistics file werent created when disabled')
++    );
++  }
++
++
+   /**
+    * Test the saving and restoring of an object.
+    */
+@@ -340,4 +373,5 @@
+     memcache_wildcards(FALSE, FALSE, FALSE, TRUE);
+     $this->assertFalse($this->checkCacheExists('test_cid_clear1', $this->default_value), 'The cache was cleared successfully.');
+   }
++
+ }
+Index: memcache.inc
+===================================================================
+--- memcache.inc	(wersja 8247)
++++ memcache.inc	(kopia robocza)
+@@ -31,6 +31,8 @@
+  *   'cache_menu', 'cache_page', or 'cache' for the default cache.
+  */
+ function cache_get($cid, $table = 'cache') {
++
++  cache_write_statistics('cache_get', $table, $cid, TRUE, $_SERVER['host']);
+   // Handle excluded bins first.
+   $bins = variable_get('memcache_bins', array());
+   if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
+@@ -173,6 +175,7 @@
+ function cache_set($cid, $data, $table = 'cache', $expire = CACHE_PERMANENT, $headers = NULL) {
+   // Handle database fallback first.
+   $bins = variable_get('memcache_bins', array());
++  cache_write_statistics('cache_set', $table, $cid, TRUE, $_SERVER['host']);
+   if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
+     return _cache_set($cid, $data, $table, $expire, $headers);
+   }
+@@ -234,6 +237,7 @@
+  *   match. If '*' is given as $cid, the table $table will be emptied.
+  */
+ function cache_clear_all($cid = NULL, $table = NULL, $wildcard = FALSE) {
++  cache_write_statistics('cache_clear_all', $table, $cid, TRUE, $_SERVER['host']);
+   // Handle database fallback first.
+   $bins = variable_get('memcache_bins', array());
+   if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
+@@ -438,3 +442,42 @@
+   // If the variables aren't cached, there's no need to do anything.
+   $conf[$name] = $value;
+ }
++
++
++/**
++ * This file write (if enabled) current cache statistics usage to 
++ * csv file for later analytics.
++ *
++ * @param $op_type
++ *   Operator type, one of cache_get, cache_set, cache_clear_all
++ * @param $bin_name 
++ *   Bin name
++ * @param $cid_name
++ *   Unique identifier of $cid
++ * @success
++ *   Does opearation succedded or failed
++ * @info 
++ *   Additional information
++ * @return
++ *   TRUE if statistics file was updated. FALSE otherwise.
++ */
++function cache_write_statistics($op_type, $bin_name, $cid_name, $success, $info) {
++  // This variable toggles this functionality
++  if (
++    variable_get('cache_write_statistics', FALSE) && 
++    function_exists('file_directory_path') &&
++    in_array($bin_name, array('cache_page', 'cache_views_data', 'users', 'cache_block'))
++  ) {
++    $file = fopen(file_directory_path() .'/cache_statistics.csv', 'a+');
++    fputcsv(
++      $file, 
++      array(time(), $op_type, $bin_name, $cid_name, $success, $info)
++    );
++    fclose($file);
++
++    return TRUE;
++  }
++  else {
++    return FALSE;
++  }
++}

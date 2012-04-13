@@ -1,0 +1,13 @@
+Index: export/views_bonus_export.module
+===================================================================
+--- export/views_bonus_export.module	(wersja 6845)
++++ export/views_bonus_export.module	(kopia robocza)
+@@ -92,7 +92,7 @@
+  * Implementation of hook_views_post_render().
+  */
+ function views_bonus_export_views_post_render(&$view, &$output, &$cache) {
+-  if (is_a($view->style_plugin, 'views_bonus_plugin_style_export')) {
++  if (isset($view->style_plugin) && is_a($view->style_plugin, 'views_bonus_plugin_style_export')) {
+     _views_bonus_export_add_headers($view);
+   }
+ }

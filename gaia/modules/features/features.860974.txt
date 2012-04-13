@@ -1,0 +1,25 @@
+Features (http://drupal.org/project/features)
+----------------------------------------------------------
+
+Description
+===========
+
+Fixes not reverting menu links.
+
+
+Compatibility
+=============
+
+6.x-1.0
+
+
+Modified files
+==============
+
+features.menu.inc
+
+
+Related issue
+=============
+
+http://drupal.org/node/860974

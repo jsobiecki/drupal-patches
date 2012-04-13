@@ -1,0 +1,24 @@
+Index: noderef_uf.module
+===================================================================
+--- noderef_uf.module	(revision 4317)
++++ noderef_uf.module	(working copy)
+@@ -20,9 +20,9 @@
+     $uf_select = FALSE;
+ 
+     $settings = array();
+-
+-    foreach (content_fields() as $field) {
+-      if ($field['type_name'] == $type && $field['widget']['module'] == 'noderef_uf') {
++    $content_type_fields = content_types($type);
++    foreach ($content_type_fields['fields'] as $field) {
++      if ($type && $field['widget']['module'] == 'noderef_uf') {
+         switch ($field['widget']['type']) {
+           case 'noderef_uf_autocomplete':
+             $uf_autocomplete = TRUE;
+@@ -654,4 +654,4 @@
+   }
+ 
+   return $references;
+-}
+\ No newline at end of file
++}

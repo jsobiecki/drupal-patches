@@ -1,0 +1,31 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+This patch changes node_access logic in drupal. 
+Now it uses intersection of access rights (AND logic operator) not an UNION (by using or logic operators).
+
+Compatibility
+=============
+
+6.x
+
+
+Modified files
+==============
+
+modules/node/node.module
+
+
+Target Process
+==============
+
+-
+
+
+Related issue
+=============
+
+http://drupal.org/node/196922

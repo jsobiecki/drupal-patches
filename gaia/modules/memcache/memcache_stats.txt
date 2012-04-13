@@ -1,0 +1,22 @@
+Memcache API and Integration (http://drupal.org/project/memcache)
+----------------------------------------------------
+
+Description
+===========
+
+Add possibility of generation CSV based time series with all cache
+related events
+
+Compatibility
+=============
+
+6.x-1.9 (last release).
+
+Modified files
+==============
+
+memcache.inc
+
+Related issue
+=============
+

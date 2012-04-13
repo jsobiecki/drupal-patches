@@ -1,0 +1,22 @@
+Index: nodequeue.module
+===================================================================
+--- nodequeue.module	(revision 7726)
++++ nodequeue.module	(working copy)
+@@ -1386,7 +1386,7 @@
+     $account = $user;
+   }
+   $nids_visible = array();
+-  if (!user_access('administer nodes', $account)) {
++  if (!user_access('manipulate all queues', $account) && !user_access('manipulate queues', $account) && !user_access('administer nodes', $account)) {
+     $node_status_sql = ' AND (n.status = 1 || n.uid = %d)';
+   }
+ 
+@@ -2549,7 +2549,7 @@
+   }
+   $where_args = array();
+   global $user;
+-  if (!user_access('administer nodes', $user)) {
++  if (!user_access('manipulate all queues', $user) && !user_access('manipulate queues', $user) && !user_access('administer nodes', $user)) {
+     $where = '(n.status = 1 || n.uid = %d) AND ';
+     $where_args = array($user->uid);
+   }

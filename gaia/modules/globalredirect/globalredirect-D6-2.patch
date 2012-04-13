@@ -1,0 +1,30 @@
+? globalredirect-D6-2.patch
+? globalredirect-D6.patch
+Index: globalredirect.module
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/globalredirect/globalredirect.module,v
+retrieving revision 1.1.2.4.2.5.2.14
+diff -u -r1.1.2.4.2.5.2.14 globalredirect.module
+--- globalredirect.module	22 Dec 2008 10:34:32 -0000	1.1.2.4.2.5.2.14
++++ globalredirect.module	20 Dec 2009 12:53:35 -0000
+@@ -128,14 +128,18 @@
+ 
+ 
+     // Find an alias (if any) for the request
+-    $alias = drupal_get_path_alias($request);
++    $alias = drupal_get_path_alias($request, isset($options['language']->language) ? $options['language']->language : NULL);
++    if (function_exists('custom_url_rewrite_outbound')) {
++      // Modules may alter outbound links by reference.
++      custom_url_rewrite_outbound($alias, $options, $request);
++    }
+     if ($prefix && $alias) {
+       $prefix .= '/';
+     }
+ 
+     // Alias case sensitivity check. If there is an alias from the previous lookup, do a query to test for case.
+     if ($alias && variable_get('globalredirect_case_sensitive_urls', GLOBALREDIRECT_CASE_SENSITIVE_URLS_ENABLED) == GLOBALREDIRECT_CASE_SENSITIVE_URLS_ENABLED) {
+-      $alias_sensitive = db_result(db_query("SELECT dst FROM {url_alias} WHERE dst = '%s'", $alias));
++      $alias_sensitive = db_result(db_query("SELECT dst FROM {url_alias} WHERE dst = '%s' AND language = '%s'", $alias, $options['language']->language));
+       if ($alias_sensitive && $alias != $alias_sensitive) {
+         // There is a match and there is a difference in case.
+         $alias = $alias_sensitive;

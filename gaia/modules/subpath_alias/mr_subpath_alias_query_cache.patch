@@ -1,0 +1,25 @@
+--- subpath_alias.module
++++ subpath_alias.module
+@@ -137,10 +137,19 @@
+       }
+     }
+     if ($args) {
+-      // Query the database for any of the sub-paths.
+-      $query = "SELECT src AS pfrom, dst AS pto FROM {url_alias} WHERE src IN(". db_placeholders($args, 'varchar') .") AND language IN('%s', '') ORDER BY language DESC, CHAR_LENGTH(src) DESC";
++      // Use static cache to prevent  duplication of queries.
++      static $query_cache = array();
++      // Build query cache id.
++      $query_cid = $path_language .':'. implode('__', $args);
++      
++      if (!isset($query_cache[$query_cid])) {
++        // Query the database for any of the sub-paths.
++        $query = "SELECT src AS pfrom, dst AS pto FROM {url_alias} WHERE src IN(". db_placeholders($args, 'varchar') .") AND language IN('%s', '') ORDER BY language DESC, CHAR_LENGTH(src) DESC";
++        $query_cache[$query_cid] = db_fetch_array(db_query_range($query, array_merge($args, array($path_language)), 0, 1));
++      }
++      
+       // Limit to one row, since we only want the best fitting result.
+-      if ($alias = db_fetch_array(db_query_range($query, array_merge($args, array($path_language)), 0, 1))) {
++      if ($alias = $query_cache[$query_cid]) {
+         $result = $alias['pto'] . substr($path, strlen($alias['pfrom']));
+         // Add to static mapping cache.
+         $map[$path_language][$path] = $result;
