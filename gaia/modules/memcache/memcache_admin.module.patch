@@ -1,7 +1,7 @@
-Index: memcache_admin.module
+Index: memcache_admin/memcache_admin.module
 ===================================================================
---- memcache_admin.module	(revision 8053)
-+++ memcache_admin.module	(working copy)
+--- memcache_admin/memcache_admin.module	(revision 8053)
++++ memcache_admin/memcache_admin.module	(working copy)
 @@ -225,6 +225,8 @@
   * @return string
   */
