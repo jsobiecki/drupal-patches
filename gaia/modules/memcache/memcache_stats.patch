@@ -1,63 +1,12 @@
-Index: tests/memcache.test
-===================================================================
---- tests/memcache.test	(wersja 8247)
-+++ tests/memcache.test	(kopia robocza)
-@@ -146,6 +146,39 @@
-     $this->checkVariable(array('drupal1', 'drupal2' => 'drupal3', 'drupal4' => array('drupal5', 'drupal6')));
-   }
- 
-+  function testCreateCacheStatistics() {
-+    dvariable_set('cache_write_statistics', TRUE);
-+    $this->assertTrue(
-+      cache_write_statistics('cache_get', 'bin_name', 'cid_name', FALSE, 'nop'),
-+      t('Statistics write returned TRUE')
-+    );
-+
-+    $this->assertTrue(
-+      file_exists(file_directory_path() .'/cache_statistics.csv'),
-+      t('Statistics file created succesfully')
-+    );
-+
-+    $file = fopen(file_directory_path() .'/cache_statistics.csv', 'r');
-+    $this->assertTrue(
-+      is_array(fgetcsv($file)),
-+      t('Statistics file created succesfully')
-+    );
-+
-+    file_delete(file_directory_path() .'/cache_statistics.csv');
-+
-+    variable_set('cache_write_statistics', FALSE);
-+    $this->assertFalse(
-+      cache_write_statistics('cache_get', 'bin_name', 'cid_name', TRUE, 'nop'),
-+      t('When statistics writing disabled, no file were created')
-+    );
-+
-+    $this->assertTrue(
-+      !file_exists(file_directory_path() .'/cache_statistics.csv'),
-+      t('Statistics file werent created when disabled')
-+    );
-+  }
-+
-+
-   /**
-    * Test the saving and restoring of an object.
-    */
-@@ -340,4 +373,5 @@
-     memcache_wildcards(FALSE, FALSE, FALSE, TRUE);
-     $this->assertFalse($this->checkCacheExists('test_cid_clear1', $this->default_value), 'The cache was cleared successfully.');
-   }
-+
- }
-Index: memcache.inc
-===================================================================
---- memcache.inc	(wersja 8247)
-+++ memcache.inc	(kopia robocza)
+diff -ruB ./memcache.inc /home/jarsob/workspace/mr.X/app/sites/all/modules/contrib/memcache/memcache.inc
+--- memcache.inc	2012-06-15 14:32:21.378201389 +0200
++++ memcache.inc	2012-06-15 14:32:04.102200813 +0200
 @@ -31,6 +31,8 @@
   *   'cache_menu', 'cache_page', or 'cache' for the default cache.
   */
  function cache_get($cid, $table = 'cache') {
 +
-+  cache_write_statistics('cache_get', $table, $cid, TRUE, $_SERVER['host']);
++  cache_write_statistics('cache_get', $table, $cid, TRUE, $_SERVER['HTTP_HOST']);
    // Handle excluded bins first.
    $bins = variable_get('memcache_bins', array());
    if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
@@ -65,7 +14,7 @@ Index: memcache.inc
  function cache_set($cid, $data, $table = 'cache', $expire = CACHE_PERMANENT, $headers = NULL) {
    // Handle database fallback first.
    $bins = variable_get('memcache_bins', array());
-+  cache_write_statistics('cache_set', $table, $cid, TRUE, $_SERVER['host']);
++  cache_write_statistics('cache_set', $table, $cid, TRUE, $_SERVER['HTTP_HOST']);
    if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
      return _cache_set($cid, $data, $table, $expire, $headers);
    }
@@ -73,11 +22,11 @@ Index: memcache.inc
   *   match. If '*' is given as $cid, the table $table will be emptied.
   */
  function cache_clear_all($cid = NULL, $table = NULL, $wildcard = FALSE) {
-+  cache_write_statistics('cache_clear_all', $table, $cid, TRUE, $_SERVER['host']);
++  cache_write_statistics('cache_clear_all', $table, $cid, TRUE, $_SERVER['HTTP_HOST']);
    // Handle database fallback first.
    $bins = variable_get('memcache_bins', array());
    if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
-@@ -438,3 +442,42 @@
+@@ -438,3 +442,60 @@
    // If the variables aren't cached, there's no need to do anything.
    $conf[$name] = $value;
  }
@@ -104,14 +53,32 @@ Index: memcache.inc
 +  // This variable toggles this functionality
 +  if (
 +    variable_get('cache_write_statistics', FALSE) && 
-+    function_exists('file_directory_path') &&
 +    in_array($bin_name, array('cache_page', 'cache_views_data', 'users', 'cache_block'))
 +  ) {
-+    $file = fopen(file_directory_path() .'/cache_statistics.csv', 'a+');
++
++    // Get executor
++    $backtrace = debug_backtrace();
++
++    // List of functions where SQL queries can originate.
++    $cache_functions = array('cache_get', 'cache_clear_all', 'cache_set', 'cache_write_statistics');
++
++    // Determine where query function was called, and adjust line/file
++    // accordingly.
++    foreach ($backtrace as $index => $function) {
++      if (!in_array($function['function'], $cache_functions)) {
++        $function_name = $function['function'];
++        $line = $function['line'];
++        $filename = $function['file'];
++        break;
++      }
++    }
++
++    $file = fopen(conf_path()  .'/files/cache_statistics.csv', 'a+');
 +    fputcsv(
-+      $file, 
-+      array(time(), $op_type, $bin_name, $cid_name, $success, $info)
++      $file,
++      array(time(), $op_type, $bin_name, $cid_name, $success, $info, $function_name, $line, $filename)
 +    );
++    fflush($file);
 +    fclose($file);
 +
 +    return TRUE;
