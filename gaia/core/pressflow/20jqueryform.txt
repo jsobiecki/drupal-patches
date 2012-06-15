@@ -1,0 +1,24 @@
+Drupal (http://drupal.org/project/drupal)
+----------------------------------------------------
+
+Description
+===========
+
+Updates jquery.form.js to newest version compatible with D6 (1.2.6 jquery).
+
+Compatibility
+=============
+
+Tested under pressflow 6.25
+
+
+Modified files
+==============
+
+misc/jquery.form.js
+
+Related issue
+=============
+
+https://redmine.serwisyregionalne.pl/issues/8155
+http://drupal.org/node/571456

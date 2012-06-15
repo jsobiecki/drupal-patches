@@ -1,0 +1,24 @@
+Path redirect (http://drupal.org/project/path_redirect)
+----------------------------------------------------
+
+Description
+===========
+
+We just noticed the whole cache_page table is truncated when we edit a node. We don't necessarily have to save it, just opening the edit form makes us clearing the cache_page table.
+
+This patch fixes this problem
+
+Compatibility
+=============
+
+6.x-1.0-rc2
+
+Modified files
+==============
+
+path_redirect.module
+
+Related issue
+=============
+
+http://drupal.org/node/1341112

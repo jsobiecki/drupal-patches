@@ -1,0 +1,17 @@
+Index: path_redirect.module
+===================================================================
+--- path_redirect.module	(wersja 8769)
++++ path_redirect.module	(kopia robocza)
+@@ -548,7 +548,11 @@
+   $sql = 'DELETE FROM {path_redirect} WHERE ' . implode(' AND ', $query['conditions']);
+   db_query($sql, $query['args']);
+   $deleted = db_affected_rows();
+-  path_redirect_clear_cache();
++
++  // Clean cache only when something was removed.
++  if ($deleted > 0) {
++    path_redirect_clear_cache();
++  }
+   return $deleted;
+ }
+ 

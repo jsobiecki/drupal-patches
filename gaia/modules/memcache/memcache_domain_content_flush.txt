@@ -1,0 +1,23 @@
+Memcache API and Integration (http://drupal.org/project/memcache)
+----------------------------------------------------
+
+Description
+===========
+
+This patch adds sepeartion of content cache flush, depending on 
+memcache_bin_prefixes variable conf.
+
+
+Compatibility
+=============
+
+6.x-1.9 (last release).
+
+Modified files
+==============
+
+memcache.inc
+
+Related issue
+=============
+

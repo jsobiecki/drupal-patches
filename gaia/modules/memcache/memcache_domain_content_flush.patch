@@ -1,0 +1,51 @@
+Index: memcache.inc
+===================================================================
+--- memcache.inc	(wersja 8817)
++++ memcache.inc	(kopia robocza)
+@@ -35,6 +35,16 @@
+   cache_write_statistics('cache_get', $table, $cid, TRUE, $_SERVER['HTTP_HOST']);
+   // Handle excluded bins first.
+   $bins = variable_get('memcache_bins', array());
++
++  // For cache_content_flush_variable, we will need some bin separation
++  // It's for special use cases, like for avoiding situtaion where we
++  // have plenty of different domains running same application, but hosting
++  // different content. On cache_content_flush mechanism flushes all
++  // content cache on each domain. This is quite big performance hit.
++  $bins_prefix = variable_get('memcache_bins_prefixes', array());
++  $prefixed_table = !isset($bins_prefix[$table]) ? $table : $bins_prefix[$table] .
++    '_' . $table;
++
+   if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
+     return _cache_get($cid, $table);
+   }
+@@ -44,7 +54,7 @@
+ 
+   // Set up common variables.
+   $cache_flush = variable_get("cache_flush_$table", 0);
+-  $cache_content_flush = variable_get("cache_content_flush_$table", 0);
++  $cache_content_flush = variable_get("cache_content_flush_$prefixed_table", 0);
+   $cache_tables = isset($_SESSION['cache_flush']) ? $_SESSION['cache_flush'] : NULL;
+   $cache_lifetime = variable_get('cache_lifetime', 0);
+   $wildcard_flushes = variable_get('memcache_wildcard_flushes', array());
+@@ -238,6 +248,11 @@
+  */
+ function cache_clear_all($cid = NULL, $table = NULL, $wildcard = FALSE) {
+   cache_write_statistics('cache_clear_all', $table, $cid, TRUE, $_SERVER['HTTP_HOST']);
++
++  $bins_prefix = variable_get('memcache_bins_prefixes', array());
++  $prefixed_table = !isset($bins_prefix[$table]) ? $table : $bins_prefix[$table] .
++    '_' . $table;
++
+   // Handle database fallback first.
+   $bins = variable_get('memcache_bins', array());
+   if (!is_null($table) && isset($bins[$table]) && $bins[$table] == 'database') {
+@@ -267,7 +282,7 @@
+     // retrieving data from this table, we will compare the cache creation
+     // time minus the cache_flush time to the cache_lifetime to determine
+     // whether or not the cached item is still valid.
+-    memcache_variable_set("cache_content_flush_$table", time());
++    memcache_variable_set("cache_content_flush_$prefixed_table", time());
+     if (variable_get('cache_lifetime', 0)) {
+       // We store the time in the current user's session which is saved into
+       // the sessions table by sess_write().  We then simulate that the cache

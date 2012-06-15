@@ -1,0 +1,22 @@
+Scheduler (http://drupal.org/project/scheduler)
+----------------------------------------------------
+
+Description
+===========
+
+Allow users with specified role to set publish on date in the past
+
+Compatibility
+=============
+
+6.x-1.7
+
+Modified files
+==============
+
+scheduler.module
+
+Related issue
+=============
+
+http://drupal.org/node/1567136#comment-5969138
