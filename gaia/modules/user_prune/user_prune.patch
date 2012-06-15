@@ -1,17 +1,16 @@
-Index: user_prune.admin.inc
-===================================================================
---- user_prune.admin.inc
-+++ user_prune.admin.inc
+diff -ur ./user_prune.admin.inc /home/jarsob/workspace/mr.X/app/sites/all/modules/contrib/user_prune/user_prune.admin.inc
+--- user_prune.admin.inc	2012-06-15 12:39:38.593976170 +0200
++++ user_prune.admin.inc	2012-05-10 09:16:51.567309522 +0200
 @@ -88,6 +88,25 @@
-    '#options' => array(500 => 500, 200 => 200, 100 => 100, 75 => 75, 50 => 50, 25 => 25, 10 => 10),
-    '#default_value' => variable_get('prune_per_run', 100)
-  );
+ 		'#options' => array(500 => 500, 200 => 200, 100 => 100, 75 => 75, 50 => 50, 25 => 25, 10 => 10),
+ 		'#default_value' => variable_get('prune_per_run', 100)
+ 	);
 +
 +  $form['exceptions'] = array(
-+   '#type' => 'fieldset',
-+   '#title' => t('Exceptions'),
-+   '#description' => t('You may exclude users that have created content or posted comments'),
-+ );
++		'#type' => 'fieldset',
++		'#title' => t('Exceptions'),
++		'#description' => t('You may exclude users that have created content or posted comments'),
++	);
 +  $form['exceptions']['prune_except_content_types'] = array(
 +    '#type' => 'checkboxes',
 +    '#title' => t('Nodes'),
@@ -25,23 +24,23 @@ Index: user_prune.admin.inc
 +    '#description' => t("Don't prune users who have posted any comments."),
 +    '#default_value' => variable_get('prune_except_comments', FALSE),
 +  );
-  
-  $form['prune_now'] = array(
-    '#type' => 'fieldset',
+ 	
+ 	$form['prune_now'] = array(
+ 		'#type' => 'fieldset',
 @@ -162,6 +181,9 @@
-      variable_set('prune_logged_in_registered_limit_unit', $values['prune_logged_in_registered_limit_unit']);
-    }
-    variable_set('prune_per_run', $values['prune_per_run']);
+ 			variable_set('prune_logged_in_registered_limit_unit', $values['prune_logged_in_registered_limit_unit']);
+ 		}
+ 		variable_set('prune_per_run', $values['prune_per_run']);
 +
 +    variable_set('prune_except_content_types', $values['prune_except_content_types']);
 +    variable_set('prune_except_comments', $values['prune_except_comments']);
-    
-    drupal_set_message(t('The configuration options have been saved.'));
-  }
+ 		
+ 		drupal_set_message(t('The configuration options have been saved.'));
+ 	}
 @@ -214,6 +236,29 @@
-      $uids[] = $data->uid;
-    }
-  }
+ 			$uids[] = $data->uid;
+ 		}
+ 	}
 +
 +  if ($values['prune_except_content_types']) {
 +    $content_types = $values['prune_except_content_types'];
@@ -65,30 +64,29 @@ Index: user_prune.admin.inc
 +    }
 +    $uids = array_diff($uids, $exclude);
 +  }
-  
-  // check to make sure the number of uids are in the per-run limit and if not force it to be
-  if (count($uids) > $values['prune_per_run']) {
+ 	
+ 	// check to make sure the number of uids are in the per-run limit and if not force it to be
+ 	if (count($uids) > $values['prune_per_run']) {
 @@ -235,4 +280,4 @@
-  
-    drupal_set_message($message);
-  }
+ 	
+ 		drupal_set_message($message);
+ 	}
 -}
-\ No newline at end of file
+\ Brak znaku nowej linii na końcu pliku
 +}
-Index: user_prune.module
-===================================================================
---- user_prune.module (revision 6198)
-+++ user_prune.module (working copy)
+diff -ur ./user_prune.module /home/jarsob/workspace/mr.X/app/sites/all/modules/contrib/user_prune/user_prune.module
+--- user_prune.module	2012-06-15 12:39:38.593976170 +0200
++++ user_prune.module	2012-05-10 09:16:51.563309522 +0200
 @@ -40,8 +40,10 @@
-  $config['prune_logged_in_registered_limit_length'] = variable_get('prune_logged_in_registered_limit_length', '');
-  $config['prune_logged_in_registered_limit_unit'] = variable_get('prune_logged_in_registered_limit_unit', 2629744);
-  $config['prune_per_run'] = variable_get('prune_per_run', 50);
+ 	$config['prune_logged_in_registered_limit_length'] = variable_get('prune_logged_in_registered_limit_length', '');
+ 	$config['prune_logged_in_registered_limit_unit'] = variable_get('prune_logged_in_registered_limit_unit', 2629744);
+ 	$config['prune_per_run'] = variable_get('prune_per_run', 50);
 +  $config['prune_except_content_types'] = variable_get('prune_except_content_types', array());
 +  $config['prune_except_comments'] = variable_get('prune_except_comments', FALSE);
-  
-  module_load_include('admin.inc', 'user_prune', 'user_prune');
-  
-  user_prune_delete($config, TRUE);
+ 	
+ 	module_load_include('admin.inc', 'user_prune', 'user_prune');
+ 	
+ 	user_prune_delete($config, TRUE);
 -}
-\ No newline at end of file
+\ Brak znaku nowej linii na końcu pliku
 +}
