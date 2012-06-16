@@ -1,7 +1,7 @@
 Index: app/sites/all/modules/contrib/cck/modules/text/text.module
 ===================================================================
---- app/sites/all/modules/contrib/cck/modules/text/text.module	(wersja 7232)
-+++ app/sites/all/modules/contrib/cck/modules/text/text.module	(kopia robocza)
+--- modules/text/text.module	(wersja 7232)
++++ modules/text/text.module	(kopia robocza)
 @@ -157,7 +157,7 @@
                form_set_error($error_element, t('%name: illegal value.', array('%name' => t($field['widget']['label']))));
              }
