@@ -1,7 +1,7 @@
 Index: app/sites/all/modules/contrib/views/includes/view.inc
 ===================================================================
---- app/sites/all/modules/contrib/views/includes/view.inc	(revision 2682)
-+++ app/sites/all/modules/contrib/views/includes/view.inc	(working copy)
+--- includes/view.inc	(revision 2682)
++++ includes/view.inc	(working copy)
 @@ -692,8 +692,10 @@
        $function($this);
      }
