@@ -1,5 +1,5 @@
---- tinymce.inc  2011-07-12 10:07:43.151717642 +0200
-+++ tinymce.inc 2011-07-07 15:31:34.000000000 +0200
+--- editors/tinymce.inc  2011-07-12 10:07:43.151717642 +0200
++++ editors/tinymce.inc 2011-07-07 15:31:34.000000000 +0200
 @@ -84,7 +84,7 @@
    $script = $editor['library path'] . '/tiny_mce.js';
    $script = fopen($script, 'r');
