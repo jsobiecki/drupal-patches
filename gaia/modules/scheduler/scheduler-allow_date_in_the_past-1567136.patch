@@ -1,9 +1,9 @@
 ### Eclipse Workspace Patch 1.0
 #P gaia-patch
-Index: app/sites/all/modules/contrib/scheduler/scheduler.module
+Index: scheduler.module
 ===================================================================
---- app/sites/all/modules/contrib/scheduler/scheduler.module	(revision 8740)
-+++ app/sites/all/modules/contrib/scheduler/scheduler.module	(working copy)
+--- scheduler.module	(revision 8740)
++++ scheduler.module	(working copy)
 @@ -7,7 +7,7 @@
   * Implementation of hook_perm().
   */
