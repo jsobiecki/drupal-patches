@@ -1,7 +1,7 @@
 Index: youtube.inc
 ===================================================================
---- youtube.inc
-+++ youtube.inc
+--- providers/emvideo/youtube.inc
++++ providers/emvideo/youtube.inc
 @@ -153,12 +153,16 @@
  /**
   * this is a wrapper for emvideo_request_xml that includes youtube's api key
