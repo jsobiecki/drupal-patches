@@ -1,0 +1,12 @@
+--- globalredirect.module	2012-06-22 20:13:33.941073808 +0200
++++ globalredirect.module	2012-05-10 09:16:53.247309578 +0200
+@@ -139,7 +139,7 @@
+ 
+     // Alias case sensitivity check. If there is an alias from the previous lookup, do a query to test for case.
+     if ($alias && variable_get('globalredirect_case_sensitive_urls', GLOBALREDIRECT_CASE_SENSITIVE_URLS_ENABLED) == GLOBALREDIRECT_CASE_SENSITIVE_URLS_ENABLED) {
+-      $alias_sensitive = db_result(db_query("SELECT dst FROM {url_alias} WHERE dst = '%s' AND language = '%s'", $alias, $options['language']->language));
++      $alias_sensitive = db_result(db_query("SELECT dst FROM {url_alias} WHERE dst = '%s' AND language = '%s'", $alias, isset($options['language']->language) ? $options['language']->language : NULL));
+       if ($alias_sensitive && $alias != $alias_sensitive) {
+         // There is a match and there is a difference in case.
+         $alias = $alias_sensitive;
+Tylko w /home/jarsob/tmp/test14/sites/all/modules/contrib/globalredirect/: PATCHES.txt
