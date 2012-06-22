@@ -1,6 +1,6 @@
 === modified file 'sites/all/modules/content_taxonomy/content_taxonomy.module'
---- sites/all/modules/contrib/content_taxonomy/content_taxonomy.module	2009-12-08 20:46:48 +0000
-+++ sites/all/modules/contrib/content_taxonomy/content_taxonomy.module	2009-12-08 20:54:20 +0000
+--- content_taxonomy.module	2009-12-08 20:46:48 +0000
++++ content_taxonomy.module	2009-12-08 20:54:20 +0000
 @@ -328,10 +328,10 @@
   * hides the taxonomy form if there exists a content taxonomy field, which is set to 'hide default taxonomy fields'
   */
