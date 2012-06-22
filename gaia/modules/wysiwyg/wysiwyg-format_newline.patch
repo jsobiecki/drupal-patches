@@ -1,6 +1,6 @@
 diff -ruB /home/jarsob/tmp/test14/sites/all/modules/contrib/wysiwyg/editors/tinymce.inc /home/jarsob/workspace/mr.X/app/sites/all/modules/contrib/wysiwyg/editors/tinymce.inc
---- /home/jarsob/tmp/test14/sites/all/modules/contrib/wysiwyg/editors/tinymce.inc	2012-06-22 20:13:33.597073796 +0200
-+++ /home/jarsob/workspace/mr.X/app/sites/all/modules/contrib/wysiwyg/editors/tinymce.inc	2012-05-10 09:16:52.267309546 +0200
+--- editors/tinymce.inc	2012-06-22 20:13:33.597073796 +0200
++++ editors/tinymce.inc	2012-05-10 09:16:52.267309546 +0200
 @@ -146,6 +146,8 @@
      'plugins' => array(),
      'theme' => $theme,
