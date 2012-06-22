@@ -8,7 +8,7 @@ Index: app/sites/all/modules/contrib/views/includes/view.inc
  
 -    $query = db_rewrite_sql($this->build_info['query'], $this->base_table, $this->base_field, array('view' => &$this));
 -    $count_query = db_rewrite_sql($this->build_info['count_query'], $this->base_table, $this->base_field, array('view' => &$this));
-+    if (!empty($this->buid_info['query'])) {
++    if (!empty($this->build_info['query'])) {
 +      $query = db_rewrite_sql($this->build_info['query'], $this->base_table, $this->base_field, array('view' => &$this));
 +      $count_query = db_rewrite_sql($this->build_info['count_query'], $this->base_table, $this->base_field, array('view' => &$this));
 +    }
