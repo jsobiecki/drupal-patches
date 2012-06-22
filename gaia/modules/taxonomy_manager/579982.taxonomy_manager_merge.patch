@@ -1,5 +1,5 @@
---- sites/all/modules/contrib/taxonomy_manager/taxonomy_manager.admin.inc	Sat Sep 05 12:09:42 2009
-+++ sites/all/modules/contrib/taxonomy_manager/taxonomy_manager.admin.inc	Thu Sep 17 09:56:17 2009
+--- taxonomy_manager.admin.inc	Sat Sep 05 12:09:42 2009
++++ taxonomy_manager.admin.inc	Thu Sep 17 09:56:17 2009
 @@ -2119,7 +2119,7 @@
    foreach ($merging_terms as $merge_term) {
      if ($merge_term != $main_term) {

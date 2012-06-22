@@ -1,7 +1,7 @@
 Index: sites/all/modules/contrib/views/includes/query.inc
 ===================================================================
---- sites/all/modules/contrib/views/includes/query.inc	(wersja 2371)
-+++ sites/all/modules/contrib/views/includes/query.inc	(wersja 2463)
+--- includes/query.inc	(wersja 2371)
++++ includes/query.inc	(wersja 2463)
 @@ -980,7 +980,14 @@
      }
  

@@ -4,8 +4,8 @@ Index: modules/user.views.inc
 RCS file: /cvs/drupal-contrib/contributions/modules/views/modules/user.views.inc,v
 retrieving revision 1.56.2.5
 diff -u -p -r1.56.2.5 user.views.inc
---- sites/all/contrib/views/modules/user.views.inc	10 Nov 2009 23:20:06 -0000	1.56.2.5
-+++ sites/all/contrib/views/modules/user.views.inc	15 Dec 2009 15:02:01 -0000
+--- modules/user.views.inc	10 Nov 2009 23:20:06 -0000	1.56.2.5
++++ modules/user.views.inc	15 Dec 2009 15:02:01 -0000
 @@ -97,6 +97,11 @@ function user_views_data() {
      'argument' => array(
        'handler' => 'views_handler_argument_string',
