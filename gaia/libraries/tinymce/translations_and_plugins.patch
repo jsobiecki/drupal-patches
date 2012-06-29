@@ -1,230 +1,1746 @@
+diff -rNuB ./jscripts/tiny_mce/langs/pl.js jscripts/tiny_mce/langs/pl.js
+--- jscripts/tiny_mce/langs/pl.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/langs/pl.js	2012-04-23 13:40:34.462981558 +0200
+@@ -0,0 +1,154 @@
++tinyMCE.addI18n({pl:{
++common:{
++edit_confirm:"Czy chcesz u\u017Cy\u0107 trybu WYSIWYG dla tego pola formularza?",
++apply:"Zastosuj",
++insert:"Wstaw",
++update:"Aktualizuj",
++cancel:"Anuluj",
++close:"Zamknij",
++browse:"Przegl\u0105daj",
++class_name:"Klasa",
++not_set:"-- Brak --",
++clipboard_msg:"Akcje Kopiuj/Wytnij/Wklej nie s\u0105 dost\u0119pne w Mozilli i Firefox.\nCzy chcesz wi\u0119cej informacji o tym problemie?",
++clipboard_no_support:"Aktualnie nie jest wspomagany przez Twoj\u0105 przegl\u0105dark\u0119, u\u017Cyj skr\u00F3t\u00F3w klawiaturowych w zamian.",
++popup_blocked:"Zauwa\u017Cyli\u015Bmy, \u017Ce Twoje blokowanie wyskakuj\u0105cych okienek wy\u0142\u0105czy\u0142o okno, kt\u00F3re dostarcza funkcjonalno\u015B\u0107 aplikacji. B\u0119dziesz potrzebowa\u0142 wy\u0142\u0105czy\u0107 blokowanie wyskakuj\u0105cych okienek na tej stronie aby w pe\u0142ni wykorzysta\u0107 to narz\u0119dzie.",
++invalid_data:"B\u0142\u0105d: Zosta\u0142y wprowadzone b\u0142\u0119dne dane, s\u0105 zaznaczone na czerwono.",
++more_colors:"Wi\u0119cej kolor\u00F3w"
++},
++contextmenu:{
++align:"Wyr\u00F3wnanie",
++left:"Lewy",
++center:"\u015Arodkowy",
++right:"Prawy",
++full:"Wype\u0142niony"
++},
++insertdatetime:{
++date_fmt:"%Y-%m-%d",
++time_fmt:"%H:%M:%S",
++insertdate_desc:"Wstaw dat\u0119",
++inserttime_desc:"Wstaw czas",
++months_long:"Stycze\u0144, Luty, Marzec, Kwiecie\u0144, Maj, Czerwiec, Lipiec, Sierpie\u0144, Wrzesie\u0144, Pa\u017Adziernik, Listopad, Grudzie\u0144",
++months_short:"Sty,Lut,Mar,Kwi,Maj,Cze,Lip,Sie,Wrz,Pa\u017A,Lis,Gru",
++day_long:"Niedziela, Poniedzia\u0142ek, Wtorek, \u015Aroda, Czwartek, Pi\u0105tek, Sobota, Niedziela",
++day_short:"N,Pn,Wt,\u015Ar,Cz,Pt,So,N"
++},
++print:{
++print_desc:"Drukuj"
++},
++preview:{
++preview_desc:"Podgl\u0105d"
++},
++directionality:{
++ltr_desc:"Kierunek od lewej do prawej",
++rtl_desc:"Kierunek od prawej do lewej"
++},
++layer:{
++insertlayer_desc:"Wklej now\u0105 warstw\u0119",
++forward_desc:"Przesu\u0144 do przodu",
++backward_desc:"Przesu\u0144 w ty\u0142",
++absolute_desc:"Prze\u0142\u0105cz pozycjonowanie absolutne",
++content:"Nowa warstwa..."
++},
++save:{
++save_desc:"Zachowaj",
++cancel_desc:"Anuluj wszystkie zmiany"
++},
++nonbreaking:{
++nonbreaking_desc:"Wklej tward\u0105 spacj\u0119"
++},
++iespell:{
++iespell_desc:"Sprawd\u017A pisowni\u0119",
++download:"ieSpell nie wykryte. Czy przeprowadzi\u0107 instalacj\u0119 tego komponentu?"
++},
++advhr:{
++advhr_desc:"Pozioma linia"
++},
++emotions:{
++emotions_desc:"Emotikony"
++},
++searchreplace:{
++search_desc:"Znajd\u017A",
++replace_desc:"Znajd\u017A/Zamie\u0144"
++},
++advimage:{
++image_desc:"Wstaw/edytuj obraz"
++},
++advlink:{
++link_desc:"Wstaw/edytuj link"
++},
++xhtmlxtras:{
++cite_desc:"Osoba cytowana",
++abbr_desc:"Skr\u00F3t",
++acronym_desc:"Akronim",
++del_desc:"Usuni\u0119cie",
++ins_desc:"Wstawienie",
++attribs_desc:"Wstaw / Edytuj atrybuty"
++},
++style:{
++desc:"Edytuj Style CSS"
++},
++paste:{
++paste_text_desc:"Wklej jako zwyk\u0142y tekst",
++paste_word_desc:"Wklej z Worda",
++selectall_desc:"Zaznacz wszystko"
++},
++paste_dlg:{
++text_title:"U\u017Cyj CTRL+V na swojej klawiaturze \u017Ceby wklei\u0107 tekst do okna.",
++text_linebreaks:"Zachowaj ko\u0144ce linii.",
++word_title:"U\u017Cyj CTRL+V na swojej klawiaturze \u017Ceby wklei\u0107 tekst do okna."
++},
++table:{
++desc:"Wstaw now\u0105 tabel\u0119",
++row_before_desc:"Wstaw nowy wiersz przed...",
++row_after_desc:"Wstaw nowy wiersz po...",
++delete_row_desc:"Usu\u0144 wiersz",
++col_before_desc:"Wstaw kolumn\u0119 przed...",
++col_after_desc:"Wstaw kolumn\u0119 po...",
++delete_col_desc:"Usu\u0144 kolumn\u0119",
++split_cells_desc:"Podziel kom\u00F3rk\u0119",
++merge_cells_desc:"Po\u0142\u0105cz kom\u00F3rki",
++row_desc:"W\u0142a\u015Bciwo\u015Bci wiersza",
++cell_desc:"W\u0142a\u015Bciwo\u015Bci kom\u00F3rki",
++props_desc:"W\u0142a\u015Bciwo\u015Bci tabeli",
++paste_row_before_desc:"Wklej wiersz przed...",
++paste_row_after_desc:"Wklej wiersz po...",
++cut_row_desc:"Wytnij wiersz...",
++copy_row_desc:"Kopiuj wiersz...",
++del:"Usu\u0144 tabel\u0119",
++row:"Wiersz",
++col:"Kolumna",
++cell:"Kom\u00F3rka"
++},
++autosave:{
++unload_msg:"Zmiany, kt\u00F3re zrobi\u0142e\u015B zostan\u0105 utracone je\u015Bli opu\u015Bcisz t\u0119 stron\u0119."
++},
++fullscreen:{
++desc:"Prze\u0142\u0105cz tryb pe\u0142noekranowy"
++},
++media:{
++desc:"Wstaw/Edytuj wbudowane media",
++edit:"Edytuj wbudowane media"
++},
++fullpage:{
++desc:"W\u0142a\u015Bciwo\u015Bci dokumentu"
++},
++template:{
++desc:"Wstaw szablon dokumentu"
++},
++visualchars:{
++desc:"Graficzna kontrola pisma w\u0142\u0105cz/wy\u0142\u0105cz."
++},
++spellchecker:{
++desc:"Sprawdzanie pisowni",
++menu:"Ustawienia sprawdzania pisowni",
++ignore_word:"Ignoruj s\u0142owo",
++ignore_words:"Ignoruj wszystkie",
++langs:"J\u0119zyki",
++wait:"Prosz\u0119 poczeka\u0107...",
++sug:"Sugestie",
++no_sug:"Brak sugestii",
++no_mpell:"\u017Badnych brakuj\u0105cych nie znaleziono."
++},
++pagebreak:{
++desc:"Wstaw lini\u0119."
++}}});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js	2012-06-29 15:16:59.734902223 +0200
++++ jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,7 +0,0 @@
+-tinyMCE.addI18n('en.advhr_dlg',{
+-normal:"Normal",
+-width:"Width",
+-widthunits:"Units",
+-size:"Height",
+-noshade:"No shadow"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/advhr/langs/pl_dlg.js jscripts/tiny_mce/plugins/advhr/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/advhr/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/advhr/langs/pl_dlg.js	2012-04-23 13:40:33.614981595 +0200
+@@ -0,0 +1,5 @@
++tinyMCE.addI18n('pl.advhr_dlg',{
++width:"Szeroko\u015B\u0107",
++size:"Wysoko\u015B\u0107",
++noshade:"Bez cienia"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js	2012-06-29 15:16:59.758902224 +0200
++++ jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,45 +0,0 @@
+-tinyMCE.addI18n('en.advimage_dlg',{
+-tab_general:"General",
+-tab_appearance:"Appearance",
+-tab_advanced:"Advanced",
+-general:"General",
+-title:"Title",
+-preview:"Preview",
+-constrain_proportions:"Constrain proportions",
+-langdir:"Language direction",
+-langcode:"Language code",
+-long_desc:"Long description link",
+-style:"Style",
+-classes:"Classes",
+-ltr:"Left to right",
+-rtl:"Right to left",
+-id:"Id",
+-map:"Image map",
+-swap_image:"Swap image",
+-alt_image:"Alternative image",
+-mouseover:"for mouse over",
+-mouseout:"for mouse out",
+-misc:"Miscellaneous",
+-example_img:"Appearance preview image",
+-missing_alt:"Are you sure you want to continue without including an Image Description? Without it the image may not be accessible to some users with disabilities, or to those using a text browser, or browsing the Web with images turned off.",
+-dialog_title:"Insert/edit image",
+-src:"Image URL",
+-alt:"Image description",
+-list:"Image list",
+-border:"Border",
+-dimensions:"Dimensions",
+-width:"Width",
+-height:"Height",
+-vspace:"Vertical space",
+-hspace:"Horizontal space",
+-align:"Alignment",
+-align_baseline:"Baseline",
+-align_top:"Top",
+-align_middle:"Middle",
+-align_bottom:"Bottom",
+-align_texttop:"Text top",
+-align_textbottom:"Text bottom",
+-align_left:"Left",
+-align_right:"Right",
+-image_list:"Image list"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/advimage/langs/pl_dlg.js jscripts/tiny_mce/plugins/advimage/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/advimage/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/advimage/langs/pl_dlg.js	2012-04-23 13:40:33.666981593 +0200
+@@ -0,0 +1,43 @@
++tinyMCE.addI18n('pl.advimage_dlg',{
++tab_general:"Og\u00F3lny",
++tab_appearance:"Prezentacja",
++tab_advanced:"Zaawansowany",
++general:"Og\u00F3lny",
++title:"Tytu\u0142",
++preview:"Podgl\u0105d",
++constrain_proportions:"Zachowaj proporcje",
++langdir:"Kierunek j\u0119zyka",
++langcode:"Kod j\u0119zyka",
++long_desc:"D\u0142ugi opis linku",
++style:"Styl",
++classes:"Klasa",
++ltr:"Lewy do prawego",
++rtl:"Prawy do lewego",
++id:"Id",
++map:"Mapa obrazu",
++swap_image:"Wymiana obrazka",
++alt_image:"alternatywny obrazek",
++mouseover:"for mouse over",
++mouseout:"for mouse out",
++misc:"R\u00F3\u017Cne",
++example_img:"Podgl\u0105d wygl\u0105du obrazka",
++missing_alt:"Czy jeste\u015B pewien, \u017Ce chcesz kontynuowa\u0107 bez opisu obrazka? Obrazek bez opisu mo\u017Ce nie by\u0107 dost\u0119pny dla u\u017Cytkownik\u00F3w kt\u00F3rzy u\u017Cywaj\u0105 tekstowej przegl\u0105darki, lub przegl\u0105daj\u0105cych stron\u0119 z wy\u0142\u0105czonymi obrazkami.",
++dialog_title:"Wklej/edytuj obraz",
++src:"URL obrazka",
++alt:"Opis obrazka",
++list:"Lista obrazk\u00F3w",
++border:"Obramowanie",
++dimensions:"Rozmiary",
++vspace:"Pionowy odstep",
++hspace:"Poziomy odstep",
++align:"Wyr\u00F3wnanie",
++align_baseline:"G\u0142\u00F3wna linia",
++align_top:"G\u00F3rny",
++align_middle:"\u015Arodkowy",
++align_bottom:"Dolny",
++align_texttop:"Tekst g\u00F3rny",
++align_textbottom:"Tekst dolny",
++align_left:"Lewy",
++align_right:"Prawy",
++image_list:"Lista obrazk\u00F3w"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js	2012-06-29 15:16:59.738902223 +0200
++++ jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,54 +0,0 @@
+-tinyMCE.addI18n('en.advlink_dlg',{
+-title:"Insert/edit link",
+-url:"Link URL",
+-target:"Target",
+-titlefield:"Title",
+-is_email:"The URL you entered seems to be an email address, do you want to add the required mailto: prefix?",
+-is_external:"The URL you entered seems to external link, do you want to add the required http:// prefix?",
+-list:"Link list",
+-general_tab:"General",
+-popup_tab:"Popup",
+-events_tab:"Events",
+-advanced_tab:"Advanced",
+-general_props:"General properties",
+-popup_props:"Popup properties",
+-event_props:"Events",
+-advanced_props:"Advanced properties",
+-popup_opts:"Options",
+-anchor_names:"Anchors",
+-target_same:"Open in this window / frame",
+-target_parent:"Open in parent window / frame",
+-target_top:"Open in top frame (replaces all frames)",
+-target_blank:"Open in new window",
+-popup:"Javascript popup",
+-popup_url:"Popup URL",
+-popup_name:"Window name",
+-popup_return:"Insert 'return false'",
+-popup_scrollbars:"Show scrollbars",
+-popup_statusbar:"Show status bar",
+-popup_toolbar:"Show toolbars",
+-popup_menubar:"Show menu bar",
+-popup_location:"Show location bar",
+-popup_resizable:"Make window resizable",
+-popup_dependent:"Dependent (Mozilla/Firefox only)",
+-popup_size:"Size",
+-width:"Width",
+-height:"Height",
+-popup_position:"Position (X/Y)",
+-id:"Id",
+-style:"Style",
+-classes:"Classes",
+-target_name:"Target name",
+-langdir:"Language direction",
+-target_langcode:"Target language",
+-langcode:"Language code",
+-encoding:"Target character encoding",
+-mime:"Target MIME type",
+-rel:"Relationship page to target",
+-rev:"Relationship target to page",
+-tabindex:"Tabindex",
+-accesskey:"Accesskey",
+-ltr:"Left to right",
+-rtl:"Right to left",
+-link_list:"Link list"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/advlink/langs/pl_dlg.js jscripts/tiny_mce/plugins/advlink/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/advlink/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/advlink/langs/pl_dlg.js	2012-04-23 13:40:33.878981584 +0200
+@@ -0,0 +1,52 @@
++tinyMCE.addI18n('pl.advlink_dlg',{
++title:"Wstaw/edytuj link",
++url:"Link URL",
++target:"Cel",
++titlefield:"Tytu\u0142",
++is_email:"Podany adres wydaje si\u0119 by\u0107 adresem emailowym, czy chcesz doda\u0107 wymagany prefix mailto: ?",
++is_external:"Podany adres wydaje si\u0119 by\u0107 zewn\u0119trznym linkiem, czy chcesz doda\u0107 wymagany prefix http:// ?",
++list:"Lista link\u00F3w",
++general_tab:"Og\u00F3lny",
++popup_tab:"Popup",
++events_tab:"Wydarzenia",
++advanced_tab:"Zaawansowany",
++general_props:"Og\u00F3lne w\u0142a\u015Bciwo\u015Bci",
++popup_props:"Popup w\u0142a\u015Bciwo\u015Bci",
++event_props:"Wydarzenia",
++advanced_props:"Zaawansowae w\u0142a\u015Bciwo\u015Bci",
++popup_opts:"Opcje",
++anchor_names:"Kotwice",
++target_same:"Otw\u00F3rz w tym oknie / ramce",
++target_parent:"Otw\u00F3rz w nadrz\u0119dnej oknie / ramce",
++target_top:"Otw\u00F3rz w g\u00F3rnej ramce (zamie\u0144 wszystkie ramki)",
++target_blank:"Otw\u00F3rz w nowym oknie",
++popup:"Wyskakuj\u0105ce okienko",
++popup_url:"URL okienka",
++popup_name:"Nazwa okiena",
++popup_return:"Wklej 'return false'",
++popup_scrollbars:"Poka\u017C paski przewijania",
++popup_statusbar:"Poka\u017C pasek statusu",
++popup_toolbar:"Poka\u017C narz\u0119dzia",
++popup_menubar:"Poka\u017C pasek menu",
++popup_location:"Poka\u017C pasek adresu",
++popup_resizable:"Stw\u00F3rz okno z w\u0142a\u015Bciwo\u015Bciami zmiany rozmiaru",
++popup_dependent:"Podleg\u0142y (Mozilla/Firefox wy\u0142\u0105cznie)",
++popup_size:"Rozmiar",
++popup_position:"Pozycja (X/Y)",
++id:"Id",
++style:"Wz\u00F3r",
++classes:"Klasy",
++target_name:"Cel",
++langdir:"Kierunek czytania tekstu",
++target_langcode:"Docelowy kod j\u0119zyka",
++langcode:"Kod j\u0119zyka",
++encoding:"Kodowanie znak\u00F3w celu",
++mime:"Cel MIME type",
++rel:"Relacje strony do celu",
++rev:"Relacje celu do strony",
++tabindex:"Tabindex",
++accesskey:"Klawisz skr\u00F3tu",
++ltr:"Kierunek z lewej do prawej",
++rtl:"Kierunek z prawej do lewej",
++link_list:"Lista odno\u015Bnik\u00F3w"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js	2012-06-29 15:16:59.762902222 +0200
++++ jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,20 +0,0 @@
+-tinyMCE.addI18n('en.emotions_dlg',{
+-title:"Insert emotion",
+-desc:"Emotions",
+-cool:"Cool",
+-cry:"Cry",
+-embarassed:"Embarassed",
+-foot_in_mouth:"Foot in mouth",
+-frown:"Frown",
+-innocent:"Innocent",
+-kiss:"Kiss",
+-laughing:"Laughing",
+-money_mouth:"Money mouth",
+-sealed:"Sealed",
+-smile:"Smile",
+-surprised:"Surprised",
+-tongue_out:"Tongue out",
+-undecided:"Undecided",
+-wink:"Wink",
+-yell:"Yell"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/emotions/langs/pl_dlg.js jscripts/tiny_mce/plugins/emotions/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/emotions/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/emotions/langs/pl_dlg.js	2012-04-23 13:40:33.506981599 +0200
+@@ -0,0 +1,20 @@
++tinyMCE.addI18n('pl.emotions_dlg',{
++title:"Wstaw emotikon\u0119",
++desc:"Emotikony",
++cool:"Cool",
++cry:"Cry",
++embarassed:"Embarassed",
++foot_in_mouth:"Foot in mouth",
++frown:"Frown",
++innocent:"Innocent",
++kiss:"Kiss",
++laughing:"Laughing",
++money_mouth:"Money mouth",
++sealed:"Sealed",
++smile:"Smile",
++surprised:"Surprised",
++tongue_out:"Tongue out",
++undecided:"Undecided",
++wink:"Wink",
++yell:"Yell"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js	2012-06-29 15:16:59.754902226 +0200
++++ jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,85 +0,0 @@
+-tinyMCE.addI18n('en.fullpage_dlg',{
+-title:"Document properties",
+-meta_tab:"General",
+-appearance_tab:"Appearance",
+-advanced_tab:"Advanced",
+-meta_props:"Meta information",
+-langprops:"Language and encoding",
+-meta_title:"Title",
+-meta_keywords:"Keywords",
+-meta_description:"Description",
+-meta_robots:"Robots",
+-doctypes:"Doctype",
+-langcode:"Language code",
+-langdir:"Language direction",
+-ltr:"Left to right",
+-rtl:"Right to left",
+-xml_pi:"XML declaration",
+-encoding:"Character encoding",
+-appearance_bgprops:"Background properties",
+-appearance_marginprops:"Body margins",
+-appearance_linkprops:"Link colors",
+-appearance_textprops:"Text properties",
+-bgcolor:"Background color",
+-bgimage:"Background image",
+-left_margin:"Left margin",
+-right_margin:"Right margin",
+-top_margin:"Top margin",
+-bottom_margin:"Bottom margin",
+-text_color:"Text color",
+-font_size:"Font size",
+-font_face:"Font face",
+-link_color:"Link color",
+-hover_color:"Hover color",
+-visited_color:"Visited color",
+-active_color:"Active color",
+-textcolor:"Color",
+-fontsize:"Font size",
+-fontface:"Font family",
+-meta_index_follow:"Index and follow the links",
+-meta_index_nofollow:"Index and don't follow the links",
+-meta_noindex_follow:"Do not index but follow the links",
+-meta_noindex_nofollow:"Do not index and don\'t follow the links",
+-appearance_style:"Stylesheet and style properties",
+-stylesheet:"Stylesheet",
+-style:"Style",
+-author:"Author",
+-copyright:"Copyright",
+-add:"Add new element",
+-remove:"Remove selected element",
+-moveup:"Move selected element up",
+-movedown:"Move selected element down",
+-head_elements:"Head elements",
+-info:"Information",
+-add_title:"Title element",
+-add_meta:"Meta element",
+-add_script:"Script element",
+-add_style:"Style element",
+-add_link:"Link element",
+-add_base:"Base element",
+-add_comment:"Comment node",
+-title_element:"Title element",
+-script_element:"Script element",
+-style_element:"Style element",
+-base_element:"Base element",
+-link_element:"Link element",
+-meta_element:"Meta element",
+-comment_element:"Comment",
+-src:"Src",
+-language:"Language",
+-href:"Href",
+-target:"Target",
+-type:"Type",
+-charset:"Charset",
+-defer:"Defer",
+-media:"Media",
+-properties:"Properties",
+-name:"Name",
+-value:"Value",
+-content:"Content",
+-rel:"Rel",
+-rev:"Rev",
+-hreflang:"Href lang",
+-general_props:"General",
+-advanced_props:"Advanced"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/fullpage/langs/pl_dlg.js jscripts/tiny_mce/plugins/fullpage/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/fullpage/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/fullpage/langs/pl_dlg.js	2012-04-23 13:40:33.934981581 +0200
+@@ -0,0 +1,85 @@
++tinyMCE.addI18n('pl.fullpage_dlg',{
++title:"W\u0142a\u015Bciwo\u015Bci dokumentu",
++meta_tab:"Og\u00F3lne",
++appearance_tab:"Wygl\u0105d",
++advanced_tab:"Zaawansowane",
++meta_props:"Meta informacje",
++langprops:"J\u0119zyk i kodowanie",
++meta_title:"Tytu\u0142",
++meta_keywords:"S\u0142owa kluczowe",
++meta_description:"Opis",
++meta_robots:"Robots",
++doctypes:"Typ dokumentu",
++langcode:"Oznaczenie kodowe j\u0119zyka",
++langdir:"Kierunek czytania tekstu",
++ltr:"Kierunek z lewej do prawej",
++rtl:"Kierunek z prawej do lewej",
++xml_pi:"XML deklaracja",
++encoding:"Kodowanie znak\u00F3w",
++appearance_bgprops:"W\u0142a\u015Bciwo\u015Bci t\u0142a",
++appearance_marginprops:"Marginesy strony",
++appearance_linkprops:"Kolor odno\u015Bnik\u00F3w",
++appearance_textprops:"W\u0142a\u015Bciwo\u015Bci tekstu",
++bgcolor:"Kolor t\u0142a",
++bgimage:"Obrazek t\u0142a",
++left_margin:"Lewy margines",
++right_margin:"Prawy margines",
++top_margin:"G\u00F3rny margines",
++bottom_margin:"Dolny margines",
++text_color:"Kolor tekstu",
++font_size:"Rozmiar czcionki",
++font_face:"Czcionka",
++link_color:"Kolor odno\u015Bnika",
++hover_color:"Kolor po najechaniu myszk\u0105",
++visited_color:"Kolor odwiedzonych link\u00F3w",
++active_color:"Kolor aktywnych link\u00F3w",
++textcolor:"Kolor",
++fontsize:"Rozmiar czcionki",
++fontface:"Rodzaj czcionki",
++meta_index_follow:"Indeksuj i pod\u0105\u017Caj za linkami",
++meta_index_nofollow:"Indeksuj i nie pod\u0105\u017Caj za odno\u015Bnikami",
++meta_noindex_follow:"Nie indeksuj i pod\u0105\u017Caj za odno\u015Bnikami",
++meta_noindex_nofollow:"Nie indeksuj i nie pod\u0105\u017Caj za odno\u015Bnikami",
++appearance_style:"Arkusze i w\u0142a\u015Bciwo\u015Bci styl\u00F3w",
++stylesheet:"Arkusz styl\u00F3w",
++style:"Styl",
++author:"Autor",
++copyright:"Prawa autorskie",
++add:"Dodaj nowy element",
++remove:"Usu\u0144 wybrany element",
++moveup:"Przesu\u0144 wybrane element do g\u00F3ry",
++movedown:"Przesu\u0144 wybrane element w d\u00F3\u0142",
++head_elements:"Elementy nag\u0142\u00F3wka",
++info:"Informacja",
++add_title:"Tytu\u0142",
++add_meta:"Meta tag",
++add_script:"Skrypt",
++add_style:"Styl",
++add_link:"Odno\u015Bnik",
++add_base:"Baza",
++add_comment:"Komentarz",
++title_element:"Tytu\u0142",
++script_element:"Skrypt",
++style_element:"Styl",
++base_element:"Baza",
++link_element:"Odno\u015Bnik",
++meta_element:"Meta tag",
++comment_element:"Komentarz",
++src:"\u0179r\u00F3d\u0142o",
++language:"J\u0119zyk",
++href:"Odno\u015Bnik",
++target:"Cel",
++type:"Typ",
++charset:"Kodowanie",
++defer:"Defer",
++media:"Media",
++properties:"W\u0142a\u015Bciwo\u015Bci",
++name:"Nazwa",
++value:"Warto\u015B\u0107",
++content:"Zawarto\u015B\u0107",
++rel:"Rel",
++rev:"Rev",
++hreflang:"J\u0119zyk odno\u015Bnika",
++general_props:"G\u0142\u00F3wne",
++advanced_props:"Zaawansowane"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/imagecaption/editor_plugin.js jscripts/tiny_mce/plugins/imagecaption/editor_plugin.js
+--- jscripts/tiny_mce/plugins/imagecaption/editor_plugin.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/imagecaption/editor_plugin.js	2012-04-23 13:40:33.598981595 +0200
+@@ -0,0 +1,62 @@
++
++(function() {
++tinymce.create('tinymce.plugins.tinymce_image_caption', {
++  // this function is run when reading of plugin
++  init : function(ed, url) {
++  ed.addCommand('mceAlert', function(vars) {
++    alert(vars);
++  });
++    // creation function resposinble for create Image Caption
++    ed.addCommand('mceCreateCaption', function() {
++
++      var html_caption;
++      var html_img;
++
++      $selected = $('<div/>').append(ed.selection.getContent());
++
++      var $collection = $selected
++        .textNodes()
++        .filter(function() {
++          return this.nodeType == Node.TEXT_NODE;
++        });
++
++      // make caption, author, rest
++      var tmpArray = new Array();
++      $collection.each(function() {
++        var tmpString;
++        if (tmpArray.length == 0)
++          tmpString = 'image-caption';
++        else if (tmpArray.length == 1)
++          tmpString = 'image-author';
++        else
++          tmpString = 'image-rest';
++        tmpArray.push('<span class="' + tmpString + '">' + this.textContent + '</span>');
++      });
++      html_caption = tmpArray.join('');
++
++      var tmpImage = $selected.find('img').appendTo('body');
++      var tmpWidth = tmpImage.width();
++      html_img = $('<div/>').append(tmpImage).html();
++
++      var html = '<p>\n\
++                    <span style="width: ' + tmpWidth + 'px;" class="image-caption-container">\n\
++                      ' + html_img + '\n\
++                      ' + html_caption + '\n\
++                    </span>\n\
++                  </p>';
++
++      ed.execCommand('mceReplaceContent',false,html);
++    });
++
++    // create button in editor
++    ed.addButton('imagecaption', {
++      title : 'Zdjęcie, podpis, autor',
++      cmd : 'mceCreateCaption', // method called when button pressed
++      image : url + '/img/imagecaption.png' // path to image button
++    });
++  }// end init
++}); //end tinymce.create()
++
++// Register plugin
++tinymce.PluginManager.add('tinymce_image_caption', tinymce.plugins.tinymce_image_caption);
++})();
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/imagecaption/editor_plugin_src.js jscripts/tiny_mce/plugins/imagecaption/editor_plugin_src.js
+--- jscripts/tiny_mce/plugins/imagecaption/editor_plugin_src.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/imagecaption/editor_plugin_src.js	2012-04-23 13:40:33.606981594 +0200
+@@ -0,0 +1,62 @@
++
++(function() {
++tinymce.create('tinymce.plugins.tinymce_image_caption', {
++  // this function is run when reading of plugin
++  init : function(ed, url) {
++  ed.addCommand('mceAlert', function(vars) {
++    alert(vars);
++  });
++    // creation function resposinble for create Image Caption
++    ed.addCommand('mceCreateCaption', function() {
++
++      var html_caption;
++      var html_img;
++
++      $selected = $('<div/>').append(ed.selection.getContent());
++
++      var $collection = $selected
++        .textNodes()
++        .filter(function() {
++          return this.nodeType == Node.TEXT_NODE;
++        });
++
++      // make caption, author, rest
++      var tmpArray = new Array();
++      $collection.each(function() {
++        var tmpString;
++        if (tmpArray.length == 0)
++          tmpString = 'image-caption';
++        else if (tmpArray.length == 1)
++          tmpString = 'image-author';
++        else
++          tmpString = 'image-rest';
++        tmpArray.push('<span class="' + tmpString + '">' + this.textContent + '</span>');
++      });
++      html_caption = tmpArray.join('');
++
++      var tmpImage = $selected.find('img').appendTo('body');
++      var tmpWidth = tmpImage.width();
++      html_img = $('<div/>').append(tmpImage).html();
++
++      var html = '<p>\n\
++                    <span style="width: ' + tmpWidth + 'px;" class="image-caption-container">\n\
++                      ' + html_img + '\n\
++                      ' + html_caption + '\n\
++                    </span>\n\
++                  </p>';
++
++      ed.execCommand('mceReplaceContent',false,html);
++    });
++
++    // create button in editor
++    ed.addButton('imagecaption', {
++      title : 'Zdjęcie, podpis, autor',
++      cmd : 'mceCreateCaption', // method called when button pressed
++      image : url + '/img/imagecaption.png' // path to image button
++    });
++  }// end init
++}); //end tinymce.create()
++
++// Register plugin
++tinymce.PluginManager.add('tinymce_image_caption', tinymce.plugins.tinymce_image_caption);
++})();
+\ Brak znaku nowej linii na końcu pliku
+Binarne pliki ./jscripts/tiny_mce/plugins/imagecaption/img/imagecaption.png i jscripts/tiny_mce/plugins/imagecaption/img/imagecaption.png różnią się
+diff -rNuB ./jscripts/tiny_mce/plugins/media/langs/en_dlg.js jscripts/tiny_mce/plugins/media/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/media/langs/en_dlg.js	2012-06-29 15:16:59.750902226 +0200
++++ jscripts/tiny_mce/plugins/media/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,103 +0,0 @@
+-tinyMCE.addI18n('en.media_dlg',{
+-title:"Insert / edit embedded media",
+-general:"General",
+-advanced:"Advanced",
+-file:"File/URL",
+-list:"List",
+-size:"Dimensions",
+-preview:"Preview",
+-constrain_proportions:"Constrain proportions",
+-type:"Type",
+-id:"Id",
+-name:"Name",
+-class_name:"Class",
+-vspace:"V-Space",
+-hspace:"H-Space",
+-play:"Auto play",
+-loop:"Loop",
+-menu:"Show menu",
+-quality:"Quality",
+-scale:"Scale",
+-align:"Align",
+-salign:"SAlign",
+-wmode:"WMode",
+-bgcolor:"Background",
+-base:"Base",
+-flashvars:"Flashvars",
+-liveconnect:"SWLiveConnect",
+-autohref:"AutoHREF",
+-cache:"Cache",
+-hidden:"Hidden",
+-controller:"Controller",
+-kioskmode:"Kiosk mode",
+-playeveryframe:"Play every frame",
+-targetcache:"Target cache",
+-correction:"No correction",
+-enablejavascript:"Enable JavaScript",
+-starttime:"Start time",
+-endtime:"End time",
+-href:"Href",
+-qtsrcchokespeed:"Choke speed",
+-target:"Target",
+-volume:"Volume",
+-autostart:"Auto start",
+-enabled:"Enabled",
+-fullscreen:"Fullscreen",
+-invokeurls:"Invoke URLs",
+-mute:"Mute",
+-stretchtofit:"Stretch to fit",
+-windowlessvideo:"Windowless video",
+-balance:"Balance",
+-baseurl:"Base URL",
+-captioningid:"Captioning id",
+-currentmarker:"Current marker",
+-currentposition:"Current position",
+-defaultframe:"Default frame",
+-playcount:"Play count",
+-rate:"Rate",
+-uimode:"UI Mode",
+-flash_options:"Flash options",
+-qt_options:"Quicktime options",
+-wmp_options:"Windows media player options",
+-rmp_options:"Real media player options",
+-shockwave_options:"Shockwave options",
+-autogotourl:"Auto goto URL",
+-center:"Center",
+-imagestatus:"Image status",
+-maintainaspect:"Maintain aspect",
+-nojava:"No java",
+-prefetch:"Prefetch",
+-shuffle:"Shuffle",
+-console:"Console",
+-numloop:"Num loops",
+-controls:"Controls",
+-scriptcallbacks:"Script callbacks",
+-swstretchstyle:"Stretch style",
+-swstretchhalign:"Stretch H-Align",
+-swstretchvalign:"Stretch V-Align",
+-sound:"Sound",
+-progress:"Progress",
+-qtsrc:"QT Src",
+-qt_stream_warn:"Streamed rtsp resources should be added to the QT Src field under the advanced tab.\nYou should also add a non streamed version to the Src field..",
+-align_top:"Top",
+-align_right:"Right",
+-align_bottom:"Bottom",
+-align_left:"Left",
+-align_center:"Center",
+-align_top_left:"Top left",
+-align_top_right:"Top right",
+-align_bottom_left:"Bottom left",
+-align_bottom_right:"Bottom right",
+-flv_options:"Flash video options",
+-flv_scalemode:"Scale mode",
+-flv_buffer:"Buffer",
+-flv_startimage:"Start image",
+-flv_starttime:"Start time",
+-flv_defaultvolume:"Default volumne",
+-flv_hiddengui:"Hidden GUI",
+-flv_autostart:"Auto start",
+-flv_loop:"Loop",
+-flv_showscalemodes:"Show scale modes",
+-flv_smoothvideo:"Smooth video",
+-flv_jscallback:"JS Callback"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/media/langs/pl_dlg.js jscripts/tiny_mce/plugins/media/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/media/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/media/langs/pl_dlg.js	2012-04-23 13:40:33.322981607 +0200
+@@ -0,0 +1,103 @@
++tinyMCE.addI18n('pl.media_dlg',{
++title:"Wstaw/Edytuj wbudowane media",
++general:"G\u0142\u00F3wny",
++advanced:"Zaawansowany",
++file:"Plik/URL",
++list:"Lista",
++size:"Wymiary",
++preview:"Podgl\u0105d",
++constrain_proportions:"Zachowaj proporcje",
++type:"Typ",
++id:"Id",
++name:"Nazwa",
++class_name:"Klasa",
++vspace:"V-Space",
++hspace:"H-Space",
++play:"Autoodtwarzanie",
++loop:"Zap\u0119tlenie",
++menu:"Poka\u017C menu",
++quality:"Jako\u015B\u0107",
++scale:"Skala",
++align:"Wyr\u00F3wnaj",
++salign:"SAlign",
++wmode:"WMode",
++bgcolor:"T\u0142o",
++base:"Baza",
++flashvars:"Flashvars",
++liveconnect:"SWLiveConnect",
++autohref:"AutoHREF",
++cache:"Cache",
++hidden:"Ukryty",
++controller:"Controller",
++kioskmode:"Kiosk mode",
++playeveryframe:"Play every frame",
++targetcache:"Target cache",
++correction:"Bez korekcji",
++enablejavascript:"W\u0142\u0105cz JavaScript",
++starttime:"Start time",
++endtime:"End time",
++href:"Href",
++qtsrcchokespeed:"Choke speed",
++target:"Kom\u00F3rka",
++volume:"G\u0142o\u015Bno\u015B\u0107",
++autostart:"Auto start",
++enabled:"Enabled",
++fullscreen:"Pe\u0142ny ekran",
++invokeurls:"Odwo\u0142aj si\u0119 do URLs",
++mute:"Wycisz",
++stretchtofit:"Rozci\u0105gnij aby dopasowa\u0107",
++windowlessvideo:"Windowless video",
++balance:"Balance",
++baseurl:"Base URL",
++captioningid:"Captioning id",
++currentmarker:"Current marker",
++currentposition:"Aktualna pozycja",
++defaultframe:"Default frame",
++playcount:"Play count",
++rate:"Rate",
++uimode:"UI Mode",
++flash_options:"Flash opcje",
++qt_options:"Quicktime opcje",
++wmp_options:"Windows media player opcje",
++rmp_options:"Real media player options",
++shockwave_options:"Shockwave options",
++autogotourl:"Auto goto URL",
++center:"Center",
++imagestatus:"Image status",
++maintainaspect:"Maintain aspect",
++nojava:"No java",
++prefetch:"Prefetch",
++shuffle:"Shuffle",
++console:"Konsola",
++numloop:"Liczba powt\u00F3rze\u0144",
++controls:"Controls",
++scriptcallbacks:"Script callbacks",
++swstretchstyle:"Stretch style",
++swstretchhalign:"Stretch H-Align",
++swstretchvalign:"Stretch V-Align",
++sound:"D\u017Awi\u0119k",
++progress:"Progress",
++qtsrc:"QT Src",
++qt_stream_warn:"Streamed rtsp resources should be added to the QT Src field under the advanced tab.\nYou should also add a non streamed version to the Src field..",
++align_top:"G\u00F3ra",
++align_right:"Prawo",
++align_bottom:"D\u00F3\u0142",
++align_left:"Lewo",
++align_center:"\u015Arodek",
++align_top_left:"G\u00F3rny lewy",
++align_top_right:"G\u00F3rny prawy",
++align_bottom_left:"Dolny lewy",
++align_bottom_right:"Dolny prawy",
++flv_options:"Flash video opcje",
++flv_scalemode:"Scale mode",
++flv_buffer:"Buffer",
++flv_startimage:"Start image",
++flv_starttime:"Start time",
++flv_defaultvolume:"Default volumne",
++flv_hiddengui:"Ukryte GUI",
++flv_autostart:"Auto start",
++flv_loop:"Loop",
++flv_showscalemodes:"Show scale modes",
++flv_smoothvideo:"Smooth video",
++flv_jscallback:"JS Callback"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/paste/langs/en_dlg.js jscripts/tiny_mce/plugins/paste/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/paste/langs/en_dlg.js	2012-06-29 15:16:59.774902226 +0200
++++ jscripts/tiny_mce/plugins/paste/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,5 +0,0 @@
+-tinyMCE.addI18n('en.paste_dlg',{
+-text_title:"Use CTRL+V on your keyboard to paste the text into the window.",
+-text_linebreaks:"Keep linebreaks",
+-word_title:"Use CTRL+V on your keyboard to paste the text into the window."
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/paste/langs/pl_dlg.js jscripts/tiny_mce/plugins/paste/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/paste/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/paste/langs/pl_dlg.js	2012-04-23 13:40:34.154981572 +0200
+@@ -0,0 +1,5 @@
++tinyMCE.addI18n('pl.paste_dlg',{
++text_title:"U\u017Cyj CTRL+V na swojej klawiaturze \u017Ceby wklei\u0107 tekst do okna.",
++text_linebreaks:"Zachowaj ko\u0144ce linii.",
++word_title:"U\u017Cyj CTRL+V na swojej klawiaturze \u017Ceby wklei\u0107 tekst do okna."
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js	2012-06-29 15:16:59.770902224 +0200
++++ jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,16 +0,0 @@
+-tinyMCE.addI18n('en.searchreplace_dlg',{
+-searchnext_desc:"Find again",
+-notfound:"The search has been completed. The search string could not be found.",
+-search_title:"Find",
+-replace_title:"Find/Replace",
+-allreplaced:"All occurrences of the search string were replaced.",
+-findwhat:"Find what",
+-replacewith:"Replace with",
+-direction:"Direction",
+-up:"Up",
+-down:"Down",
+-mcase:"Match case",
+-findnext:"Find next",
+-replace:"Replace",
+-replaceall:"Replace all"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/searchreplace/langs/pl_dlg.js jscripts/tiny_mce/plugins/searchreplace/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/searchreplace/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/searchreplace/langs/pl_dlg.js	2012-04-23 13:40:34.038981576 +0200
+@@ -0,0 +1,16 @@
++tinyMCE.addI18n('pl.searchreplace_dlg',{
++searchnext_desc:"Znajd\u017A ponownie",
++notfound:"Wyszukiwanie zako\u0144czone. Poszukiwany fragment nie zosta\u0142 znaleziony.",
++search_title:"Znajd\u017A",
++replace_title:"Znajd\u017A/Zamie\u0144",
++allreplaced:"Wszystkie wyst\u0105pienia szukanego fragmentu zosta\u0142y zast\u0105pione.",
++findwhat:"Znajd\u017A...",
++replacewith:"Zamie\u0144 z...",
++direction:"Kierunek",
++up:"W g\u00F3r\u0119",
++down:"W d\u00F3\u0142",
++mcase:"Uwzgl\u0119dnij wielko\u015B\u0107 liter",
++findnext:"Znajd\u017A nast\u0119pny",
++replace:"Zamie\u0144",
++replaceall:"Zamie\u0144 wszystko"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/style/langs/en_dlg.js jscripts/tiny_mce/plugins/style/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/style/langs/en_dlg.js	2012-06-29 15:16:59.734902223 +0200
++++ jscripts/tiny_mce/plugins/style/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,70 +0,0 @@
+-tinyMCE.addI18n('en.style_dlg',{
+-title:"Edit CSS Style",
+-apply:"Apply",
+-text_tab:"Text",
+-background_tab:"Background",
+-block_tab:"Block",
+-box_tab:"Box",
+-border_tab:"Border",
+-list_tab:"List",
+-positioning_tab:"Positioning",
+-text_props:"Text",
+-text_font:"Font",
+-text_size:"Size",
+-text_weight:"Weight",
+-text_style:"Style",
+-text_variant:"Variant",
+-text_lineheight:"Line height",
+-text_case:"Case",
+-text_color:"Color",
+-text_decoration:"Decoration",
+-text_overline:"overline",
+-text_underline:"underline",
+-text_striketrough:"strikethrough",
+-text_blink:"blink",
+-text_none:"none",
+-background_color:"Background color",
+-background_image:"Background image",
+-background_repeat:"Repeat",
+-background_attachment:"Attachment",
+-background_hpos:"Horizontal position",
+-background_vpos:"Vertical position",
+-block_wordspacing:"Word spacing",
+-block_letterspacing:"Letter spacing",
+-block_vertical_alignment:"Vertical alignment",
+-block_text_align:"Text align",
+-block_text_indent:"Text indent",
+-block_whitespace:"Whitespace",
+-block_display:"Display",
+-box_width:"Width",
+-box_height:"Height",
+-box_float:"Float",
+-box_clear:"Clear",
+-padding:"Padding",
+-same:"Same for all",
+-top:"Top",
+-right:"Right",
+-bottom:"Bottom",
+-left:"Left",
+-margin:"Margin",
+-style:"Style",
+-width:"Width",
+-height:"Height",
+-color:"Color",
+-list_type:"Type",
+-bullet_image:"Bullet image",
+-position:"Position",
+-positioning_type:"Type",
+-visibility:"Visibility",
+-zindex:"Z-index",
+-overflow:"Overflow",
+-placement:"Placement",
+-clip:"Clip",
+-text:"Text",
+-background:"Background",
+-block:"Block",
+-box:"Box",
+-border:"Border",
+-list:"List",
+-position:"Position"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/style/langs/pl_dlg.js jscripts/tiny_mce/plugins/style/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/style/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/style/langs/pl_dlg.js	2012-04-23 13:40:33.978981579 +0200
+@@ -0,0 +1,63 @@
++tinyMCE.addI18n('pl.style_dlg',{
++title:"Edytuj CSS Style",
++apply:"Zastosuj",
++text_tab:"Text",
++background_tab:"T\u0142o",
++block_tab:"Zablokuj",
++box_tab:"Box",
++border_tab:"Obramowanie",
++list_tab:"Lista",
++positioning_tab:"Pozycjonowanie",
++text_props:"Tekst",
++text_font:"Wz\u00F3r czcionki",
++text_size:"Rozmiar",
++text_weight:"Waga",
++text_style:"Styl",
++text_variant:"Wariant",
++text_lineheight:"Linia wysoko\u015Bci",
++text_case:"Wielko\u015B\u0107 liter",
++text_color:"Kolor",
++text_decoration:"Dekoracja",
++text_overline:"Nadkre\u015Blenie",
++text_underline:"Podkre\u015Blenie",
++text_striketrough:"Przekre\u015Blenie",
++text_blink:"Miganie",
++text_none:"\u017Baden",
++background_color:"Kolor t\u0142a",
++background_image:"Obrazek t\u0142a",
++background_repeat:"Powt\u00F3rz",
++background_attachment:"Za\u0142\u0105cznik",
++background_hpos:"Pozycja pozioma",
++background_vpos:"Pozycja pionowa",
++block_wordspacing:"Odst\u0119p mi\u0119dzy wyrazami",
++block_letterspacing:"Odst\u0119p mi\u0119dzy literami",
++block_vertical_alignment:"Pionowe wyr\u00F3wnanie",
++block_text_align:"Wyr\u00F3wna\u0107 tekst",
++block_text_indent:"Akapit w tek\u015Bcie",
++block_whitespace:"Bia\u0142a przestrze\u0144",
++block_display:"Widoczno\u015B\u0107",
++box_width:"Szeroko\u015B\u0107",
++box_height:"Wysoko\u015B\u0107",
++box_float:"P\u0142ywanie",
++box_clear:"Wyczy\u015B\u0107",
++padding:"Odst\u0119py",
++same:"To samo dla wszystkich",
++top:"G\u00F3ra",
++right:"Prawy",
++bottom:"D\u00F3\u0142",
++left:"Lewy",
++margin:"Margines",
++style:"Styl",
++width:"Szeroko\u015B\u0107",
++height:"Wysoko\u015B\u0107",
++color:"Kolor",
++list_type:"Typ",
++bullet_image:"Obrazek listy",
++position:"Pozycja",
++positioning_type:"Typ",
++visibility:"Widoczno\u015B\u0107",
++zindex:"Z-index",
++overflow:"Przepe\u0142niony",
++placement:"Umieszczenie",
++clip:"Clip"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/table/langs/en_dlg.js jscripts/tiny_mce/plugins/table/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/table/langs/en_dlg.js	2012-06-29 15:16:59.722902226 +0200
++++ jscripts/tiny_mce/plugins/table/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,74 +0,0 @@
+-tinyMCE.addI18n('en.table_dlg',{
+-general_tab:"General",
+-advanced_tab:"Advanced",
+-general_props:"General properties",
+-advanced_props:"Advanced properties",
+-rowtype:"Row in table part",
+-title:"Insert/Modify table",
+-width:"Width",
+-height:"Height",
+-cols:"Columns",
+-rows:"Rows",
+-cellspacing:"Cellspacing",
+-cellpadding:"Cellpadding",
+-border:"Border",
+-align:"Alignment",
+-align_default:"Default",
+-align_left:"Left",
+-align_right:"Right",
+-align_middle:"Center",
+-row_title:"Table row properties",
+-cell_title:"Table cell properties",
+-cell_type:"Cell type",
+-valign:"Vertical alignment",
+-align_top:"Top",
+-align_bottom:"Bottom",
+-bordercolor:"Border color",
+-bgcolor:"Background color",
+-merge_cells_title:"Merge table cells",
+-id:"Id",
+-style:"Style",
+-langdir:"Language direction",
+-langcode:"Language code",
+-mime:"Target MIME type",
+-ltr:"Left to right",
+-rtl:"Right to left",
+-bgimage:"Background image",
+-summary:"Summary",
+-td:"Data",
+-th:"Header",
+-cell_cell:"Update current cell",
+-cell_row:"Update all cells in row",
+-cell_all:"Update all cells in table",
+-row_row:"Update current row",
+-row_odd:"Update odd rows in table",
+-row_even:"Update even rows in table",
+-row_all:"Update all rows in table",
+-thead:"Table Head",
+-tbody:"Table Body",
+-tfoot:"Table Foot",
+-scope:"Scope",
+-rowgroup:"Row Group",
+-colgroup:"Col Group",
+-col_limit:"You've exceeded the maximum number of columns of {$cols}.",
+-row_limit:"You've exceeded the maximum number of rows of {$rows}.",
+-cell_limit:"You've exceeded the maximum number of cells of {$cells}.",
+-missing_scope:"Are you sure you want to continue without specifying a scope for this table header cell. Without it, it may be difficult for some users with disabilities to understand the content or data displayed of the table.",
+-caption:"Table caption",
+-frame:"Frame",
+-frame_none:"none",
+-frame_groups:"groups",
+-frame_rows:"rows",
+-frame_cols:"cols",
+-frame_all:"all",
+-rules:"Rules",
+-rules_void:"void",
+-rules_above:"above",
+-rules_below:"below",
+-rules_hsides:"hsides",
+-rules_lhs:"lhs",
+-rules_rhs:"rhs",
+-rules_vsides:"vsides",
+-rules_box:"box",
+-rules_border:"border"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/table/langs/pl_dlg.js jscripts/tiny_mce/plugins/table/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/table/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/table/langs/pl_dlg.js	2012-04-23 13:40:33.770981588 +0200
+@@ -0,0 +1,74 @@
++tinyMCE.addI18n('pl.table_dlg',{
++general_tab:"G\u0142\u00F3wna",
++advanced_tab:"Zaawansowana",
++general_props:"G\u0142\u00F3wne w\u0142a\u015Bciwo\u015Bci",
++advanced_props:"Zaawansowane w\u0142a\u015Bciwo\u015Bci",
++rowtype:"Row in table part",
++title:"Wklej/Zmie\u0144 tabel\u0119",
++width:"Szeroko\u015B\u0107",
++height:"Wysoko\u015B\u0107",
++cols:"Kolumny",
++rows:"Wiersze",
++cellspacing:"Cellspacing",
++cellpadding:"Cellpadding",
++border:"Ramka",
++align:"Wyr\u00F3wnanie",
++align_default:"Domy\u015Blnie",
++align_left:"Lewy",
++align_right:"Prawy",
++align_middle:"\u015Arodek",
++row_title:"W\u0142a\u015Bciwo\u015Bci wiersza",
++cell_title:"W\u0142a\u015Bciwo\u015Bci kom\u00F3rki",
++cell_type:"Cell type",
++valign:"Pionowe wyr\u00F3wnanie",
++align_top:"G\u00F3ra",
++align_bottom:"D\u00F3\u0142",
++bordercolor:"Kolor ramki",
++bgcolor:"Kolor t\u0142a",
++merge_cells_title:"Po\u0142\u0105cz kom\u00F3rki",
++id:"Id",
++style:"Styl",
++langdir:"Kierunek czytania tekstu",
++langcode:"Oznaczenie kodowe j\u0119zyka",
++mime:"Docelowy typ MIME",
++ltr:"Kierunek z lewej do prawej",
++rtl:"Kierunek z prawej do lewej",
++bgimage:"Obrazek t\u0142a",
++summary:"Podsumowanie",
++td:"Data",
++th:"Nag\u0142owek",
++cell_cell:"Zmie\u0144 aktualn\u0105 kom\u00F3rk\u0119",
++cell_row:"Zmie\u0144 wszytkie kom\u00F3rki w wierszu",
++cell_all:"Zmie\u0144 wszytkie kom\u00F3rki w tabeli",
++row_row:"Zmie\u0144 aktualny wiersz",
++row_odd:"Zmie\u0144 nieparzyste wiersze",
++row_even:"Zmie\u0144 parzyste wiersze",
++row_all:"Zmie\u0144 wszystkie wiersze",
++thead:"Nag\u0142\u00F3wek tabeli",
++tbody:"Cia\u0142o tabeli",
++tfoot:"Stopka tabeli",
++scope:"Zakres",
++rowgroup:"Grupa wierszy",
++colgroup:"Grupa kolumn",
++col_limit:"Przekroczy\u0142e\u015B maksymaln\u0105 liczb\u0119 kolumn kt\u00F3ra wynosi {$cols}.",
++row_limit:"Przekroczy\u0142e\u015B maksymaln\u0105 liczb\u0119 wierszy kt\u00F3ra wynosi {$rows}.",
++cell_limit:"Przekroczy\u0142e\u015B maksymaln\u0105 liczb\u0119 kom\u00F3rek kt\u00F3ra wynosi {$cells}.",
++missing_scope:"Jeste\u015B pewny \u017Ce chcesz kontynuowa\u0107 bez definiowania zasi\u0119gu dla kom\u00F3rki tabeli. Bez niej, mo\u017Ce by\u0107 trudne dla niekt\u00F3rych u\u017Cytkownik\u00F3w zrozuminie zawarto\u015Bci albo danych wy\u015Bwietlanych poza tabel\u0105.",
++caption:"Nag\u0142\u00F3wek tabeli",
++frame:"Ramka",
++frame_none:"brak",
++frame_groups:"grupy",
++frame_rows:"wiersze",
++frame_cols:"kolumny",
++frame_all:"wszystkie",
++rules:"Prowadnice",
++rules_void:"void",
++rules_above:"nad",
++rules_below:"pod",
++rules_hsides:"hsides",
++rules_lhs:"lhs",
++rules_rhs:"rhs",
++rules_vsides:"vsides",
++rules_box:"box",
++rules_border:"border"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/template/langs/en_dlg.js jscripts/tiny_mce/plugins/template/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/template/langs/en_dlg.js	2012-06-29 15:16:59.742902224 +0200
++++ jscripts/tiny_mce/plugins/template/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,15 +0,0 @@
+-tinyMCE.addI18n('en.template_dlg',{
+-title:"Templates",
+-label:"Template",
+-desc_label:"Description",
+-desc:"Insert predefined template content",
+-select:"Select a template",
+-preview:"Preview",
+-warning:"Warning: Updating a template with a different one may cause data loss.",
+-mdate_format:"%Y-%m-%d %H:%M:%S",
+-cdate_format:"%Y-%m-%d %H:%M:%S",
+-months_long:"January,February,March,April,May,June,July,August,September,October,November,December",
+-months_short:"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
+-day_long:"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
+-day_short:"Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/template/langs/pl_dlg.js jscripts/tiny_mce/plugins/template/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/template/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/template/langs/pl_dlg.js	2012-04-23 13:40:34.106981574 +0200
+@@ -0,0 +1,15 @@
++tinyMCE.addI18n('pl.template_dlg',{
++title:"Szablony",
++label:"Szablon",
++desc_label:"Opis",
++desc:"Wstaw szablon dokumentu",
++select:"Wybierz szablon",
++preview:"Podgl\u0105d",
++warning:"Uwaga: Aktualizacja szablon\u00F3w mo\u017Ce spowodowa\u0107 utrat\u0119 danych.",
++mdate_format:"%Y-%m-%d %H:%M:%S",
++cdate_format:"%Y-%m-%d %H:%M:%S",
++months_long:"Stycze\u0144,Luty,Marzec.Kwiecie\u0144,Maj,Czerwiec,Lipiec,Sierpie\u0144,Wrzesie\u0144,Pa\u017Adziernik,Listopad,Grudzie\u0144",
++months_short:"Sty,Lut,Mar,Kwi,Maj,Cze,Lip,Sie,Wrz,Pa\u017A,Lis,Gru",
++day_long:"Niedziela,Poniedzia\u0142ek,Wtorek,\u015Aroda,Czwartek,Pi\u0105tek,Sobota,Niedziela",
++day_short:"N,Pn,Wt,\u015Ar,Cz,Pt,So,N"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js
+--- jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js	2012-06-29 15:16:59.746902225 +0200
++++ jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,32 +0,0 @@
+-tinyMCE.addI18n('en.xhtmlxtras_dlg',{
+-attribute_label_title:"Title",
+-attribute_label_id:"ID",
+-attribute_label_class:"Class",
+-attribute_label_style:"Style",
+-attribute_label_cite:"Cite",
+-attribute_label_datetime:"Date/Time",
+-attribute_label_langdir:"Text Direction",
+-attribute_option_ltr:"Left to right",
+-attribute_option_rtl:"Right to left",
+-attribute_label_langcode:"Language",
+-attribute_label_tabindex:"TabIndex",
+-attribute_label_accesskey:"AccessKey",
+-attribute_events_tab:"Events",
+-attribute_attrib_tab:"Attributes",
+-general_tab:"General",
+-attrib_tab:"Attributes",
+-events_tab:"Events",
+-fieldset_general_tab:"General Settings",
+-fieldset_attrib_tab:"Element Attributes",
+-fieldset_events_tab:"Element Events",
+-title_ins_element:"Insertion Element",
+-title_del_element:"Deletion Element",
+-title_acronym_element:"Acronym Element",
+-title_abbr_element:"Abbreviation Element",
+-title_cite_element:"Citation Element",
+-remove:"Remove",
+-insert_date:"Insert current date/time",
+-option_ltr:"Left to right",
+-option_rtl:"Right to left",
+-attribs_title:"Insert/Edit Attributes"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/plugins/xhtmlxtras/langs/pl_dlg.js jscripts/tiny_mce/plugins/xhtmlxtras/langs/pl_dlg.js
+--- jscripts/tiny_mce/plugins/xhtmlxtras/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/plugins/xhtmlxtras/langs/pl_dlg.js	2012-04-23 13:40:34.218981568 +0200
+@@ -0,0 +1,32 @@
++tinyMCE.addI18n('pl.xhtmlxtras_dlg',{
++attribute_label_title:"Tytu\u0142",
++attribute_label_id:"ID",
++attribute_label_class:"Klasa",
++attribute_label_style:"Styl",
++attribute_label_cite:"Osoba cytowana",
++attribute_label_datetime:"Data/Czas",
++attribute_label_langdir:"Kierunek czytania tekstu",
++attribute_option_ltr:"Kierunek z lewej do prawej",
++attribute_option_rtl:"Kierunek z prawej do lewej",
++attribute_label_langcode:"J\u0119zyk",
++attribute_label_tabindex:"TabIndex",
++attribute_label_accesskey:"AccessKey",
++attribute_events_tab:"Wydarzenia",
++attribute_attrib_tab:"Atrybuty",
++general_tab:"G\u0142\u00F3wny",
++attrib_tab:"Atrybuty",
++events_tab:"Wydarzenia",
++fieldset_general_tab:"G\u0142\u00F3wne ustawienia",
++fieldset_attrib_tab:"Atrybuty",
++fieldset_events_tab:"Zdarzenia",
++title_ins_element:"Insertion Element",
++title_del_element:"Deletion Element",
++title_acronym_element:"Akronim Element",
++title_abbr_element:"Abbreviation Element",
++title_cite_element:"Osoba cytowana",
++remove:"Usu\u0144",
++insert_date:"Wklej aktualn\u0105 dat\u0119/czas",
++option_ltr:"Kierunek z lewej do prawej",
++option_rtl:"Kierunek z prawej do lewej",
++attribs_title:"Wklej/edytuj atrybuty"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/themes/advanced/langs/en_dlg.js jscripts/tiny_mce/themes/advanced/langs/en_dlg.js
+--- jscripts/tiny_mce/themes/advanced/langs/en_dlg.js	2012-06-29 15:16:59.786902228 +0200
++++ jscripts/tiny_mce/themes/advanced/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,53 +0,0 @@
+-tinyMCE.addI18n('en.advanced_dlg',{
+-about_title:"About TinyMCE",
+-about_general:"About",
+-about_help:"Help",
+-about_license:"License",
+-about_plugins:"Plugins",
+-about_plugin:"Plugin",
+-about_author:"Author",
+-about_version:"Version",
+-about_loaded:"Loaded plugins",
+-anchor_title:"Insert/edit anchor",
+-anchor_name:"Anchor name",
+-code_title:"HTML Source Editor",
+-code_wordwrap:"Word wrap",
+-colorpicker_title:"Select a color",
+-colorpicker_picker_tab:"Picker",
+-colorpicker_picker_title:"Color picker",
+-colorpicker_palette_tab:"Palette",
+-colorpicker_palette_title:"Palette colors",
+-colorpicker_named_tab:"Named",
+-colorpicker_named_title:"Named colors",
+-colorpicker_color:"Color:",
+-colorpicker_name:"Name:",
+-charmap_title:"Select custom character",
+-image_title:"Insert/edit image",
+-image_src:"Image URL",
+-image_alt:"Image description",
+-image_list:"Image list",
+-image_border:"Border",
+-image_dimensions:"Dimensions",
+-image_vspace:"Vertical space",
+-image_hspace:"Horizontal space",
+-image_align:"Alignment",
+-image_align_baseline:"Baseline",
+-image_align_top:"Top",
+-image_align_middle:"Middle",
+-image_align_bottom:"Bottom",
+-image_align_texttop:"Text top",
+-image_align_textbottom:"Text bottom",
+-image_align_left:"Left",
+-image_align_right:"Right",
+-link_title:"Insert/edit link",
+-link_url:"Link URL",
+-link_target:"Target",
+-link_target_same:"Open link in the same window",
+-link_target_blank:"Open link in a new window",
+-link_titlefield:"Title",
+-link_is_email:"The URL you entered seems to be an email address, do you want to add the required mailto: prefix?",
+-link_is_external:"The URL you entered seems to external link, do you want to add the required http:// prefix?",
+-link_list:"Link list",
+-accessibility_help:"Accessibility Help",
+-accessibility_usage_title:"General Usage"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/themes/advanced/langs/en.js jscripts/tiny_mce/themes/advanced/langs/en.js
+--- jscripts/tiny_mce/themes/advanced/langs/en.js	2012-06-29 15:16:59.786902228 +0200
++++ jscripts/tiny_mce/themes/advanced/langs/en.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,68 +0,0 @@
+-tinyMCE.addI18n('en.advanced',{
+-style_select:"Styles",
+-font_size:"Font size",
+-fontdefault:"Font family",
+-block:"Format",
+-paragraph:"Paragraph",
+-div:"Div",
+-address:"Address",
+-pre:"Preformatted",
+-h1:"Heading 1",
+-h2:"Heading 2",
+-h3:"Heading 3",
+-h4:"Heading 4",
+-h5:"Heading 5",
+-h6:"Heading 6",
+-blockquote:"Blockquote",
+-code:"Code",
+-samp:"Code sample",
+-dt:"Definition term ",
+-dd:"Definition description",
+-bold_desc:"Bold (Ctrl+B)",
+-italic_desc:"Italic (Ctrl+I)",
+-underline_desc:"Underline (Ctrl+U)",
+-striketrough_desc:"Strikethrough",
+-justifyleft_desc:"Align left",
+-justifycenter_desc:"Align center",
+-justifyright_desc:"Align right",
+-justifyfull_desc:"Align full",
+-bullist_desc:"Unordered list",
+-numlist_desc:"Ordered list",
+-outdent_desc:"Outdent",
+-indent_desc:"Indent",
+-undo_desc:"Undo (Ctrl+Z)",
+-redo_desc:"Redo (Ctrl+Y)",
+-link_desc:"Insert/edit link",
+-unlink_desc:"Unlink",
+-image_desc:"Insert/edit image",
+-cleanup_desc:"Cleanup messy code",
+-code_desc:"Edit HTML Source",
+-sub_desc:"Subscript",
+-sup_desc:"Superscript",
+-hr_desc:"Insert horizontal ruler",
+-removeformat_desc:"Remove formatting",
+-custom1_desc:"Your custom description here",
+-forecolor_desc:"Select text color",
+-backcolor_desc:"Select background color",
+-charmap_desc:"Insert custom character",
+-visualaid_desc:"Toggle guidelines/invisible elements",
+-anchor_desc:"Insert/edit anchor",
+-cut_desc:"Cut",
+-copy_desc:"Copy",
+-paste_desc:"Paste",
+-image_props_desc:"Image properties",
+-newdocument_desc:"New document",
+-help_desc:"Help",
+-blockquote_desc:"Blockquote",
+-clipboard_msg:"Copy/Cut/Paste is not available in Mozilla and Firefox.\r\nDo you want more information about this issue?",
+-path:"Path",
+-newdocument:"Are you sure you want clear all contents?",
+-toolbar_focus:"Jump to tool buttons - Alt+Q, Jump to editor - Alt-Z, Jump to element path - Alt-X",
+-more_colors:"More colors",
+-
+-// Accessibility Strings
+-shortcuts_desc:'Accessibility Help',
+-help_shortcut:'. Press ALT F10 for toolbar. Press ALT 0 for help.',
+-rich_text_area:"Rich Text Area",
+-toolbar:"Toolbar"
+-});
+diff -rNuB ./jscripts/tiny_mce/themes/advanced/langs/pl_dlg.js jscripts/tiny_mce/themes/advanced/langs/pl_dlg.js
+--- jscripts/tiny_mce/themes/advanced/langs/pl_dlg.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/themes/advanced/langs/pl_dlg.js	2012-04-23 13:40:34.554981553 +0200
+@@ -0,0 +1,52 @@
++tinyMCE.addI18n('pl.advanced_dlg',{
++about_title:"O TinyMCE",
++about_general:"O TinyMCE",
++about_help:"Pomoc",
++about_license:"Licencja",
++about_plugins:"Wtyczki",
++about_plugin:"Wtyczka",
++about_author:"Autor",
++about_version:"Wersja",
++about_loaded:"Za\u0142adowane wtyczki",
++anchor_title:"Wstaw/Edytuj zakotwiczenie",
++anchor_name:"Nazwa zakotwiczenia",
++code_title:"Edytor \u017Ar\u00F3d\u0142a HTML",
++code_wordwrap:"Zawijanie s\u0142\u00F3w",
++colorpicker_title:"Wybierz kolor",
++colorpicker_picker_tab:"Wybieranie",
++colorpicker_picker_title:"Wybieranie kolor\u00F3w",
++colorpicker_palette_tab:"Paleta",
++colorpicker_palette_title:"Paleta kolor\u00F3w",
++colorpicker_named_tab:"Nazwane",
++colorpicker_named_title:"Nazwane kolory",
++colorpicker_color:"Kolor:",
++colorpicker_name:"Nazwa:",
++charmap_title:"Wybierz niestandardowy znak",
++image_title:"Wstaw/Edytuj obraz",
++image_src:"URL obrazka",
++image_alt:"Opis obrazka",
++image_list:"Lista obrazk\u00F3w",
++image_border:"Ramka",
++image_dimensions:"Rozmiary",
++image_vspace:"Pionowy odst\u0119p",
++image_hspace:"Poziomy odst\u0119p",
++image_align:"Wyr\u00F3wnanie",
++image_align_baseline:"Linia bazowa",
++image_align_top:"G\u00F3ra",
++image_align_middle:"\u015Arodek",
++image_align_bottom:"Dolny",
++image_align_texttop:"G\u00F3rny tekst",
++image_align_textbottom:"Dolny tekst",
++image_align_left:"Lewy",
++link_rel:"Atrybut rel",
++image_align_right:"Prawy",
++link_title:"Wstaw/edytuj link",
++link_url:"Link URL",
++link_target:"Cel",
++link_target_same:"Otw\u00F3rz link w tym samym oknie",
++link_target_blank:"Otw\u00F3rz link w nowym oknie",
++link_titlefield:"Tytu\u0142",
++link_is_email:"URL kt\u00F3ry otworzy\u0142e\u015B wydaje si\u0119 by\u0107 adresem mailowym, czy chcesz doda\u0107 odpowiedni prefix mailto: ?",
++link_is_external:"URL kt\u00F3ry otworzy\u0142e\u015B wydaje si\u0119 by\u0107 zewn\u0119trznym linkiem, czy chcesz doda\u0107 wymagany prefix http:// ?",
++link_list:"Lista link\u00F3w"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/themes/advanced/langs/pl.js jscripts/tiny_mce/themes/advanced/langs/pl.js
+--- jscripts/tiny_mce/themes/advanced/langs/pl.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/themes/advanced/langs/pl.js	2012-04-23 13:40:34.554981553 +0200
+@@ -0,0 +1,62 @@
++tinyMCE.addI18n('pl.advanced',{
++style_select:"Styl",
++font_size:"Rozmiar czcionki",
++fontdefault:"Rodzaj czcionki",
++block:"Format",
++paragraph:"Paragraf",
++div:"Div",
++address:"Adres",
++pre:"Czcionka o sta\u0142ej szeroko\u015Bci",
++h1:"Nag\u0142\u00F3wek 1",
++h2:"Nag\u0142\u00F3wek 2",
++h3:"Nag\u0142\u00F3wek 3",
++h4:"Nag\u0142\u00F3wek 4",
++h5:"Nag\u0142\u00F3wek 5",
++h6:"Nag\u0142\u00F3wek 6",
++blockquote:"Wydzielony blok",
++code:"Kod",
++samp:"Pr\u00F3bka kodu",
++dt:"Definicja terminu ",
++dd:"Opis terminu",
++bold_desc:"Pogrubienie (Ctrl+B)",
++italic_desc:"Kursywa (Ctrl+I)",
++underline_desc:"Podkre\u015Blenie (Ctrl+U)",
++striketrough_desc:"Przekre\u015Blenia",
++justifyleft_desc:"Wyr\u00F3wnaj do lewej",
++justifycenter_desc:"Wycentruj",
++justifyright_desc:"Wyr\u00F3wnaj do prawej",
++justifyfull_desc:"R\u00F3wnanie do prawej i lewej",
++bullist_desc:"Lista nienumerowana",
++numlist_desc:"Lista numerowana",
++outdent_desc:"Cofnij wci\u0119cie",
++indent_desc:"Wci\u0119cie",
++undo_desc:"Cofnij (Ctrl+Z)",
++redo_desc:"Pon\u00F3w (Ctrl+Y)",
++link_desc:"Wstaw/edytuj link",
++unlink_desc:"Usu\u0144 link",
++image_desc:"Wstaw/edytuj obraz",
++cleanup_desc:"Wyczy\u015B\u0107 nieuporz\u0105dkowany kod",
++code_desc:"Edytuj \u017Ar\u00F3d\u0142o HTML",
++sub_desc:"Indeks dolny",
++sup_desc:"Indeks g\u00F3rny",
++hr_desc:"Wstaw poziom\u0105 lini\u0119",
++removeformat_desc:"Usu\u0144 formatowanie",
++custom1_desc:"Tw\u00F3j niestandardowy opis tutaj",
++forecolor_desc:"Wybierz kolor tekstu",
++backcolor_desc:"Wybierz kolor t\u0142a",
++charmap_desc:"Wstaw niestandardowy znak",
++visualaid_desc:"Prze\u0142\u0105cz widoczno\u015B\u0107 wska\u017Anik\u00F3w i niewidocznych element\u00F3w",
++anchor_desc:"Wstaw/edytuj kotwic\u0119",
++cut_desc:"Wytnij",
++copy_desc:"Kopiuj",
++paste_desc:"Wklej",
++image_props_desc:"W\u0142a\u015Bciwo\u015Bci obrazka",
++newdocument_desc:"Nowy dokument",
++help_desc:"Pomoc",
++blockquote_desc:"Blok cytatu",
++clipboard_msg:"Akcje Kopiuj/Wytnij/Wklej nie s\u0105 dost\u0119pne w Mozilli i Firefox.\nCzy chcesz wi\u0119cej informacji o tym problemie?",
++path:"\u015Acie\u017Cka",
++newdocument:"Czy jeste\u015B pewnien, ze chcesz wyczy\u015Bci\u0107 ca\u0142\u0105 zawarto\u015B\u0107?",
++toolbar_focus:"Przeskocz do przycisk\u00F3w narz\u0119dzi - Alt+Q, Przeskocz do edytora - Alt-Z, Przeskocz do elementu \u015Bcie\u017Cki - Alt-X",
++more_colors:"Wi\u0119cej kolor\u00F3w"
++});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/themes/simple/langs/en.js jscripts/tiny_mce/themes/simple/langs/en.js
+--- jscripts/tiny_mce/themes/simple/langs/en.js	2012-06-29 15:16:59.778902227 +0200
++++ jscripts/tiny_mce/themes/simple/langs/en.js	1970-01-01 01:00:00.000000000 +0100
+@@ -1,11 +0,0 @@
+-tinyMCE.addI18n('en.simple',{
+-bold_desc:"Bold (Ctrl+B)",
+-italic_desc:"Italic (Ctrl+I)",
+-underline_desc:"Underline (Ctrl+U)",
+-striketrough_desc:"Strikethrough",
+-bullist_desc:"Unordered list",
+-numlist_desc:"Ordered list",
+-undo_desc:"Undo (Ctrl+Z)",
+-redo_desc:"Redo (Ctrl+Y)",
+-cleanup_desc:"Cleanup messy code"
+-});
+\ Brak znaku nowej linii na końcu pliku
+diff -rNuB ./jscripts/tiny_mce/themes/simple/langs/pl.js jscripts/tiny_mce/themes/simple/langs/pl.js
+--- jscripts/tiny_mce/themes/simple/langs/pl.js	1970-01-01 01:00:00.000000000 +0100
++++ jscripts/tiny_mce/themes/simple/langs/pl.js	2012-04-23 13:40:34.974981535 +0200
+@@ -0,0 +1,11 @@
++tinyMCE.addI18n('pl.simple',{
++bold_desc:"Pogrubienie (Ctrl+B)",
++italic_desc:"Kursywa (Ctrl+I)",
++underline_desc:"Podkre\u015Blenie (Ctrl+U)",
++striketrough_desc:"Przekre\u015Blenie",
++bullist_desc:"Lista nienumerowana",
++numlist_desc:"Lista numerowana",
++undo_desc:"Cofnij (Ctrl+Z)",
++redo_desc:"Pon\u00F3w (Ctrl+Y)",
++cleanup_desc:"Wyczy\u015B\u0107 nieuporz\u0105dkowany kod"
++});
+\ Brak znaku nowej linii na końcu pliku
 diff -rNuB ./tinymce.patch tinymce.patch
---- tinymce.patch	2012-06-29 14:59:49.310867907 +0200
+--- tinymce.patch	2012-06-29 15:18:24.242905037 +0200
 +++ tinymce.patch	1970-01-01 01:00:00.000000000 +0100
-@@ -1,2035 +0,0 @@
--diff -rNuB ./jscripts/tiny_mce/langs/en.js jscripts/tiny_mce/langs/en.js
----- jscripts/tiny_mce/langs/en.js	2012-06-29 14:50:39.362849593 +0200
--+++ jscripts/tiny_mce/langs/en.js	1970-01-01 01:00:00.000000000 +0100
--@@ -1,218 +0,0 @@
---tinyMCE.addI18n({en:{
---common:{
---edit_confirm:"Do you want to use the WYSIWYG mode for this textarea?",
---apply:"Apply",
---insert:"Insert",
---update:"Update",
---cancel:"Cancel",
---close:"Close",
---browse:"Browse",
---class_name:"Class",
---not_set:"-- Not set --",
---clipboard_msg:"Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?",
---clipboard_no_support:"Currently not supported by your browser, use keyboard shortcuts instead.",
---popup_blocked:"Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.",
---invalid_data:"{#field} is invalid",
---invalid_data_number:"{#field} must be a number",
---invalid_data_min:"{#field} must be a number greater than {#min}",
---invalid_data_size:"{#field} must be a number or percentage",
---more_colors:"More colors"
---},
---colors:{
---'000000':'Black',
---'993300':'Burnt orange',
---'333300':'Dark olive',
---'003300':'Dark green',
---'003366':'Dark azure',
---'000080':'Navy Blue',
---'333399':'Indigo',
---'333333':'Very dark gray',
---'800000':'Maroon',
---'FF6600':'Orange',
---'808000':'Olive',
---'008000':'Green',
---'008080':'Teal',
---'0000FF':'Blue',
---'666699':'Grayish blue',
---'808080':'Gray',
---'FF0000':'Red',
---'FF9900':'Amber',
---'99CC00':'Yellow green',
---'339966':'Sea green',
---'33CCCC':'Turquoise',
---'3366FF':'Royal blue',
---'800080':'Purple',
---'999999':'Medium gray',
---'FF00FF':'Magenta',
---'FFCC00':'Gold',
---'FFFF00':'Yellow',
---'00FF00':'Lime',
---'00FFFF':'Aqua',
---'00CCFF':'Sky blue',
---'993366':'Brown',
---'C0C0C0':'Silver',
---'FF99CC':'Pink',
---'FFCC99':'Peach',
---'FFFF99':'Light yellow',
---'CCFFCC':'Pale green',
---'CCFFFF':'Pale cyan',
---'99CCFF':'Light sky blue',
---'CC99FF':'Plum',
---'FFFFFF':'White'
---},
---contextmenu:{
---align:"Alignment",
---left:"Left",
---center:"Center",
---right:"Right",
---full:"Full"
---},
---insertdatetime:{
---date_fmt:"%Y-%m-%d",
---time_fmt:"%H:%M:%S",
---insertdate_desc:"Insert date",
---inserttime_desc:"Insert time",
---months_long:"January,February,March,April,May,June,July,August,September,October,November,December",
---months_short:"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
---day_long:"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
---day_short:"Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun"
---},
---print:{
---print_desc:"Print"
---},
---preview:{
---preview_desc:"Preview"
---},
---directionality:{
---ltr_desc:"Direction left to right",
---rtl_desc:"Direction right to left"
---},
---layer:{
---insertlayer_desc:"Insert new layer",
---forward_desc:"Move forward",
---backward_desc:"Move backward",
---absolute_desc:"Toggle absolute positioning",
---content:"New layer..."
---},
---save:{
---save_desc:"Save",
---cancel_desc:"Cancel all changes"
---},
---nonbreaking:{
---nonbreaking_desc:"Insert non-breaking space character"
---},
---iespell:{
---iespell_desc:"Run spell checking",
---download:"ieSpell not detected. Do you want to install it now?"
---},
---advhr:{
---advhr_desc:"Horizontal rule"
---},
---emotions:{
---emotions_desc:"Emotions"
---},
---searchreplace:{
---search_desc:"Find",
---replace_desc:"Find/Replace"
---},
---advimage:{
---image_desc:"Insert/edit image"
---},
---advlink:{
---link_desc:"Insert/edit link"
---},
---xhtmlxtras:{
---cite_desc:"Citation",
---abbr_desc:"Abbreviation",
---acronym_desc:"Acronym",
---del_desc:"Deletion",
---ins_desc:"Insertion",
---attribs_desc:"Insert/Edit Attributes"
---},
---style:{
---desc:"Edit CSS Style"
---},
---paste:{
---paste_text_desc:"Paste as Plain Text",
---paste_word_desc:"Paste from Word",
---selectall_desc:"Select All",
---plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
---plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
---},
---paste_dlg:{
---text_title:"Use CTRL+V on your keyboard to paste the text into the window.",
---text_linebreaks:"Keep linebreaks",
---word_title:"Use CTRL+V on your keyboard to paste the text into the window."
---},
---table:{
---desc:"Inserts a new table",
---row_before_desc:"Insert row before",
---row_after_desc:"Insert row after",
---delete_row_desc:"Delete row",
---col_before_desc:"Insert column before",
---col_after_desc:"Insert column after",
---delete_col_desc:"Remove column",
---split_cells_desc:"Split merged table cells",
---merge_cells_desc:"Merge table cells",
---row_desc:"Table row properties",
---cell_desc:"Table cell properties",
---props_desc:"Table properties",
---paste_row_before_desc:"Paste table row before",
---paste_row_after_desc:"Paste table row after",
---cut_row_desc:"Cut table row",
---copy_row_desc:"Copy table row",
---del:"Delete table",
---row:"Row",
---col:"Column",
---cell:"Cell"
---},
---autosave:{
---unload_msg:"The changes you made will be lost if you navigate away from this page.",
---restore_content:"Restore auto-saved content.",
---warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
---},
---fullscreen:{
---desc:"Toggle fullscreen mode"
---},
---media:{
---desc:"Insert / edit embedded media",
---edit:"Edit embedded media"
---},
---fullpage:{
---desc:"Document properties"
---},
---template:{
---desc:"Insert predefined template content"
---},
---visualchars:{
---desc:"Visual control characters on/off."
---},
---spellchecker:{
---desc:"Toggle spellchecker",
---menu:"Spellchecker settings",
---ignore_word:"Ignore word",
---ignore_words:"Ignore all",
---langs:"Languages",
---wait:"Please wait...",
---sug:"Suggestions",
---no_sug:"No suggestions",
---no_mpell:"No misspellings found."
---},
---pagebreak:{
---desc:"Insert page break."
---},
---advlist:{
---types:"Types",
---def:"Default",
---lower_alpha:"Lower alpha",
---lower_greek:"Lower greek",
---lower_roman:"Lower roman",
---upper_alpha:"Upper alpha",
---upper_roman:"Upper roman",
---circle:"Circle",
---disc:"Disc",
---square:"Square"
---},
---aria:{
---rich_text_area:"Rich Text Area"
---}}});
--\ Brak znaku nowej linii na końcu pliku
+@@ -1,1739 +0,0 @@
 -diff -rNuB ./jscripts/tiny_mce/langs/pl.js jscripts/tiny_mce/langs/pl.js
 ---- jscripts/tiny_mce/langs/pl.js	1970-01-01 01:00:00.000000000 +0100
 -+++ jscripts/tiny_mce/langs/pl.js	2012-04-23 13:40:34.462981558 +0200
@@ -385,7 +1901,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+}}});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js	2012-06-29 14:50:39.326849589 +0200
+---- jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js	2012-06-29 15:16:59.734902223 +0200
 -+++ jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,7 +0,0 @@
 --tinyMCE.addI18n('en.advhr_dlg',{
@@ -407,7 +1923,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js	2012-06-29 14:50:39.346849595 +0200
+---- jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js	2012-06-29 15:16:59.758902224 +0200
 -+++ jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,45 +0,0 @@
 --tinyMCE.addI18n('en.advimage_dlg',{
@@ -505,7 +2021,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js	2012-06-29 14:50:39.330849591 +0200
+---- jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js	2012-06-29 15:16:59.738902223 +0200
 -+++ jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,54 +0,0 @@
 --tinyMCE.addI18n('en.advlink_dlg',{
@@ -621,7 +2137,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js	2012-06-29 14:50:39.350849594 +0200
+---- jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js	2012-06-29 15:16:59.762902222 +0200
 -+++ jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,20 +0,0 @@
 --tinyMCE.addI18n('en.emotions_dlg',{
@@ -671,7 +2187,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js	2012-06-29 14:50:39.342849595 +0200
+---- jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js	2012-06-29 15:16:59.754902226 +0200
 -+++ jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,85 +0,0 @@
 --tinyMCE.addI18n('en.fullpage_dlg',{
@@ -986,7 +2502,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -\ Brak znaku nowej linii na końcu pliku
 -Binarne pliki ./jscripts/tiny_mce/plugins/imagecaption/img/imagecaption.png i jscripts/tiny_mce/plugins/imagecaption/img/imagecaption.png różnią się
 -diff -rNuB ./jscripts/tiny_mce/plugins/media/langs/en_dlg.js jscripts/tiny_mce/plugins/media/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/media/langs/en_dlg.js	2012-06-29 14:50:39.338849594 +0200
+---- jscripts/tiny_mce/plugins/media/langs/en_dlg.js	2012-06-29 15:16:59.750902226 +0200
 -+++ jscripts/tiny_mce/plugins/media/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,103 +0,0 @@
 --tinyMCE.addI18n('en.media_dlg',{
@@ -1202,7 +2718,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/paste/langs/en_dlg.js jscripts/tiny_mce/plugins/paste/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/paste/langs/en_dlg.js	2012-06-29 14:50:39.358849592 +0200
+---- jscripts/tiny_mce/plugins/paste/langs/en_dlg.js	2012-06-29 15:16:59.774902226 +0200
 -+++ jscripts/tiny_mce/plugins/paste/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,5 +0,0 @@
 --tinyMCE.addI18n('en.paste_dlg',{
@@ -1222,7 +2738,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js	2012-06-29 14:50:39.358849592 +0200
+---- jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js	2012-06-29 15:16:59.770902224 +0200
 -+++ jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,16 +0,0 @@
 --tinyMCE.addI18n('en.searchreplace_dlg',{
@@ -1264,7 +2780,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/style/langs/en_dlg.js jscripts/tiny_mce/plugins/style/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/style/langs/en_dlg.js	2012-06-29 14:50:39.322849589 +0200
+---- jscripts/tiny_mce/plugins/style/langs/en_dlg.js	2012-06-29 15:16:59.734902223 +0200
 -+++ jscripts/tiny_mce/plugins/style/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,70 +0,0 @@
 --tinyMCE.addI18n('en.style_dlg',{
@@ -1407,7 +2923,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/table/langs/en_dlg.js jscripts/tiny_mce/plugins/table/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/table/langs/en_dlg.js	2012-06-29 14:50:39.298849592 +0200
+---- jscripts/tiny_mce/plugins/table/langs/en_dlg.js	2012-06-29 15:16:59.722902226 +0200
 -+++ jscripts/tiny_mce/plugins/table/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,74 +0,0 @@
 --tinyMCE.addI18n('en.table_dlg',{
@@ -1565,7 +3081,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/template/langs/en_dlg.js jscripts/tiny_mce/plugins/template/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/template/langs/en_dlg.js	2012-06-29 14:50:39.330849591 +0200
+---- jscripts/tiny_mce/plugins/template/langs/en_dlg.js	2012-06-29 15:16:59.742902224 +0200
 -+++ jscripts/tiny_mce/plugins/template/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,15 +0,0 @@
 --tinyMCE.addI18n('en.template_dlg',{
@@ -1605,7 +3121,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js
----- jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js	2012-06-29 14:50:39.334849593 +0200
+---- jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js	2012-06-29 15:16:59.746902225 +0200
 -+++ jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,32 +0,0 @@
 --tinyMCE.addI18n('en.xhtmlxtras_dlg',{
@@ -1678,67 +3194,8 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+attribs_title:"Wklej/edytuj atrybuty"
 -+});
 -\ Brak znaku nowej linii na końcu pliku
--diff -rNuB ./jscripts/tiny_mce/themes/advanced/js/link.js jscripts/tiny_mce/themes/advanced/js/link.js
----- jscripts/tiny_mce/themes/advanced/js/link.js	2012-06-29 14:50:39.370849595 +0200
--+++ jscripts/tiny_mce/themes/advanced/js/link.js	2012-04-23 13:40:34.970981535 +0200
--@@ -19,6 +19,7 @@
-- 		this.fillClassList('class_list');
-- 		this.fillFileList('link_list', 'tinyMCELinkList');
-- 		this.fillTargetList('target_list');
--+		this.fillRelList('rel_list');
-- 
-- 		if (e = ed.dom.getParent(ed.selection.getNode(), 'A')) {
-- 			f.href.value = ed.dom.getAttrib(e, 'href');
--@@ -27,6 +28,7 @@
-- 			selectByValue(f, 'link_list', f.href.value);
-- 			selectByValue(f, 'target_list', ed.dom.getAttrib(e, 'target'));
-- 			selectByValue(f, 'class_list', ed.dom.getAttrib(e, 'class'));
--+			selectByValue(f, 'rel_list', ed.dom.getAttrib(e, 'rel'));
-- 		}
-- 	},
-- 
--@@ -64,7 +66,8 @@
-- 						href : href,
-- 						title : f.linktitle.value,
-- 						target : f.target_list ? getSelectValue(f, "target_list") : null,
---						'class' : f.class_list ? getSelectValue(f, "class_list") : null
--+						'class' : f.class_list ? getSelectValue(f, "class_list") : null,
--+						rel : f.rel_list ? getSelectValue(f, "rel_list") : null,
-- 					});
-- 				}
-- 			});
--@@ -73,7 +76,8 @@
-- 				href : href,
-- 				title : f.linktitle.value,
-- 				target : f.target_list ? getSelectValue(f, "target_list") : null,
---				'class' : f.class_list ? getSelectValue(f, "class_list") : null
--+				'class' : f.class_list ? getSelectValue(f, "class_list") : null,
--+				rel : f.rel_list ? getSelectValue(f, "rel_list") : null,
-- 			});
-- 		}
-- 
--@@ -145,6 +149,19 @@
-- 
-- 		if (v = tinyMCEPopup.getParam('theme_advanced_link_targets')) {
-- 			tinymce.each(v.split(','), function(v) {
--+				v = v.split('=');
--+				lst.options[lst.options.length] = new Option(v[0], v[1]);
--+			});
--+		}
--+	},
--+	fillRelList : function(id) {
--+		var dom = tinyMCEPopup.dom, lst = dom.get(id), v;
--+
--+		lst.options[lst.options.length] = new Option(tinyMCEPopup.getLang('not_set'), '');
--+		lst.options[lst.options.length] = new Option('nofollow', 'nofollow');
--+
--+		if (v = tinyMCEPopup.getParam('theme_advanced_link_targets')) {
--+			tinymce.each(v.split(','), function(v) {
-- 				v = v.split('=');
-- 				lst.options[lst.options.length] = new Option(v[0], v[1]);
-- 			});
 -diff -rNuB ./jscripts/tiny_mce/themes/advanced/langs/en_dlg.js jscripts/tiny_mce/themes/advanced/langs/en_dlg.js
----- jscripts/tiny_mce/themes/advanced/langs/en_dlg.js	2012-06-29 14:50:39.374849594 +0200
+---- jscripts/tiny_mce/themes/advanced/langs/en_dlg.js	2012-06-29 15:16:59.786902228 +0200
 -+++ jscripts/tiny_mce/themes/advanced/langs/en_dlg.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,53 +0,0 @@
 --tinyMCE.addI18n('en.advanced_dlg',{
@@ -1796,7 +3253,7 @@ diff -rNuB ./tinymce.patch tinymce.patch
 --});
 -\ Brak znaku nowej linii na końcu pliku
 -diff -rNuB ./jscripts/tiny_mce/themes/advanced/langs/en.js jscripts/tiny_mce/themes/advanced/langs/en.js
----- jscripts/tiny_mce/themes/advanced/langs/en.js	2012-06-29 14:50:39.374849594 +0200
+---- jscripts/tiny_mce/themes/advanced/langs/en.js	2012-06-29 15:16:59.786902228 +0200
 -+++ jscripts/tiny_mce/themes/advanced/langs/en.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,68 +0,0 @@
 --tinyMCE.addI18n('en.advanced',{
@@ -1991,22 +3448,8 @@ diff -rNuB ./tinymce.patch tinymce.patch
 -+more_colors:"Wi\u0119cej kolor\u00F3w"
 -+});
 -\ Brak znaku nowej linii na końcu pliku
--diff -rNuB ./jscripts/tiny_mce/themes/advanced/link.htm jscripts/tiny_mce/themes/advanced/link.htm
----- jscripts/tiny_mce/themes/advanced/link.htm	2012-06-29 14:50:39.370849595 +0200
--+++ jscripts/tiny_mce/themes/advanced/link.htm	2012-04-23 13:40:34.590981552 +0200
--@@ -37,6 +37,10 @@
-- 			<td><label id="targetlistlabel" for="targetlist">{#advanced_dlg.link_target}</label></td>
-- 			<td><select id="target_list" name="target_list"></select></td>
-- 		</tr>
--+		<tr>
--+			<td><label id="rellistlabel" for="rellist">{#advanced_dlg.link_rel}</label></td>
--+			<td><select id="rel_list" name="rel_list"></select></td>
--+		</tr>
--           <tr>
--             <td class="nowrap"><label for="linktitle">{#advanced_dlg.link_titlefield}</label></td>
--             <td><input id="linktitle" name="linktitle" type="text" value="" style="width: 200px" /></td>
 -diff -rNuB ./jscripts/tiny_mce/themes/simple/langs/en.js jscripts/tiny_mce/themes/simple/langs/en.js
----- jscripts/tiny_mce/themes/simple/langs/en.js	2012-06-29 14:50:39.362849593 +0200
+---- jscripts/tiny_mce/themes/simple/langs/en.js	2012-06-29 15:16:59.778902227 +0200
 -+++ jscripts/tiny_mce/themes/simple/langs/en.js	1970-01-01 01:00:00.000000000 +0100
 -@@ -1,11 +0,0 @@
 --tinyMCE.addI18n('en.simple',{
